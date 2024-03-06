@@ -21,7 +21,7 @@ out
 .vscode/settings.json
 imagens/*
 .vscode
-
+*.log
 yarn.lock
 
 # Generated files

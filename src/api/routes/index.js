@@ -7,7 +7,7 @@ const router = express.Router();
 router.use("/teste", testeRoutes);
 
 console.log("🚀 -------------------🚀");
-console.log("TENANT: Rotas disponiveis");
+console.log("TESTE: Rotas disponiveis");
 testeRoutes.stack.forEach((r) => {
   // console.log(`🚀 ~ r:`, r.route)
   if (r.route && r.route.path) {
