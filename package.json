@@ -1,7 +1,7 @@
 {
   "name": "easy-esocial",
   "version": "1.0.0",
-  "description": "API de integração do easydots com o e-social",
+  "description": "Backend do sistema de armazem",
   "main": "server.js",
   "author": "Murilo Melo",
   "license": "MIT",
