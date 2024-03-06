@@ -6,6 +6,6 @@ const router = express.Router();
 
 const testeController = new TesteController();
 
-router.get("/", testeController.buscaHolerite);
+router.get("/", testeController.teste);
 
 export default router;
