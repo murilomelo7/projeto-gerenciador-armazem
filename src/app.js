@@ -2,6 +2,8 @@ import express from "express";
 
 import routes from "./api/routes";
 
+import logger from "./config/logger";
+
 const app = express();
 
 //---------------------------------------------------------------------------
@@ -9,7 +11,7 @@ const app = express();
 app.get("/status", (req, res) =>
   res
     .status(200)
-    .json({ message: "Server ok!", version: "easydots-esocial v1.0.0" })
+    .json({ message: "Server ok!", version: "projeto-armazem v1.0.0" })
 );
 
 //---------------------------------------------------------------------------
@@ -19,7 +21,7 @@ app.use(routes);
 //---------------------------------------------------------------------------
 // ! 404 NOT FOUND
 app.use((req, res, next) => {
-  console.log(`Requisição para ${req.originalUrl} não encontrada`);
+  logger.error(`Requisição para ${req.originalUrl} não encontrada`);
   res.status(404).send("Página não encontrada");
 });
 
@@ -28,13 +30,13 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const { query, params, body, originalUrl } = req;
   const { statusCode, message, data } = err;
-  console.log(err);
+  logger.error(err);
 
   const host = req.get("host");
   const { protocol, url, method } = req;
 
-  console.log(`Failed endpoint ${method} ${protocol}://${host}${url}`);
-  console.error(err.message, err.stack);
+  logger.error(`Failed endpoint ${method} ${protocol}://${host}${url}`);
+  logger.error(err.message, err.stack);
 
   res.status(statusCode || 500).json({ message, data });
 });

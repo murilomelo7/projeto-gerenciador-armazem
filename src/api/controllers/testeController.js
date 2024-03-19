@@ -1,8 +1,4 @@
-import { TesteService } from "../services";
-
-import { XMLParser, XMLBuilder, XMLValidator } from "fast-xml-parser";
-import fs from "fs";
-import path from "path";
+import TesteService from "../services/testeService";
 
 export default class TesteController {
   constructor() {
@@ -11,8 +7,6 @@ export default class TesteController {
 
   async teste(req, res) {
     try {
-     
-
       res.status(200).json({});
     } catch (error) {
       console.log(error);
