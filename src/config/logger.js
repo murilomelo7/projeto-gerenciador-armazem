@@ -13,7 +13,7 @@ class Logger {
             winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
             winston.format.colorize(),
             winston.format.printf(
-              (info) => `${info.level}: ${info.message} ${info.timestamp} `
+              (info) => `${info.timestamp} ${info.level}: ${info.message}`
             )
           ),
         }),
