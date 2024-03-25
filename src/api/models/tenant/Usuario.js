@@ -71,6 +71,7 @@ class Usuario extends Model {
       }
     );
   }
+
   static associate(models) {
     this.belongsTo(models.Perfil, { foreignKey: "perfil_fk", as: "perfilFk" });
 
