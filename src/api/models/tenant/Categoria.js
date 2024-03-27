@@ -34,7 +34,7 @@ class Categoria extends Model {
         tableName,
         modelName: Categoria,
         schema: "public",
-      }
+      },
     );
   }
 }

@@ -1,15 +1,15 @@
-import controller from '../controllers/categoria.controller'
+import controller from '../controllers/categoria.controller';
 
 class CategoriaRoutes {
-    constructor(){}
+  constructor() {}
 
-    async registerRoutes(fastify, options){
-        fastify.post("/categorias", controller.postCategorias)
+  async registerRoutes(fastify, options) {
+    fastify.post('/categorias', controller.postCategorias);
 
-        fastify.put("/categorias", controller.putCategorias)
+    fastify.put('/categorias', controller.putCategorias);
 
-        fastify.get("/categorias", controller.getCategorias);
-    }
+    fastify.get('/categorias', controller.getCategorias);
+  }
 }
 
 export default new CategoriaRoutes();

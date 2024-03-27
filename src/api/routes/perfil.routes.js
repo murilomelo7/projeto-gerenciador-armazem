@@ -1,15 +1,15 @@
-import controller from '../controllers/perfil.controller'
+import controller from '../controllers/perfil.controller';
 
 class PerfilRoutes {
-    constructor(){}
+  constructor() {}
 
-    async registerRoutes(fastify, options){
-        fastify.post("/perfil", controller.postPerfis)
+  async registerRoutes(fastify, options) {
+    fastify.post('/perfil', controller.postPerfis);
 
-        fastify.put("/perfil", controller.putPerfis)
+    fastify.put('/perfil', controller.putPerfis);
 
-        fastify.get("/perfil", controller.getPerfis);
-    }
+    fastify.get('/perfil', controller.getPerfis);
+  }
 }
 
 export default new PerfilRoutes();

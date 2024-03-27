@@ -79,7 +79,7 @@ class Empresa extends Model {
         tableName,
         modelName: Empresa,
         schema: "public",
-      }
+      },
     );
   }
 }

@@ -1,15 +1,26 @@
- import controller from '../controllers/usuario.controller'
+// Importa o controlador de usuário
+import usuarioController from '../controllers/usuario.controller';
 
 class UsuarioRoutes {
-    constructor(){}
+  constructor() {}
 
-    async registerRoutes(fastify, options){
-        fastify.post("/usuarios", controller.postUsuarios)
+  // Método para registrar as rotas
+  async registerRoutes(fastify, options) {
+    // Rota para criar um novo usuário (POST)
+    fastify.post('/usuarios', async (request, reply) => {
+      await usuarioController.postUsuarios(fastify, request, reply);
+    });
 
-        fastify.put("/usuarios", controller.putUsuarios)
+    // Rota para atualizar um usuário existente (PUT)
+    fastify.put('/usuarios', async (request, reply) => {
+      await usuarioController.putUsuarios(fastify, request, reply);
+    });
 
-        fastify.get("/usuarios", controller.getUsuarios);
-    }
+    // Rota para obter todos os usuários (GET)
+    fastify.get('/usuarios', async (request, reply) => {
+      await usuarioController.getUsuarios(fastify, request, reply);
+    });
+  }
 }
 
 export default new UsuarioRoutes();

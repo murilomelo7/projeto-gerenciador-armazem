@@ -1,8 +1,7 @@
 {
-    "watch": ["src"],
-    "ext": ".js,.json",
-    "execMap": {
-      "js": "node --trace-deprecation --inspect -r sucrase/register"
-      
-    }
+  "watch": ["src"],
+  "ext": ".js,.json",
+  "execMap": {
+    "js": "node --trace-deprecation --inspect -r sucrase/register"
   }
+}

@@ -13,8 +13,8 @@ class Logger {
             winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
             winston.format.colorize(),
             winston.format.printf(
-              (info) => `${info.timestamp} ${info.level}: ${info.message}`
-            )
+              (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+            ),
           ),
         }),
         new winston.transports.File({ filename: "error.log", level: "error" }),

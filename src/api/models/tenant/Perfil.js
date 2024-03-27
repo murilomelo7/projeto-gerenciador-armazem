@@ -38,7 +38,7 @@ class Perfil extends Model {
         tableName,
         modelName: Perfil,
         schema: "public",
-      }
+      },
     );
   }
 }

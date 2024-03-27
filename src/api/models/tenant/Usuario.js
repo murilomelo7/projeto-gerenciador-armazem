@@ -68,7 +68,7 @@ class Usuario extends Model {
         tableName,
         modelName: Usuario,
         schema: "public",
-      }
+      },
     );
   }
 

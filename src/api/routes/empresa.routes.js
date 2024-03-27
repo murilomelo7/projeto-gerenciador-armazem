@@ -1,15 +1,15 @@
-import controller from '../controllers/empresa.controller'
+import controller from '../controllers/empresa.controller';
 
 class EmpresaRoutes {
-    constructor(){}
+  constructor() {}
 
-    async registerRoutes(fastify, options){
-        fastify.post("/empresa", controller.postEmpresas)
+  async registerRoutes(fastify, options) {
+    fastify.post('/empresa', controller.postEmpresas);
 
-        fastify.put("/empresa", controller.putEmpresas)
+    fastify.put('/empresa', controller.putEmpresas);
 
-        fastify.get("/empresa", controller.getEmpresas);
-    }
+    fastify.get('/empresa', controller.getEmpresas);
+  }
 }
 
 export default new EmpresaRoutes();

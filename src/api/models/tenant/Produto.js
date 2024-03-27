@@ -45,7 +45,7 @@ class Produto extends Model {
         tableName,
         modelName: Produto,
         schema: "public",
-      }
+      },
     );
   }
   static associate(models) {
