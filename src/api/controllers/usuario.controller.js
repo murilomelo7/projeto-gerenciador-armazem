@@ -1,34 +1,33 @@
 // import UsuarioService from '../services/usuario.service'
+import { createSchema } from "../schema/usuario.schema";
 
 class UsuarioController {
   constructor() {}
 
-  async postUsuarios(fastify, request, reply) {
+  async create(request, reply) {
     try {
+      const body = request.body;
 
-      fastify.log.info('POST USUARIO');
-        
-      const dados = request.body;
+      
 
       reply.code(200).send(dados);
     } catch (error) {
+      request.log.info(error);
       reply.code(500).send(error);
     }
   }
 
-  async putUsuarios(request, reply) {
+  async update(request, reply) {
     try {
-
     } catch (error) {
       reply.code(500).send(error);
     }
   }
 
-  async getUsuarios(request, reply) {
+  async findAll(request, reply) {
     try {
     } catch (error) {
       reply.code(500).send(error);
-
     }
   }
 }

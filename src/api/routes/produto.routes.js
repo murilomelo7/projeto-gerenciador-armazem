@@ -1,14 +1,14 @@
-import controller from '../controllers/produto.controller';
+import controller from "../controllers/produto.controller";
 
 class ProdutoRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post('/produto', controller.postProdutos);
+    fastify.post("/produto", controller.create);
 
-    fastify.put('/produto', controller.putProdutos);
+    fastify.put("/produto", controller.update);
 
-    fastify.get('/produto', controller.getProdutos);
+    fastify.get("/produto", controller.findAll);
   }
 }
 

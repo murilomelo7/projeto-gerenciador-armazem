@@ -1,17 +1,17 @@
 class ProdutoController {
   constructor() {}
 
-  async postProdutos(request, reply) {
+  async create(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async putProdutos(request, reply) {
+  async update(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async getProdutos(request, reply) {
+  async findAll(request, reply) {
     try {
     } catch (error) {}
   }

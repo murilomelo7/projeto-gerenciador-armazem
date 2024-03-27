@@ -1,17 +1,17 @@
 class CategoriaController {
   constructor() {}
 
-  async postCategorias(request, reply) {
+  async create(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async putCategorias(request, reply) {
+  async update(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async getCategorias(request, reply) {
+  async findAll(request, reply) {
     try {
     } catch (error) {}
   }

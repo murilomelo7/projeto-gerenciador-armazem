@@ -1,17 +1,17 @@
 class EmpresaController {
   constructor() {}
 
-  async postEmpresas(request, reply) {
+  async create(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async putEmpresas(request, reply) {
+  async update(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async getEmpresas(request, reply) {
+  async findAll(request, reply) {
     try {
     } catch (error) {}
   }

@@ -1,17 +1,17 @@
 class PerfilController {
   constructor() {}
 
-  async postPerfis(request, reply) {
+  async create(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async putPerfis(request, reply) {
+  async update(request, reply) {
     try {
     } catch (error) {}
   }
 
-  async getPerfis(request, reply) {
+  async findAll(request, reply) {
     try {
     } catch (error) {}
   }

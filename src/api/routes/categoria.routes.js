@@ -4,11 +4,11 @@ class CategoriaRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post('/categorias', controller.postCategorias);
+    fastify.post('/categoria', controller.create);
 
-    fastify.put('/categorias', controller.putCategorias);
+    fastify.put('/categoria', controller.update);
 
-    fastify.get('/categorias', controller.getCategorias);
+    fastify.get('/categoria', controller.findAll);
   }
 }
 
