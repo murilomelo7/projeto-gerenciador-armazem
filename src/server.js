@@ -50,6 +50,17 @@ class Server {
       process.exit(1);
     }
   }
+
+  async close() {
+    try {
+      await this.fastify.close();
+      this.fastify.log.info('Server closed successfully');
+    } catch (error) {
+      this.fastify.log.error('Error closing server:', error);
+      process.exit(1);
+    }
+  }
+  
 }
 
-export default Server;
+export default new Server();

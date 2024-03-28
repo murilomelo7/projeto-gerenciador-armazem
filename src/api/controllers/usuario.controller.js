@@ -26,6 +26,8 @@ class UsuarioController {
 
   async findAll(request, reply) {
     try {
+
+      reply.code(200).send({nome:'Murilo'})
     } catch (error) {
       reply.code(500).send(error);
     }

@@ -8,20 +8,23 @@
   "scripts": {
     "start": "node -r sucrase/register ./src/app.js",
     "dev": "nodemon ./src/app.js",
-    "test": "jest --testTimeout=10000",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint . --ext .js",
     "build": "sucrase src -d ./dist --transforms imports",
     "format": "prettier --write ."
   },
   "jest": {
     "testEnvironment": "node",
+    "transform": {},
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ],
-    "type": "module"
+    ]
   },
   "dependencies": {
+    "@babel/core": "^7.24.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "axios": "^1.6.7",
+    "babel-jest": "^29.7.0",
     "date-fns": "^3.3.1",
     "dotenv": "^16.4.5",
     "eslint": "^8.13.0",
@@ -34,11 +37,11 @@
     "pino-pretty": "^11.0.0",
     "sequelize": "^6.37.1",
     "supertest": "^6.3.4",
-    "tap": "^18.7.2",
     "winston": "^3.12.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.3",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
