@@ -13,6 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//? Comando para executar a migration: 
+//? npx prisma migrate dev --name initial
+
 model Usuario {
   id         Int       @id @default(autoincrement())
   nome       String    @db.VarChar(80)
@@ -35,6 +38,7 @@ model Usuario {
 model Categoria {
   id        Int       @id @default(autoincrement())
   nome      String    @db.VarChar(128)
+  descricao String    @db.Text
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
 
