@@ -8,7 +8,19 @@ class CategoriaRoutes {
   async registerRoutes(fastify, options) {
     fastify.post("/categoria", { preHandler: create }, controller.create);
 
-    fastify.put("/categoria", controller.update);
+    fastify.put("/categoria", {
+      schema: {
+        querystring: {
+          type: "object",
+          properties: {
+            id: { type: "number" },
+          },
+          required: ["id"],
+          additionalProperties: false,
+        },
+      },
+      handler: controller.update,
+    });
 
     fastify.get("/categoria", {
       schema: {
