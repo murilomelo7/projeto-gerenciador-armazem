@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../database/PrismaService";
 class CategoriaController {
   constructor() {}
 
@@ -32,7 +30,19 @@ class CategoriaController {
 
   async findAll(request, reply) {
     try {
-    } catch (error) {}
+      const queryParams = request.query;
+
+      const where = {};
+
+      queryParams.id ? (where.id = queryParams.id) : undefined;
+
+      const dados = await prisma.categoria.findMany({ where });
+
+      reply.code(200).send(dados);
+    } catch (error) {
+      request.log.error(error);
+      reply.codd(500).send(error);
+    }
   }
 }
 

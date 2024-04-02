@@ -10,7 +10,19 @@ class CategoriaRoutes {
 
     fastify.put("/categoria", controller.update);
 
-    fastify.get("/categoria", controller.findAll);
+    fastify.get("/categoria", {
+      schema: {
+        querystring: {
+          type: "object",
+          properties: {
+            id: { type: "number" },
+          },
+          // required: ["id"],
+          additionalProperties: false,
+        },
+      },
+      handler: controller.findAll,
+    });
   }
 }
 
