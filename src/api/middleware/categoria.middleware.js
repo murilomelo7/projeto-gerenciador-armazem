@@ -36,12 +36,10 @@ class CategoriaMiddleware {
   }
 
   async categoriaExist(request, reply) {
-    const body = await validateRequestBodyPresence(request, reply);
-
-    const { id } = body;
+    const { id } = request.params;
 
     try {
-      const categoriaValidation = prisma.categoria.findFirst({ where: { id } });
+      const categoriaValidation = await prisma.categoria.findFirst({ where: { id } });
 
       if (!categoriaValidation) {
         return reply.code(400).send({

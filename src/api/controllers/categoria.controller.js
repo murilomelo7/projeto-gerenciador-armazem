@@ -6,17 +6,12 @@ class CategoriaController {
     try {
       const { nome, descricao } = request.body;
 
-      const dados = {
-        nome,
-        descricao,
-      };
-
       const categoria = await prisma.categoria.create({
-        data: dados,
+        data: { nome, descricao },
       });
 
       request.log.info(categoria);
-      reply.code(200).send(categoria);
+      reply.code(201).send(categoria);
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -27,10 +22,12 @@ class CategoriaController {
     try {
       const { id } = request.params;
       const { nome, descricao } = request.body;
-      const data = { nome, descricao };
 
       const categoria = await prisma.categoria.update({
-        data,
+        data: {
+          nome,
+          descricao,
+        },
         where: {
           id,
         },
@@ -44,7 +41,7 @@ class CategoriaController {
     }
   }
 
-  async findFirstCategoria(request, reply) {
+  async findFirst(request, reply) {
     try {
       const { id } = request.params;
 
@@ -62,7 +59,7 @@ class CategoriaController {
     }
   }
 
-  async findManyCategorias(request, reply) {
+  async findMany(request, reply) {
     try {
       const queryParams = request.query;
 

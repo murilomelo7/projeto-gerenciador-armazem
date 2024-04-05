@@ -21,7 +21,10 @@ class CategoriaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.categoriaExist, middleware.update],
+      preHandler: [
+        middleware.update,
+        middleware.categoriaExist,
+      ],
       handler: controller.update,
     });
 
@@ -36,7 +39,7 @@ class CategoriaRoutes {
           additionalProperties: false,
         },
       },
-      handler: controller.findFirstCategoria,
+      handler: controller.findFirst,
     });
 
     fastify.get("/categoria", {
@@ -50,7 +53,7 @@ class CategoriaRoutes {
           additionalProperties: false,
         },
       },
-      handler: controller.findManyCategorias,
+      handler: controller.findMany,
     });
   }
 }
