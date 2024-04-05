@@ -1,0 +1,170 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "RotasApiProjetoArmazem",
+    "dateExported": "2024-04-05T04:18:42.577Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "24545fa7-88aa-4391-976d-f614841092d0",
+            "name": "Usuario",
+            "containerId": "",
+            "created": "2024-04-01T07:38:58.400Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
+            "name": "Categoria",
+            "containerId": "",
+            "created": "2024-04-05T02:03:00.225Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "6feb10da-f10c-47d3-942f-eee47ec2afb2",
+            "name": "Produto",
+            "containerId": "",
+            "created": "2024-04-05T02:03:07.129Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "db69c852-4675-4384-b5f9-dd570abc7229",
+            "name": "Empresa",
+            "containerId": "",
+            "created": "2024-04-05T02:03:13.376Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "9fa33438-c9ae-48c5-ad90-a1dfda798cac",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
+            "name": "/categoria",
+            "url": "{{api_local}}/categoria",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-04-05T02:03:22.792Z",
+            "modified": "2024-04-05T03:23:33.055Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Stem\",\n  \"descricao\": \"Stem de Narguila\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ae565663-c7f6-4764-b15b-2f6c5a109726",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "6feb10da-f10c-47d3-942f-eee47ec2afb2",
+            "name": "/produto",
+            "url": "{{api_local}}/produto",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-04-05T02:20:26.205Z",
+            "modified": "2024-04-05T03:40:31.535Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Teste Produto 1\",\n  \"descricao\": \"Este é o teste do produto 1\",\n  \"categoria_id\": 1,\n  \"quantidade_produto\": 2\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6aed76a7-9dfc-4a33-8bef-60f42808d0bc",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
+            "name": "/categoria/:id",
+            "url": "{{api_local}}/categoria/415",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2024-04-05T02:03:52.628Z",
+            "modified": "2024-04-05T02:44:59.646Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Teste Update STEM 1\",\n  \"descricao\": \"Este é o teste Update  DA STEAM NARGUILA\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a59155a5-a57e-4d48-a7f9-38dd8bb14fc7",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "6feb10da-f10c-47d3-942f-eee47ec2afb2",
+            "name": "/produto/:id",
+            "url": "{{api_local}}/produto/1",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2024-04-05T02:20:32.124Z",
+            "modified": "2024-04-05T03:58:44.135Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Teste Update Produto 1\",\n  \"descricao\": \"\",\n  \"quantidade_produto\": 43,\n  \"data_validade\": \"2024-03-20\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "b0c9a100-757c-49e1-931a-7e445d15b195",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
+            "name": "/categoria/:id",
+            "url": "{{api_local}}/categoria/1",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-04-05T02:04:29.092Z",
+            "modified": "2024-04-05T02:39:13.751Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c9ffea87-d9d8-4f27-9c94-38879c9cb589",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "6feb10da-f10c-47d3-942f-eee47ec2afb2",
+            "name": "/produto/:id",
+            "url": "{{api_local}}/produto/1",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-04-05T02:20:40.876Z",
+            "modified": "2024-04-05T02:24:17.495Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f812f0c7-c83e-42ff-b952-c9e311566af0",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
+            "name": "/categoria",
+            "url": "{{api_local}}/categoria",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-04-05T02:05:01.709Z",
+            "modified": "2024-04-05T02:05:06.144Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b461a46d-f307-45ac-bd02-db504d451b7a",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "6feb10da-f10c-47d3-942f-eee47ec2afb2",
+            "name": "/produto",
+            "url": "{{api_local}}/produto",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-04-05T02:20:46.045Z",
+            "modified": "2024-04-05T02:24:35.138Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
