@@ -23,40 +23,18 @@ model Usuario {
   senha      String    @db.VarChar(256)
   email      String    @unique @db.VarChar(80)
   cpf        String    @db.VarChar(11)
-  perfil_fk  Int?
-  empresa_fk Int?
+  perfil_id  Int
+  empresa_id Int
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
   createdBy  DateTime? @map("created_by") @db.Timestamp(6)
   updatedAt  DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
   updatedBy  DateTime? @map("updated_by") @db.Timestamp(6)
 
   // Define os relacionamentos
-  perfilFk  Perfil?  @relation("UsuarioPerfil", fields: [perfil_fk], references: [id])
-  empresaFk Empresa? @relation("UsuarioEmpresa", fields: [empresa_fk], references: [id])
-}
+  perfilFk  Perfil?  @relation("UsuarioPerfil", fields: [perfil_id], references: [id])
+  empresaFk Empresa? @relation("UsuarioEmpresa", fields: [empresa_id], references: [id])
 
-model Categoria {
-  id        Int       @id @default(autoincrement())
-  nome      String    @db.VarChar(128)
-  descricao String    @db.Text
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
-
-  produtos Produto[] @relation("ProdutoCategoria")
-}
-
-model Produto {
-  id                 Int       @id @default(autoincrement())
-  nome               String    @db.VarChar(128)
-  categoria_fk       Int
-  quantidade_produto BigInt    @db.BigInt
-  data_validade      DateTime  @db.Timestamp(6)
-  data_entrada       DateTime? @db.Timestamp(6)
-  data_saida         DateTime? @db.Timestamp(6)
-  createdAt          DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
-
-  categoriaFk Categoria @relation("ProdutoCategoria", fields: [categoria_fk], references: [id])
+  @@map("usuario")
 }
 
 model Perfil {
@@ -67,6 +45,63 @@ model Perfil {
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
 
   perfis Usuario[] @relation("UsuarioPerfil")
+
+  @@map("perfil")
+}
+
+model Categoria {
+  id        Int       @id @default(autoincrement())
+  nome      String    @db.VarChar(128)
+  descricao String    @db.Text
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  produtos Produto[] @relation("ProdutoCategoria")
+
+  @@map("categoria")
+}
+
+model Produto {
+  id                 Int       @id @default(autoincrement())
+  nome               String    @db.VarChar(128)
+  categoria_id       Int
+  descricao          String?   @db.VarChar(256)
+  quantidade_produto BigInt    @db.BigInt
+  data_validade      DateTime? @db.Timestamp(6)
+  createdAt          DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  categoriaFk    Categoria        @relation("ProdutoCategoria", fields: [categoria_id], references: [id])
+  EntradaProduto EntradaProduto[]
+  SaidaProduto   SaidaProduto[]
+
+  @@map("produto")
+}
+
+model EntradaProduto {
+  id           Int      @id @default(autoincrement())
+  produto_id   Int
+  quantidade   BigInt   @db.BigInt
+  data_entrada DateTime @db.Timestamp(6)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  produto Produto @relation(fields: [produto_id], references: [id])
+
+  @@map("entrada_produto")
+}
+
+model SaidaProduto {
+  id         Int      @id @default(autoincrement())
+  produto_id Int
+  quantidade BigInt   @db.BigInt
+  data_saida DateTime @db.Timestamp(6)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  produto Produto @relation(fields: [produto_id], references: [id])
+
+  @@map("saida_produto")
 }
 
 model Empresa {
@@ -85,4 +120,6 @@ model Empresa {
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt   DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
   empresas    Usuario[] @relation("UsuarioEmpresa")
+
+  @@map("empresa")
 }

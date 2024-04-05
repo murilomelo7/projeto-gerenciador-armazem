@@ -8,9 +8,11 @@ class UsuarioController {
 
   async create(request, reply) {
     try {
-      const body = request.body;
+      const {body} = request.body;
 
-      const novoUsuario = await prisma.Usuario.create(body);
+
+
+      const novoUsuario = await prisma.usuario.create(body);
 
       reply.code(200).send(novoUsuario);
     } catch (error) {

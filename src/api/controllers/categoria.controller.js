@@ -11,12 +11,12 @@ class CategoriaController {
         descricao,
       };
 
-      const novaCategoria = await prisma.categoria.create({
+      const categoria = await prisma.categoria.create({
         data: dados,
       });
 
-      request.log.info(novaCategoria);
-      reply.code(200).send(novaCategoria);
+      request.log.info(categoria);
+      reply.code(200).send(categoria);
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -25,23 +25,58 @@ class CategoriaController {
 
   async update(request, reply) {
     try {
-    } catch (error) {}
+      const { id } = request.params;
+      const { nome, descricao } = request.body;
+      const data = { nome, descricao };
+
+      const categoria = await prisma.categoria.update({
+        data,
+        where: {
+          id,
+        },
+      });
+
+      request.log.info(categoria);
+      reply.code(200).send(categoria);
+    } catch (error) {
+      request.log.error(error);
+      reply.code(500).send(error);
+    }
   }
 
-  async findAll(request, reply) {
+  async findFirstCategoria(request, reply) {
+    try {
+      const { id } = request.params;
+
+      const categoria = await prisma.categoria.findFirst({
+        where: {
+          id,
+        },
+      });
+
+      request.log.info(categoria);
+      reply.code(200).send(categoria);
+    } catch (error) {
+      request.log.error(error);
+      reply.code(500).send(error);
+    }
+  }
+
+  async findManyCategorias(request, reply) {
     try {
       const queryParams = request.query;
 
       const where = {};
 
+      // Filtro params por id
       queryParams.id ? (where.id = queryParams.id) : undefined;
 
-      const dados = await prisma.categoria.findMany({ where });
+      const categorias = await prisma.categoria.findMany({ where });
 
-      reply.code(200).send(dados);
+      reply.code(200).send(categorias);
     } catch (error) {
       request.log.error(error);
-      reply.codd(500).send(error);
+      reply.code(500).send(error);
     }
   }
 }
