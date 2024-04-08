@@ -1,0 +1,118 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table empresa {
+  id Int [pk, increment]
+  tipo String [not null]
+  cpfCnpj String [not null]
+  nome String [not null]
+  telefone String
+  email String
+  endereco String
+  cidade String
+  estado String
+  cep String
+  status String [not null, default: 'ativo']
+  observacoes String
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
+  usuarios usuario [not null]
+  categorias categoria [not null]
+  produtos produto [not null]
+  entradas entrada_produto [not null]
+  saidas saida_produto [not null]
+}
+
+Table usuario {
+  id Int [pk, increment]
+  nome String [not null]
+  usuario String [unique, not null]
+  senha String [not null]
+  email String [unique, not null]
+  cpf String [not null]
+  perfil_id Int [not null]
+  empresa_id Int [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
+  perfilFk perfil
+  empresaFk empresa
+}
+
+Table perfil {
+  id Int [pk, increment]
+  nome String [not null]
+  acessos String [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
+  perfis usuario [not null]
+}
+
+Table categoria {
+  id Int [pk, increment]
+  empresa_id Int [not null]
+  nome String [not null]
+  descricao String [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
+  empresaFk empresa
+  produtos produto [not null]
+}
+
+Table produto {
+  id Int [pk, increment]
+  empresa_id Int [not null]
+  nome String [not null]
+  categoria_id Int [not null]
+  descricao String
+  quantidade_produto Int [not null]
+  data_validade DateTime
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
+  empresaFk empresa
+  categoriaFk categoria [not null]
+  EntradaProduto entrada_produto [not null]
+  SaidaProduto saida_produto [not null]
+}
+
+Table entrada_produto {
+  id Int [pk, increment]
+  empresa_id Int [not null]
+  produto_id Int [not null]
+  quantidade Int [not null]
+  data_entrada DateTime [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  empresaFk empresa
+  produto produto [not null]
+}
+
+Table saida_produto {
+  id Int [pk, increment]
+  empresa_id Int [not null]
+  produto_id Int [not null]
+  quantidade Int [not null]
+  data_saida DateTime [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  empresaFk empresa
+  produto produto [not null]
+}
+
+Ref: usuario.perfil_id > perfil.id
+
+Ref: usuario.empresa_id > empresa.id
+
+Ref: categoria.empresa_id > empresa.id
+
+Ref: produto.empresa_id > empresa.id
+
+Ref: produto.categoria_id > categoria.id
+
+Ref: entrada_produto.empresa_id > empresa.id
+
+Ref: entrada_produto.produto_id > produto.id
+
+Ref: saida_produto.empresa_id > empresa.id
+
+Ref: saida_produto.produto_id > produto.id

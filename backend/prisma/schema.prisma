@@ -13,6 +13,10 @@ generator erd {
   theme    = "dark"
   output   = "../ERD.svg"
 }
+generator dbml {
+  provider = "prisma-dbml-generator"
+  
+}
 
 datasource db {
   provider = "postgresql"
