@@ -1,15 +1,32 @@
 import controller from "../controllers/usuario.controller";
-import { create } from "../middleware/usuario.middleware";
+import middlewareUsuario from "../middleware/usuario.middleware";
+import middlewareEmpresa from "../middleware/empresa.middleware";
 
 class UsuarioRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post("/usuario", { preHandler: create }, controller.create);
+    fastify.post("/usuario", {
+      preHandler: create,
+      handler: controller.create,
+    });
 
-    fastify.put("/usuario", controller.update);
+    fastify.put("/usuario/:id", {
+      schema: {
+        params: {
+          type: "object",
+          properties: {
+            id: { type: "number" },
+          },
+          required: ["id"],
+          additionalProperties: false,
+        },
+      },
+      preHandler: [middlewareUsuario.update],
+      handler: controller.update,
+    });
 
-    fastify.get("/usuario", controller.findAll);
+    fastify.get("/usuario");
   }
 }
 

@@ -6,8 +6,9 @@ class CategoriaMiddleware {
   constructor() {}
 
   async create(request, reply) {
-    const body = await validateRequestBodyPresence(request, reply);
     try {
+      const body = await validateRequestBodyPresence(request, reply);
+
       createSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
@@ -21,8 +22,9 @@ class CategoriaMiddleware {
   }
 
   async update(request, reply) {
-    const body = await validateRequestBodyPresence(request, reply);
     try {
+      const body = await validateRequestBodyPresence(request, reply);
+
       updateSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
@@ -35,11 +37,13 @@ class CategoriaMiddleware {
     }
   }
 
-  async categoriaExist(request, reply) {
-    const { id } = request.params;
-
+  async categoriaExists(request, reply) {
     try {
-      const categoriaValidation = await prisma.categoria.findFirst({ where: { id } });
+      const { id } = request.params;
+
+      const categoriaValidation = await prisma.categoria.findFirst({
+        where: { id },
+      });
 
       if (!categoriaValidation) {
         return reply.code(400).send({
@@ -53,7 +57,33 @@ class CategoriaMiddleware {
       return reply.code(500).send({
         statusCode: 500,
         error: "Error",
-        message: "Ocorreu um erro na validação das categorias",
+        message: "Ocorreu um erro na validação da categoria",
+        details: error.message,
+      });
+    }
+  }
+
+  async categoriaIdExists(request, reply) {
+    const { categoria_id } = request.body;
+
+    try {
+      const categoriaValidation = await prisma.categoria.findFirst({
+        where: { id: categoria_id },
+      });
+
+      if (!categoriaValidation) {
+        return reply.code(400).send({
+          statusCode: 400,
+          error: "Bad Request",
+          message: "Dados inválidos",
+          details: "Está categoria não existe",
+        });
+      }
+    } catch (error) {
+      return reply.code(500).send({
+        statusCode: 500,
+        error: "Error",
+        message: "Ocorreu um erro na validação da categoria_id",
         details: error.message,
       });
     }

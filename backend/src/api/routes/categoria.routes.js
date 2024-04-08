@@ -21,10 +21,7 @@ class CategoriaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [
-        middleware.update,
-        middleware.categoriaExist,
-      ],
+      preHandler: [middleware.update, middleware.categoriaExist],
       handler: controller.update,
     });
 
@@ -38,6 +35,14 @@ class CategoriaRoutes {
           required: ["id"],
           additionalProperties: false,
         },
+        querystring: {
+          type: "object",
+          properties: {
+            empresa_id: { type: "number" },
+          },
+          required: ["empresa_id"],
+          additionalProperties: false,
+        },
       },
       handler: controller.findFirst,
     });
@@ -47,9 +52,9 @@ class CategoriaRoutes {
         querystring: {
           type: "object",
           properties: {
-            id: { type: "number" },
+            empresa_id: { type: "number" },
           },
-          // required: ["id"],
+          required: ["empresa_id"],
           additionalProperties: false,
         },
       },

@@ -1,9 +1,9 @@
 import prisma from "../../database/PrismaService";
 
 import { validateRequestBodyPresence } from "./body.middleware";
-import { createSchema, updateSchema } from "../schema/produto.schema";
+import { createSchema, updateSchema } from "../schema/empresa.schema";
 
-class ProdutoMiddleware {
+class EmpresaMiddleware {
   constructor() {}
 
   async create(request, reply) {
@@ -38,57 +38,57 @@ class ProdutoMiddleware {
     }
   }
 
-  async produtoExists(request, reply) {
+  async empresaExists(request, reply) {
     try {
       const { id } = request.params;
 
-      const perfilValidation = await prisma.produto.findFirst({
+      const empresaValidation = await prisma.empresa.findFirst({
         where: { id },
       });
 
-      if (!perfilValidation) {
+      if (!empresaValidation) {
         return reply.code(400).send({
           statusCode: 400,
           error: "Bad Request",
           message: "Dados inválidos",
-          details: "Este produto não existe",
+          details: "Está empresa não existe",
         });
       }
     } catch (error) {
       return reply.code(500).send({
         statusCode: 500,
         error: "Error",
-        message: "Ocorreu um erro na validação do produto",
+        message: "Ocorreu um erro na validação da empresa",
         details: error.message,
       });
     }
   }
 
-  async produtoIdExists(request, reply) {
+  async empresaIdExists(request, reply) {
     try {
-      const { produto_id } = request.body;
+      const { empresa_id } = request.query;
 
-      const produtoValidation = await prisma.produto.findFirst({
-        where: { id: produto_id },
+      const empresaValidation = await prisma.empresa.findFirst({
+        where: { id: empresa_id },
       });
 
-      if (!produtoValidation) {
+      if (!empresaValidation) {
         return reply.code(400).send({
           statusCode: 400,
           error: "Bad Request",
           message: "Dados inválidos",
-          details: "Este produto não existe",
+          details: "Está empresa não existe",
         });
       }
     } catch (error) {
       return reply.code(500).send({
         statusCode: 500,
         error: "Error",
-        message: "Ocorreu um erro na validação do produto_id",
+        message: "Ocorreu um erro na validação do empresa_id",
         details: error.message,
       });
     }
   }
 }
 
-export default new ProdutoMiddleware();
+export default new EmpresaMiddleware();

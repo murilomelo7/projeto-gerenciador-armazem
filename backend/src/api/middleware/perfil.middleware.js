@@ -1,15 +1,14 @@
 import prisma from "../../database/PrismaService";
 
 import { validateRequestBodyPresence } from "./body.middleware";
-import { createSchema, updateSchema } from "../schema/produto.schema";
+import { createSchema, updateSchema } from "../schema/perfil.schema";
 
-class ProdutoMiddleware {
+class PerfilMiddleware {
   constructor() {}
 
   async create(request, reply) {
+    const body = await validateRequestBodyPresence(request, reply);
     try {
-      const body = await validateRequestBodyPresence(request, reply);
-
       createSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
@@ -23,9 +22,8 @@ class ProdutoMiddleware {
   }
 
   async update(request, reply) {
+    const body = await validateRequestBodyPresence(request, reply);
     try {
-      const body = await validateRequestBodyPresence(request, reply);
-
       updateSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
@@ -38,11 +36,11 @@ class ProdutoMiddleware {
     }
   }
 
-  async produtoExists(request, reply) {
+  async perfilExists(request, reply) {
     try {
       const { id } = request.params;
 
-      const perfilValidation = await prisma.produto.findFirst({
+      const perfilValidation = await prisma.perfil.findFirst({
         where: { id },
       });
 
@@ -51,44 +49,44 @@ class ProdutoMiddleware {
           statusCode: 400,
           error: "Bad Request",
           message: "Dados inválidos",
-          details: "Este produto não existe",
+          details: "Este perfil não existe",
         });
       }
     } catch (error) {
       return reply.code(500).send({
         statusCode: 500,
         error: "Error",
-        message: "Ocorreu um erro na validação do produto",
+        message: "Ocorreu um erro na validação do perfil",
         details: error.message,
       });
     }
   }
 
-  async produtoIdExists(request, reply) {
+  async perfilIdExists(request, reply) {
     try {
-      const { produto_id } = request.body;
+      const { perfil_id } = request.body;
 
-      const produtoValidation = await prisma.produto.findFirst({
-        where: { id: produto_id },
+      const perfilValidation = await prisma.perfil.findFirst({
+        where: { id: perfil_id },
       });
 
-      if (!produtoValidation) {
+      if (!perfilValidation) {
         return reply.code(400).send({
           statusCode: 400,
           error: "Bad Request",
           message: "Dados inválidos",
-          details: "Este produto não existe",
+          details: "Este perfil não existe",
         });
       }
     } catch (error) {
       return reply.code(500).send({
         statusCode: 500,
         error: "Error",
-        message: "Ocorreu um erro na validação do produto_id",
+        message: "Ocorreu um erro na validação do perfil_id",
         details: error.message,
       });
     }
   }
 }
 
-export default new ProdutoMiddleware();
+export default new PerfilMiddleware();

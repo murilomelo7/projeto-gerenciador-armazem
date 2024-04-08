@@ -24,7 +24,6 @@ class ProdutoController {
       });
 
       request.log.info(produto);
-
       reply.code(200).send(produto);
     } catch (error) {
       request.log.error(error);
@@ -58,7 +57,6 @@ class ProdutoController {
       });
 
       request.log.info(produto);
-
       reply.code(200).send(produto);
     } catch (error) {
       request.log.error(error);
