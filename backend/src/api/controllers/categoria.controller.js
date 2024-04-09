@@ -4,12 +4,9 @@ class CategoriaController {
 
   async create(request, reply) {
     try {
-      const { nome, descricao } = request.body;
-
       const categoria = await prisma.categoria.create({
-        data: { nome, descricao },
+        data: request.body,
       });
-
       request.log.info(categoria);
       reply.code(201).send(categoria);
     } catch (error) {
@@ -21,15 +18,13 @@ class CategoriaController {
   async update(request, reply) {
     try {
       const { id } = request.params;
-      const { nome, descricao } = request.body;
+      const { empresa_id } = request.query;
 
       const categoria = await prisma.categoria.update({
-        data: {
-          nome,
-          descricao,
-        },
+        data: request.body,
         where: {
           id,
+          empresa_id,
         },
       });
 
@@ -44,10 +39,11 @@ class CategoriaController {
   async findFirst(request, reply) {
     try {
       const { id } = request.params;
-
+      const { empresa_id } = request.query;
       const categoria = await prisma.categoria.findFirst({
         where: {
           id,
+          empresa_id,
         },
       });
 

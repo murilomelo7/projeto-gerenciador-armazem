@@ -11,7 +11,12 @@ class PerfilController {
     } catch (error) {}
   }
 
-  async findAll(request, reply) {
+  async findFirst(request, reply) {
+    try {
+    } catch (error) {}
+  }
+
+  async findMany(request, reply) {
     try {
     } catch (error) {}
   }

@@ -5,21 +5,9 @@ class UsuarioController {
 
   async create(request, reply) {
     try {
-      const { nome, usuario, senha, email, cpf, perfil_id, empresa_id } =
-        request.body;
-
       const novoUsuario = await prisma.usuario.create({
-        data: {
-          nome,
-          usuario,
-          senha,
-          email,
-          cpf,
-          perfil_id,
-          empresa_id,
-        },
+        data: request.body,
       });
-
       request.log.info(error);
       reply.code(200).send(novoUsuario);
     } catch (error) {
@@ -30,21 +18,9 @@ class UsuarioController {
 
   async update(request, reply) {
     try {
-      const { nome, usuario, senha, email, cpf, perfil_id, empresa_id } =
-        request.body;
-
       const usuarioAtualizado = await prisma.usuario.update({
-        data: {
-          nome,
-          usuario,
-          senha,
-          email,
-          cpf,
-          perfil_id,
-          empresa_id,
-        },
+        data: request.body,
       });
-
       request.log.info(usuarioAtualizado);
       reply.code(200).send(usuarioAtualizado);
     } catch (error) {
@@ -56,8 +32,11 @@ class UsuarioController {
   async findFirst(request, reply) {
     try {
       const { id } = request.params;
+      const { empresa_id } = request.query;
 
-      const usuario = await prisma.usuario.findFirst({ where: { id } });
+      const usuario = await prisma.usuario.findFirst({
+        where: { id, empresa_id },
+      });
 
       request.log.info(usuario);
       reply.code(200).send(usuario);

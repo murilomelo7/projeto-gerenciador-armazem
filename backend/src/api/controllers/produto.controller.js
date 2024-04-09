@@ -7,6 +7,7 @@ class ProdutoController {
     try {
       const {
         nome,
+        empresa_id,
         descricao,
         categoria_id,
         quantidade_produto,
@@ -16,6 +17,7 @@ class ProdutoController {
       const produto = await prisma.produto.create({
         data: {
           nome,
+          empresa_id,
           descricao,
           categoria_id,
           quantidade_produto,
@@ -34,9 +36,9 @@ class ProdutoController {
   async update(request, reply) {
     try {
       const { id } = request.params;
-
       const {
         nome,
+        empresa_id,
         descricao,
         categoria_id,
         quantidade_produto,
@@ -46,6 +48,7 @@ class ProdutoController {
       const produto = await prisma.produto.update({
         data: {
           nome,
+          empresa_id,
           descricao,
           categoria_id,
           quantidade_produto,
@@ -53,6 +56,7 @@ class ProdutoController {
         },
         where: {
           id,
+          empresa_id,
         },
       });
 
@@ -67,8 +71,11 @@ class ProdutoController {
   async findFirst(request, reply) {
     try {
       const { id } = request.params;
+      const { empresa_id } = request.query;
 
-      const produto = await prisma.produto.findFirst({ where: { id } });
+      const produto = await prisma.produto.findFirst({
+        where: { id, empresa_id },
+      });
 
       request.log.info(produto);
       reply.code(200).send(produto);
@@ -80,7 +87,27 @@ class ProdutoController {
 
   async findMany(request, reply) {
     try {
-      const produtos = await prisma.produto.findMany();
+      const { empresa_id } = request.query;
+
+      const produtos = await prisma.produto.findMany({
+        where: empresa_id,
+      });
+
+      reply.code(200).send(produtos);
+    } catch (error) {
+      request.log.error(error);
+      reply.code(500).send(error);
+    }
+  }
+
+  async delete(request, reply) {
+    try {
+      const { id } = request.params;
+      const { empresa_id } = request.query;
+
+      await prisma.produto.delete({
+        where: { id, empresa_id },
+      });
 
       reply.code(200).send(produtos);
     } catch (error) {

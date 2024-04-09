@@ -1,19 +1,13 @@
-import supertest from 'supertest';
-import fastify from '../server'; // Substitua pelo caminho do arquivo que exporta a função buildFastify
+import { test } from "tap";
+// import supertest from "supertest";
+import fastify from "../server";
 
-
-describe('Teste da rota GET `/usuario`', () => {
-
-  beforeAll(async () => {
-    await fastify.start();
+test("GET / retorna hello world", async (t) => {
+  const response = await app.inject({
+    method: "GET",
+    url: "/",
   });
 
-  afterAll(async () => {
-    await fastify.close();
-  });
-
-  test('Deve retornar status 200 ao acessar a rota', async () => {
-    const response = await supertest('http://localhost:3000').get('/usuario').expect(200);
-    expect(response.status).toBe(200);
-  });
+  t.equal(response.statusCode, 200);
+  t.same(JSON.parse(response.payload), { hello: "world" });
 });

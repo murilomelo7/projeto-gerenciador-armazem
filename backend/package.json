@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node -r sucrase/register ./src/app.js",
     "dev": "nodemon --exec \"sucrase-node src/app.js\"",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "babel-node --extensions .js,.jsx node_modules/.bin/tap test/**/*.test.js",
     "lint": "eslint . --ext .js",
     "build": "sucrase src -d ./dist --transforms imports",
     "format": "prettier --write ."
@@ -38,6 +38,7 @@
     "pino-pretty": "^11.0.0",
     "prisma": "^5.11.0",
     "supertest": "^6.3.4",
+    "tap": "^18.7.2",
     "winston": "^3.12.0",
     "zod": "^3.22.4"
   },
