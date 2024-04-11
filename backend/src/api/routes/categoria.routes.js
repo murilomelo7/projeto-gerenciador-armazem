@@ -21,7 +21,7 @@ class CategoriaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.update, middleware.categoriaExist],
+      preHandler: [middleware.update, middleware.categoriaExists],
       handler: controller.update,
     });
 

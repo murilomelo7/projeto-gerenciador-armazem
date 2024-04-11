@@ -1,9 +1,8 @@
-import Login from "./pages/Login/form";
+import Login from "./pages/public/Login/index";
 
 function App() {
   return (
     <>
-      <h1>Inicio</h1>
       <Login />
     </>
   );

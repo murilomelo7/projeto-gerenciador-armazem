@@ -8,7 +8,7 @@ class UsuarioController {
       const novoUsuario = await prisma.usuario.create({
         data: request.body,
       });
-      request.log.info(error);
+      request.log.info(novoUsuario);
       reply.code(200).send(novoUsuario);
     } catch (error) {
       request.log.error(error);
