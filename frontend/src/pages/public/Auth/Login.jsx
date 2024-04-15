@@ -12,8 +12,7 @@ const Login = () => {
   const handleSubmit = () => {
     event.preventDefault();
 
-    console.log(usuario);
-    console.log(senha);
+    
   };
 
   return (
