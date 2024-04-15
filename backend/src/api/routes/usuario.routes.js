@@ -7,7 +7,7 @@ class UsuarioRoutes {
 
   async registerRoutes(fastify, options) {
     fastify.post("/usuario", {
-      preHandler: create,
+      preHandler: middlewareUsuario.create,
       handler: controller.create,
     });
 
@@ -26,7 +26,7 @@ class UsuarioRoutes {
       handler: controller.update,
     });
 
-    fastify.get("/usuario");
+    // fastify.get("/usuario");
   }
 }
 

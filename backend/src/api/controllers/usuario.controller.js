@@ -1,10 +1,14 @@
 import prisma from "../../database/PrismaService";
 
+import UsuarioService from "../services/usuario.service";
+
 class UsuarioController {
   constructor() {}
 
   async create(request, reply) {
     try {
+      request.body.senha = UsuarioService.hashPassword(request.body.senha);
+
       const novoUsuario = await prisma.usuario.create({
         data: request.body,
       });

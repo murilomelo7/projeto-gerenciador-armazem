@@ -8,7 +8,7 @@ class PerfilRoutes {
 
     fastify.put("/perfil", controller.update);
 
-    fastify.get("/perfil", controller.findAll);
+    // fastify.get("/perfil", controller.findAll);
   }
 }
 

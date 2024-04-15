@@ -21,10 +21,10 @@ class ProdutoRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.update, middleware.categoriaExist],
+      preHandler: [middleware.update, middleware.produtoExists],
       handler: controller.update,
     });
-    
+
     fastify.get("/produto/:id", {
       schema: {
         params: {
