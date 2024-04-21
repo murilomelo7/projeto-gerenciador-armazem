@@ -13,9 +13,9 @@ generator erd {
   theme    = "dark"
   output   = "../ERD.svg"
 }
+
 generator dbml {
   provider = "prisma-dbml-generator"
-  
 }
 
 datasource db {
@@ -36,7 +36,7 @@ model Empresa {
   endereco    String?   @db.VarChar(255)
   cidade      String?   @db.VarChar(100)
   estado      String?   @db.VarChar(2)
-  cep         String?   @db.VarChar(8)
+  cep         String?   @db.VarChar(9)
   status      String    @default("ativo") @db.VarChar(20)
   observacoes String?   @db.Text
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
@@ -58,6 +58,7 @@ model Usuario {
   senha      String    @db.VarChar(256)
   email      String    @unique @db.VarChar(80)
   cpf        String    @db.VarChar(11)
+  token      String?   @unique @db.VarChar(256)
   perfil_id  Int
   empresa_id Int
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)

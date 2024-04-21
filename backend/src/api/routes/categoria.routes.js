@@ -1,12 +1,13 @@
 import controller from "../controllers/categoria.controller";
-import middleware from "../middleware/categoria.middleware";
+import categoriaMiddleware from "../middleware/categoria.middleware";
+import authMiddleware from "../middleware/auth.middleware";
 
 class CategoriaRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
     fastify.post("/categoria", {
-      preHandler: middleware.create,
+      preHandler: [authMiddleware.authToken, categoriaMiddleware.create],
       handler: controller.create,
     });
 
@@ -21,7 +22,10 @@ class CategoriaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.update, middleware.categoriaExists],
+      preHandler: [
+        categoriaMiddleware.update,
+        categoriaMiddleware.categoriaExists,
+      ],
       handler: controller.update,
     });
 

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "empresa" ALTER COLUMN "cep" SET DATA TYPE VARCHAR(9);

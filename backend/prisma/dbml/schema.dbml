@@ -31,6 +31,7 @@ Table usuario {
   senha String [not null]
   email String [unique, not null]
   cpf String [not null]
+  token String [unique]
   perfil_id Int [not null]
   empresa_id Int [not null]
   createdAt DateTime [default: `now()`]

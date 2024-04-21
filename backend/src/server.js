@@ -1,20 +1,20 @@
 // server.js
 
-import Fastify from 'fastify';
+import Fastify from "fastify";
 
-import CategoriaRoutes from './api/routes/categoria.routes';
-import EmpresaRoutes from './api/routes/empresa.routes';
-import PerfilRoutes from './api/routes/perfil.routes';
-import ProdutoRoutes from './api/routes/produto.routes';
-import UsuarioRoutes from './api/routes/usuario.routes';
+import CategoriaRoutes from "./api/routes/categoria.routes";
+import EmpresaRoutes from "./api/routes/empresa.routes";
+import PerfilRoutes from "./api/routes/perfil.routes";
+import ProdutoRoutes from "./api/routes/produto.routes";
+import UsuarioRoutes from "./api/routes/usuario.routes";
 
-const environment = 'development';
+const environment = "development";
 
 const loggerConfig = () => {
-  if (environment === 'development') {
+  if (environment === "development") {
     return {
       transport: {
-        target: 'pino-pretty',
+        target: "pino-pretty",
         options: {
           colorize: true,
         },
@@ -33,7 +33,7 @@ class Server {
   }
 
   initializeRoutes() {
-    // Import and register routes
+    //? Aqui inicializa as rotas
     CategoriaRoutes.registerRoutes(this.fastify);
     EmpresaRoutes.registerRoutes(this.fastify);
     PerfilRoutes.registerRoutes(this.fastify);
@@ -44,7 +44,7 @@ class Server {
   async start() {
     try {
       await this.fastify.listen({ port: 3000 });
-      this.fastify.log.info('Server is listening on port 3000');
+      this.fastify.log.info("Server is listening on port 3000");
     } catch (error) {
       this.fastify.log.error(error);
       process.exit(1);
@@ -54,13 +54,12 @@ class Server {
   async close() {
     try {
       await this.fastify.close();
-      this.fastify.log.info('Server closed successfully');
+      this.fastify.log.info("Server closed successfully");
     } catch (error) {
-      this.fastify.log.error('Error closing server:', error);
+      this.fastify.log.error("Error closing server:", error);
       process.exit(1);
     }
   }
-  
 }
 
 export default new Server();

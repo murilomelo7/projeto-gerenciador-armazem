@@ -21,7 +21,7 @@ class EmpresaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.update],
+      preHandler: [middleware.empresaExists, middleware.update],
       handler: controller.update,
     });
 
@@ -36,21 +36,27 @@ class EmpresaRoutes {
           additionalProperties: false,
         },
       },
+      preHandler: [middleware.empresaExists],
       handler: controller.findFirst,
     });
 
     fastify.get("/empresa", {
+      handler: controller.findMany,
+    });
+
+    fastify.delete("/empresa/:id", {
       schema: {
-        querystring: {
+        params: {
           type: "object",
           properties: {
             id: { type: "number" },
           },
-          // required: ["id"],
+          required: ["id"],
           additionalProperties: false,
         },
       },
-      handler: controller.findMany,
+      preHandler: [middleware.empresaExists],
+      handler: controller.delete,
     });
   }
 }

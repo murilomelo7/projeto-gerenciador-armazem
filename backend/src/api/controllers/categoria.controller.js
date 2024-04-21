@@ -1,4 +1,5 @@
 import prisma from "../../database/PrismaService";
+
 class CategoriaController {
   constructor() {}
 
@@ -7,7 +8,6 @@ class CategoriaController {
       const categoria = await prisma.categoria.create({
         data: request.body,
       });
-      request.log.info(categoria);
       reply.code(201).send(categoria);
     } catch (error) {
       request.log.error(error);
@@ -28,7 +28,6 @@ class CategoriaController {
         },
       });
 
-      request.log.info(categoria);
       reply.code(200).send(categoria);
     } catch (error) {
       request.log.error(error);
@@ -47,7 +46,6 @@ class CategoriaController {
         },
       });
 
-      request.log.info(categoria);
       reply.code(200).send(categoria);
     } catch (error) {
       request.log.error(error);

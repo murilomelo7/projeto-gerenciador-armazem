@@ -9,7 +9,7 @@ export const createSchema = z.object({
   endereco: z.string().min(1).max(255),
   cidade: z.string().min(1).max(100),
   estado: z.string().min(2).max(2),
-  cep: z.string().min(8).max(8),
+  cep: z.string().min(9).max(9),
   observacoes: z.string(),
 });
 export const updateSchema = z.object({
@@ -21,7 +21,7 @@ export const updateSchema = z.object({
   endereco: z.string().min(1).max(255),
   cidade: z.string().min(1).max(100),
   estado: z.string().min(2).max(2),
-  cep: z.string().min(8).max(8),
+  cep: z.string().min(9).max(9),
   status: z.string().min(1).max(20),
   observacoes: z.string(),
 });
