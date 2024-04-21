@@ -18,14 +18,16 @@ class CategoriaController {
   async update(request, reply) {
     try {
       const { id } = request.params;
-      const { empresa_id } = request.query;
+      const { empresa_id } = request.empresa_id;
+
+      const where = {
+        id,
+        empresa_id,
+      };
 
       const categoria = await prisma.categoria.update({
         data: request.body,
-        where: {
-          id,
-          empresa_id,
-        },
+        where,
       });
 
       reply.code(200).send(categoria);
@@ -38,12 +40,16 @@ class CategoriaController {
   async findFirst(request, reply) {
     try {
       const { id } = request.params;
-      const { empresa_id } = request.query;
+
+      const { empresa_id } = request.empresa_id;
+
+      const where = {
+        id,
+        empresa_id,
+      };
+
       const categoria = await prisma.categoria.findFirst({
-        where: {
-          id,
-          empresa_id,
-        },
+        where,
       });
 
       reply.code(200).send(categoria);
@@ -57,7 +63,11 @@ class CategoriaController {
     try {
       const queryParams = request.query;
 
-      const where = {};
+      const { empresa_id } = request.empresa_id;
+
+      const where = {
+        empresa_id,
+      };
 
       // Filtro params por id
       queryParams.id ? (where.id = queryParams.id) : undefined;

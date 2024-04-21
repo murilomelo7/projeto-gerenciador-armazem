@@ -52,16 +52,7 @@ class CategoriaRoutes {
     });
 
     fastify.get("/categoria", {
-      schema: {
-        querystring: {
-          type: "object",
-          properties: {
-            empresa_id: { type: "number" },
-          },
-          required: ["empresa_id"],
-          additionalProperties: false,
-        },
-      },
+      preHandler: authMiddleware.authToken,
       handler: controller.findMany,
     });
   }

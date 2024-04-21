@@ -1,7 +1,5 @@
 import prisma from "../../database/PrismaService";
 
-import EmpresaMiddleware from "../middleware/empresa.middleware";
-
 class AuthMiddleware {
   constructor() {}
 
@@ -15,22 +13,19 @@ class AuthMiddleware {
         });
       }
 
-      await EmpresaMiddleware.empresaIdExists(request, reply);
-
       const { token } = request.headers;
 
-      const tokenValidation = prisma.usuario.findFirst({
+      const tokenValidation = await prisma.usuario.findFirst({
         where: { token },
       });
 
       if (!tokenValidation) {
-        return reply.code(400).send({
-          statusCode: 400,
-          error: "Bad Request",
+        reply.code(404).send({
+          statusCode: 404,
+          error: "Not Found",
           message: "Token não encontrado",
         });
       }
-
       request.empresa_id = tokenValidation.empresa_id;
     } catch (error) {
       request.log.error(error);

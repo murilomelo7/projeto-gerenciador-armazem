@@ -5,15 +5,6 @@ import UsuarioService from "../services/usuario.service";
 class UsuarioController {
   constructor() {}
 
-  async login(request, reply) {
-    try {
-      const { senha } = request.body.senha;
-    } catch (error) {
-      request.log.error(error);
-      reply.code(500).send(error);
-    }
-  }
-
   async create(request, reply) {
     try {
       request.body.senha = await UsuarioService.hashPassword(
