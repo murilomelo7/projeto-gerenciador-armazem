@@ -1,12 +1,15 @@
 import { z } from "zod";
 
 export const createSchema = z.object({
-  empresa_id: z.number().min(1),
   nome: z.string().min(1).max(128),
   descricao: z.string().max(256),
   categoria_id: z.number(),
   quantidade_produto: z.number(),
-  data_validade: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().optional(),
+  data_validade: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .nullable()
+    .optional(),
 });
 
 export const updateSchema = z.object({
@@ -14,5 +17,9 @@ export const updateSchema = z.object({
   descricao: z.string().max(256).optional(),
   categoria_id: z.number().optional(),
   quantidade_produto: z.number().optional(),
-  data_validade: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().optional(),
+  data_validade: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .nullable()
+    .optional(),
 });

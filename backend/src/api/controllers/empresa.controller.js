@@ -19,10 +19,10 @@ class EmpresaController {
     try {
       const { id } = request.params;
 
-      const empresa = await prisma.empresa.update({
-        data: request.body,
-        where: { id },
-      });
+      const data = request.body;
+      const where = { id };
+
+      const empresa = await prisma.empresa.update({ data, where });
 
       reply.code(200).send(empresa);
     } catch (error) {

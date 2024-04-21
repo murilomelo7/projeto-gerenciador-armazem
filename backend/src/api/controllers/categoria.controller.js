@@ -5,9 +5,8 @@ class CategoriaController {
 
   async create(request, reply) {
     try {
-      const categoria = await prisma.categoria.create({
-        data: request.body,
-      });
+      const data = request.body;
+      const categoria = await prisma.categoria.create({ data });
       reply.code(201).send(categoria);
     } catch (error) {
       request.log.error(error);
@@ -24,11 +23,8 @@ class CategoriaController {
         id,
         empresa_id,
       };
-
-      const categoria = await prisma.categoria.update({
-        data: request.body,
-        where,
-      });
+      const data = request.body;
+      const categoria = await prisma.categoria.update({ data, where });
 
       reply.code(200).send(categoria);
     } catch (error) {
@@ -48,9 +44,15 @@ class CategoriaController {
         empresa_id,
       };
 
-      const categoria = await prisma.categoria.findFirst({
-        where,
-      });
+      const categoria = await prisma.categoria.findFirst({ where });
+
+      if (!categoria) {
+        reply.code(404).send({
+          statusCode: 404,
+          error: "Not Found",
+          message: "Categoria não encontrada",
+        });
+      }
 
       reply.code(200).send(categoria);
     } catch (error) {
@@ -73,6 +75,14 @@ class CategoriaController {
       queryParams.id ? (where.id = queryParams.id) : undefined;
 
       const categorias = await prisma.categoria.findMany({ where });
+
+      if (!categorias) {
+        reply.code(404).send({
+          statusCode: 404,
+          error: "Not Found",
+          message: "Categorias não encontradas",
+        });
+      }
 
       reply.code(200).send(categorias);
     } catch (error) {

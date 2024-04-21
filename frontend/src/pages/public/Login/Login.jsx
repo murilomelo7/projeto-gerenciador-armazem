@@ -5,14 +5,23 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
+import api from "@/services/api";
+
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
 
-  const handleSubmit = () => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    const dados = { usuario, senha };
+    const request = await api.post("/login", dados);
 
-    
+    let token = null;
+
+    if (request.statusCode === "200") {
+      token = request.token;
+    }
+
+    console.log(token);
   };
 
   return (

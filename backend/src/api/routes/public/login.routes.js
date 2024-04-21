@@ -1,5 +1,5 @@
-import controller from "../controllers/login.controller";
-import middleware from "../middleware/login.middleware";
+import controller from "../../controllers/login.controller";
+import middleware from "../../middleware/login.middleware";
 
 class LoginRoutes {
   constructor() {}

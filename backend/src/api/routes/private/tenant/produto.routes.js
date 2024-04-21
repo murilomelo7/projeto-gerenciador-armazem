@@ -1,16 +1,17 @@
-import controller from "../controllers/perfil.controller";
-import middleware from "../middleware/perfil.middleware";
+import controller from "../../../controllers/produto.controller";
+import produtoMiddleware from "../../../middleware/produto.middleware";
+import authMiddleware from "../../../middleware/auth.middleware";
 
-class PerfilRoutes {
+class ProdutoRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post("/perfil", {
-      preHandler: middleware.create,
+    fastify.post("/produto", {
+      preHandler: produtoMiddleware.create,
       handler: controller.create,
     });
 
-    fastify.put("/perfil/:id", {
+    fastify.put("/produto/:id", {
       schema: {
         params: {
           type: "object",
@@ -21,11 +22,15 @@ class PerfilRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.update, middleware.perfilExists],
+      preHandler: [
+        authMiddleware.authToken,
+        produtoMiddleware.update,
+        produtoMiddleware.produtoExists,
+      ],
       handler: controller.update,
     });
 
-    fastify.get("/perfil/:id", {
+    fastify.get("/produto/:id", {
       schema: {
         params: {
           type: "object",
@@ -36,14 +41,16 @@ class PerfilRoutes {
           additionalProperties: false,
         },
       },
+      preHandler: [authMiddleware.authToken],
       handler: controller.findFirst,
     });
 
-    fastify.get("/perfil", {
+    fastify.get("/produto", {
+      preHandler: [authMiddleware.authToken],
       handler: controller.findMany,
     });
 
-    fastify.delete("/perfil/:id", {
+    fastify.delete("/produto/:id", {
       schema: {
         params: {
           type: "object",
@@ -54,10 +61,10 @@ class PerfilRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.perfilExists],
+      preHandler: [authMiddleware.authToken, produtoMiddleware.produtoExists],
       handler: controller.delete,
     });
   }
 }
 
-export default new PerfilRoutes();
+export default new ProdutoRoutes();

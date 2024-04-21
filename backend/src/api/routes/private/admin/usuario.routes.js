@@ -1,16 +1,18 @@
-import controller from "../controllers/empresa.controller";
-import middleware from "../middleware/empresa.middleware";
+import controller from "../../../controllers/usuario.controller";
+import usuarioMiddleware from "../../../middleware/usuario.middleware";
+import empresaMiddleware from "../../../middleware/empresa.middleware";
+import authMiddleware from "../../../middleware/auth.middleware";
 
-class EmpresaRoutes {
+class UsuarioRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post("/empresa", {
-      preHandler: middleware.create,
+    fastify.post("/usuario", {
+      preHandler: [usuarioMiddleware.create, empresaMiddleware.empresaIdExists],
       handler: controller.create,
     });
 
-    fastify.put("/empresa/:id", {
+    fastify.put("/usuario/:id", {
       schema: {
         params: {
           type: "object",
@@ -21,11 +23,11 @@ class EmpresaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.empresaExists, middleware.update],
+      preHandler: [usuarioMiddleware.update],
       handler: controller.update,
     });
 
-    fastify.get("/empresa/:id", {
+    fastify.get("/usuario/:id", {
       schema: {
         params: {
           type: "object",
@@ -36,15 +38,16 @@ class EmpresaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.empresaExists],
+      preHandler: [empresaMiddleware.empresaIdExists],
       handler: controller.findFirst,
     });
 
-    fastify.get("/empresa", {
+    fastify.get("/usuario", {
+      // preHandler: [empresaMiddleware.empresaIdExists],
       handler: controller.findMany,
     });
 
-    fastify.delete("/empresa/:id", {
+    fastify.delete("/usuario/:id", {
       schema: {
         params: {
           type: "object",
@@ -55,10 +58,13 @@ class EmpresaRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [middleware.empresaExists],
+      preHandler: [
+        usuarioMiddleware.usuarioExists,
+        // empresaMiddleware.empresaIdExists,
+      ],
       handler: controller.delete,
     });
   }
 }
 
-export default new EmpresaRoutes();
+export default new UsuarioRoutes();

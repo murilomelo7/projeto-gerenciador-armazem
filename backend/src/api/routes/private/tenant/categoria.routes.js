@@ -1,6 +1,6 @@
-import controller from "../controllers/categoria.controller";
-import categoriaMiddleware from "../middleware/categoria.middleware";
-import authMiddleware from "../middleware/auth.middleware";
+import controller from "../../../controllers/categoria.controller";
+import categoriaMiddleware from "../../../middleware/categoria.middleware";
+import authMiddleware from "../../../middleware/auth.middleware";
 
 class CategoriaRoutes {
   constructor() {}
@@ -23,6 +23,7 @@ class CategoriaRoutes {
         },
       },
       preHandler: [
+        authMiddleware.authToken,
         categoriaMiddleware.update,
         categoriaMiddleware.categoriaExists,
       ],
@@ -39,15 +40,8 @@ class CategoriaRoutes {
           required: ["id"],
           additionalProperties: false,
         },
-        querystring: {
-          type: "object",
-          properties: {
-            empresa_id: { type: "number" },
-          },
-          required: ["empresa_id"],
-          additionalProperties: false,
-        },
       },
+      preHandler: [authMiddleware.authToken],
       handler: controller.findFirst,
     });
 

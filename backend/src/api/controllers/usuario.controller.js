@@ -65,7 +65,7 @@ class UsuarioController {
         reply.code(404).send({
           statusCode: 404,
           error: "Not Found",
-          message: "Usuário não encontrado",
+          message: "Usuários não encontrados",
         });
       }
 

@@ -5,25 +5,15 @@ class ProdutoController {
 
   async create(request, reply) {
     try {
-      const {
-        nome,
-        empresa_id,
-        descricao,
-        categoria_id,
-        quantidade_produto,
-        data_validade,
-      } = request.body;
+      const empresa_id = request.empresa_id;
 
-      const produto = await prisma.produto.create({
-        data: {
-          nome,
-          empresa_id,
-          descricao,
-          categoria_id,
-          quantidade_produto,
-          data_validade: data_validade ? new Date(data_validade) : null,
-        },
-      });
+      const data_validade = request.body.data_validade
+        ? new Date(data_validade)
+        : null;
+
+      const data = { ...request.body, data_validade, empresa_id };
+
+      const produto = await prisma.produto.create({ data });
 
       reply.code(200).send(produto);
     } catch (error) {
@@ -35,28 +25,22 @@ class ProdutoController {
   async update(request, reply) {
     try {
       const { id } = request.params;
-      const {
-        nome,
+      const { empresa_id } = request.empresa_id;
+
+      const data_validade = request.body.data_validade
+        ? new Date(data_validade)
+        : null;
+
+      request.body = { ...request.body, data_validade };
+
+      const where = {
+        id,
         empresa_id,
-        descricao,
-        categoria_id,
-        quantidade_produto,
-        data_validade,
-      } = request.body;
+      };
 
       const produto = await prisma.produto.update({
-        data: {
-          nome,
-          empresa_id,
-          descricao,
-          categoria_id,
-          quantidade_produto,
-          data_validade: data_validade ? new Date(data_validade) : null,
-        },
-        where: {
-          id,
-          empresa_id,
-        },
+        data: request.body,
+        where,
       });
 
       reply.code(200).send(produto);
@@ -69,11 +53,14 @@ class ProdutoController {
   async findFirst(request, reply) {
     try {
       const { id } = request.params;
-      const { empresa_id } = request.query;
+      const { empresa_id } = request.empresa_id;
 
-      const produto = await prisma.produto.findFirst({
-        where: { id, empresa_id },
-      });
+      const where = {
+        id,
+        empresa_id,
+      };
+
+      const produto = await prisma.produto.findFirst({ where });
 
       reply.code(200).send(produto);
     } catch (error) {
@@ -84,11 +71,13 @@ class ProdutoController {
 
   async findMany(request, reply) {
     try {
-      const { empresa_id } = request.query;
+      const { empresa_id } = request.empresa_id;
 
-      const produtos = await prisma.produto.findMany({
-        where: empresa_id,
-      });
+      const where = {
+        empresa_id,
+      };
+
+      const produtos = await prisma.produto.findMany({ where });
 
       reply.code(200).send(produtos);
     } catch (error) {
@@ -100,11 +89,14 @@ class ProdutoController {
   async delete(request, reply) {
     try {
       const { id } = request.params;
-      const { empresa_id } = request.query;
+      const { empresa_id } = request.empresa_id;
 
-      await prisma.produto.delete({
-        where: { id, empresa_id },
-      });
+      const where = {
+        id,
+        empresa_id,
+      };
+
+      await prisma.produto.delete({ where });
 
       reply.code(200).send(produtos);
     } catch (error) {

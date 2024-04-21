@@ -2,12 +2,17 @@
 
 import Fastify from "fastify";
 
-import CategoriaRoutes from "./api/routes/categoria.routes";
-import EmpresaRoutes from "./api/routes/empresa.routes";
-import PerfilRoutes from "./api/routes/perfil.routes";
-import ProdutoRoutes from "./api/routes/produto.routes";
-import UsuarioRoutes from "./api/routes/usuario.routes";
-import LoginRoutes from "./api/routes/login.routes";
+//? Private Admin
+import EmpresaRoutes from "./api/routes/private/admin/empresa.routes";
+import PerfilRoutes from "./api/routes/private/admin/perfil.routes";
+import UsuarioRoutes from "./api/routes/private/admin/usuario.routes";
+
+//? Private Tenant
+import CategoriaRoutes from "./api/routes/private/tenant/categoria.routes";
+import ProdutoRoutes from "./api/routes/private/tenant/produto.routes";
+
+//? Public
+import LoginRoutes from "./api/routes/public/login.routes";
 
 const environment = "development";
 
