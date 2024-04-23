@@ -15,7 +15,7 @@ class LoginController {
 
       if (!usuarioValidation) {
         reply.code(404).send({
-          statusCode: 400,
+          statusCode: 404,
           error: "Not Found",
           message: "Usuário não encontrado",
         });

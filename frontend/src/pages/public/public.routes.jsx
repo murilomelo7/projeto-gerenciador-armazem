@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Login from "./Auth/Login";
+import Login from "./Login/Login";
 
 const PublicRoutes = () => {
   return (

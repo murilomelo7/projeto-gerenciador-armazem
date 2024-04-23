@@ -1,36 +1,72 @@
 {
-    "client": "Thunder Client",
+    "clientName": "Thunder Client",
     "collectionName": "RotasApiProjetoArmazem",
-    "dateExported": "2024-04-05T04:18:42.577Z",
-    "version": "1.1",
+    "collectionId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+    "dateExported": "2024-04-23T01:51:55.105Z",
+    "version": "1.2",
     "folders": [
         {
             "_id": "24545fa7-88aa-4391-976d-f614841092d0",
             "name": "Usuario",
-            "containerId": "",
+            "containerId": "bb551d1e-cb37-4439-a08f-0848ff2b0c3d",
             "created": "2024-04-01T07:38:58.400Z",
             "sortNum": 10000
         },
         {
             "_id": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
             "name": "Categoria",
-            "containerId": "",
+            "containerId": "6d17db15-0338-4546-8e8c-424132045506",
             "created": "2024-04-05T02:03:00.225Z",
-            "sortNum": 20000
+            "sortNum": 10000
+        },
+        {
+            "_id": "bb074ad2-e289-45e2-8741-552f3af50d31",
+            "name": "Login",
+            "containerId": "3be8a94f-11db-4506-a95a-ea8ebdabf349",
+            "created": "2024-04-21T05:07:47.292Z",
+            "sortNum": 10000
         },
         {
             "_id": "6feb10da-f10c-47d3-942f-eee47ec2afb2",
             "name": "Produto",
-            "containerId": "",
+            "containerId": "6d17db15-0338-4546-8e8c-424132045506",
             "created": "2024-04-05T02:03:07.129Z",
-            "sortNum": 30000
+            "sortNum": 20000
         },
         {
             "_id": "db69c852-4675-4384-b5f9-dd570abc7229",
             "name": "Empresa",
-            "containerId": "",
+            "containerId": "bb551d1e-cb37-4439-a08f-0848ff2b0c3d",
             "created": "2024-04-05T02:03:13.376Z",
-            "sortNum": 40000
+            "sortNum": 20000
+        },
+        {
+            "_id": "69dcd923-f403-4f7a-86fc-1020097b8b33",
+            "name": "Perfil",
+            "containerId": "bb551d1e-cb37-4439-a08f-0848ff2b0c3d",
+            "created": "2024-04-21T03:58:01.703Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "bb551d1e-cb37-4439-a08f-0848ff2b0c3d",
+            "name": "Admin",
+            "containerId": "",
+            "created": "2024-04-21T18:51:18.799Z",
+            "sortNum": 70000
+        },
+        {
+            "_id": "3be8a94f-11db-4506-a95a-ea8ebdabf349",
+            "name": "Public",
+            "containerId": "",
+            "created": "2024-04-21T18:51:49.276Z",
+            "sortNum": 80000
+        },
+        {
+            "_id": "6d17db15-0338-4546-8e8c-424132045506",
+            "name": "Tenant",
+            "containerId": "",
+            "created": "2024-04-21T18:52:21.667Z",
+            "sortNum": 90000
         }
     ],
     "requests": [
@@ -114,15 +150,25 @@
             "_id": "b0c9a100-757c-49e1-931a-7e445d15b195",
             "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
             "containerId": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
-            "name": "/categoria/:id",
-            "url": "{{api_local}}/categoria/1",
+            "name": "/categoria/:id?empresa_id=",
+            "url": "{{api_local}}/categoria/1?empresa_id=1",
             "method": "GET",
             "sortNum": 30000,
             "created": "2024-04-05T02:04:29.092Z",
-            "modified": "2024-04-05T02:39:13.751Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-04-21T02:51:47.913Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "teste"
+                }
+            ],
+            "params": [
+                {
+                    "name": "empresa_id",
+                    "value": "1",
+                    "isPath": false
+                }
+            ]
         },
         {
             "_id": "c9ffea87-d9d8-4f27-9c94-38879c9cb589",
@@ -142,15 +188,18 @@
             "_id": "f812f0c7-c83e-42ff-b952-c9e311566af0",
             "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
             "containerId": "de47e3ac-a2f8-48a5-8ed6-c2c098f341f5",
-            "name": "/categoria",
+            "name": "/categoria?empresa_id=",
             "url": "{{api_local}}/categoria",
             "method": "GET",
             "sortNum": 40000,
             "created": "2024-04-05T02:05:01.709Z",
-            "modified": "2024-04-05T02:05:06.144Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-04-21T06:00:54.800Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "eyJhbGciOiJIUzI1NiJ9.dGVzdGUudXN1YXJpbzEyMzQ1Ng.02RWh13k01XxXCoOxozbYdnXI6wkUl73Y9_zSUfSglU"
+                }
+            ]
         },
         {
             "_id": "b461a46d-f307-45ac-bd02-db504d451b7a",
@@ -165,6 +214,217 @@
             "headers": [],
             "params": [],
             "tests": []
+        },
+        {
+            "_id": "6256916d-a0e7-44cb-b4ac-0822dc8c4bb2",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "24545fa7-88aa-4391-976d-f614841092d0",
+            "name": "/usuario",
+            "url": "{{api_local}}/usuario",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-04-15T04:13:33.147Z",
+            "modified": "2024-04-21T05:06:39.120Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Teste Usuario\",\n  \"usuario\": \"teste.usuario\",\n  \"senha\": \"123456\",\n  \"email\": \"teste.usuario@email.com\",\n  \"cpf\": \"12345678910\",\n  \"perfil_id\": 1,\n  \"empresa_id\": 2\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "899f0e91-6742-4249-91b7-124c6f1422ec",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "24545fa7-88aa-4391-976d-f614841092d0",
+            "name": "/usuario/:id",
+            "url": "{{api_local}}/usuario/1",
+            "method": "PUT",
+            "sortNum": 65000,
+            "created": "2024-04-21T04:44:51.329Z",
+            "modified": "2024-04-21T04:45:09.170Z",
+            "headers": []
+        },
+        {
+            "_id": "6abeaf37-7b06-496b-884d-9f4fe0a4c3ce",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "24545fa7-88aa-4391-976d-f614841092d0",
+            "name": "/usuario/:id?empresa_id=",
+            "url": "{{api_local}}/usuario/1",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-04-15T04:13:51.143Z",
+            "modified": "2024-04-21T05:01:08.793Z",
+            "headers": []
+        },
+        {
+            "_id": "68916063-3825-49f1-93db-a01c4e59e794",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "db69c852-4675-4384-b5f9-dd570abc7229",
+            "name": "/empresa",
+            "url": "{{api_local}}/empresa",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-04-21T03:22:05.369Z",
+            "modified": "2024-04-21T05:04:10.595Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tipo\": \"J\",\n  \"cpfCnpj\": \"95529501000176\",\n  \"nome\": \"Empresa ADMIN\",\n  \"telefone\": \"999888777\",\n  \"email\": \"empresa.admin@teste.com\",\n  \"endereco\": \"Rua admin 234\",\n  \"cidade\": \"São Paulo\",\n  \"estado\": \"SP\",\n  \"cep\": \"05888-060\",\n  \"observacoes\": \"teste\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "06d203ba-e13a-4be6-be22-a77a56ba817a",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "69dcd923-f403-4f7a-86fc-1020097b8b33",
+            "name": "/perfil",
+            "url": "{{api_local}}/perfil",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-04-21T03:58:01.703Z",
+            "modified": "2024-04-21T05:04:54.989Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Cliente\",\n  \"acessos\": \"cliente\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "ac671ce4-de0c-4c38-95a3-7864fe3fc770",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "db69c852-4675-4384-b5f9-dd570abc7229",
+            "name": "/empresa/:id",
+            "url": "{{api_local}}/empresa/4",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2024-04-21T03:22:19.579Z",
+            "modified": "2024-04-21T04:36:31.343Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tipo\": \"J\",\n  \"cpfCnpj\": \"95529501000176\",\n  \"nome\": \"Empresa Teste\",\n  \"telefone\": \"999888777\",\n  \"email\": \"empresa.teste@teste.com\",\n  \"endereco\": \"Rua teste 234\",\n  \"cidade\": \"São Paulo\",\n  \"estado\": \"SP\",\n  \"cep\": \"05888-060\",\n  \"status\": \"ativo\",\n  \"observacoes\": \"teste\",\n  \"createdAt\": \"2024-04-21T03:45:48.366Z\",\n  \"updatedAt\": \"2024-04-21T03:45:48.366Z\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "ba58d397-5978-4240-bbc5-6dbe86f22420",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "db69c852-4675-4384-b5f9-dd570abc7229",
+            "name": "/empresa",
+            "url": "{{api_local}}/empresa",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-04-21T03:30:46.173Z",
+            "modified": "2024-04-21T03:31:12.290Z",
+            "headers": []
+        },
+        {
+            "_id": "298a7c95-6d6b-4e61-b6a2-e0866b59244e",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "69dcd923-f403-4f7a-86fc-1020097b8b33",
+            "name": "/perfil/:id",
+            "url": "{{api_local}}/perfil/1",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2024-04-21T03:58:01.704Z",
+            "modified": "2024-04-21T04:23:12.045Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Admin\",\n  \"acessos\": \"admin\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "72adf91d-f293-4df5-b565-bfc67d2a8876",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "db69c852-4675-4384-b5f9-dd570abc7229",
+            "name": "/empresa/:id",
+            "url": "{{api_local}}/empresa/1",
+            "method": "DELETE",
+            "sortNum": 95000,
+            "created": "2024-04-21T03:36:56.745Z",
+            "modified": "2024-04-21T03:37:13.886Z",
+            "headers": []
+        },
+        {
+            "_id": "8602764d-b16b-425b-a3a3-8a1420a1bb42",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "69dcd923-f403-4f7a-86fc-1020097b8b33",
+            "name": "/perfil",
+            "url": "{{api_local}}/perfil",
+            "method": "GET",
+            "sortNum": 97500,
+            "created": "2024-04-21T03:58:01.705Z",
+            "modified": "2024-04-21T03:59:19.038Z",
+            "headers": []
+        },
+        {
+            "_id": "f0d67db3-dae7-4432-9551-d1ecf3e3a890",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "db69c852-4675-4384-b5f9-dd570abc7229",
+            "name": "/empresa/:id",
+            "url": "{{api_local}}/empresa/1",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2024-04-21T03:22:22.123Z",
+            "modified": "2024-04-21T03:35:20.824Z",
+            "headers": []
+        },
+        {
+            "_id": "269f9161-67e5-43e4-bc1d-cd78a11d2cbd",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "69dcd923-f403-4f7a-86fc-1020097b8b33",
+            "name": "/perfil/:id",
+            "url": "{{api_local}}/perfil/3",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2024-04-21T03:58:01.707Z",
+            "modified": "2024-04-21T04:26:05.214Z",
+            "headers": []
+        },
+        {
+            "_id": "3d8a7a7b-a029-48d7-871b-5cc7f94f9876",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "69dcd923-f403-4f7a-86fc-1020097b8b33",
+            "name": "/perfil/:id",
+            "url": "{{api_local}}/perfil/3",
+            "method": "DELETE",
+            "sortNum": 110000,
+            "created": "2024-04-21T03:58:01.706Z",
+            "modified": "2024-04-21T04:26:14.196Z",
+            "headers": []
+        },
+        {
+            "_id": "312c2ef8-ec40-41cc-9915-cc8d50aa776e",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "24545fa7-88aa-4391-976d-f614841092d0",
+            "name": "/usuario?empresa_id=",
+            "url": "{{api_local}}/usuario",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-04-21T04:41:37.446Z",
+            "modified": "2024-04-21T18:52:44.531Z",
+            "headers": []
+        },
+        {
+            "_id": "19203940-7e85-4e9f-adfa-6645af742a01",
+            "colId": "3e0820ab-3084-48cd-874c-4123d82588a8",
+            "containerId": "bb074ad2-e289-45e2-8741-552f3af50d31",
+            "name": "/login",
+            "url": "{{api_local}}/login",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2024-04-21T05:07:54.290Z",
+            "modified": "2024-04-21T05:50:11.808Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"usuario\": \"teste.usuario\",\n  \"senha\": \"123456\"\n}",
+                "form": []
+            }
         }
-    ]
+    ],
+    "ref": "zdjbf09ye3fr6e0hW6HxTA2zt5HMv47K8Uykc_v7_fL9gZjr1nF6Mwi0Y7KBnmtyVL5JZuC9tkl1hB3ERSjymg"
 }

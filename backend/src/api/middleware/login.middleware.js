@@ -9,7 +9,6 @@ class LoginMiddleware {
   async login(request, reply) {
     try {
       const body = await validateRequestBodyPresence(request, reply);
-
       loginSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
