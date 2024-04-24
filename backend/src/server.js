@@ -1,6 +1,7 @@
 // server.js
 
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 
 //? Private Admin
 import EmpresaRoutes from "./api/routes/private/admin/empresa.routes";
@@ -30,6 +31,7 @@ const loggerConfig = () => {
     true;
   }
 };
+
 class Server {
   constructor() {
     this.fastify = Fastify({
@@ -39,6 +41,12 @@ class Server {
   }
 
   initializeRoutes() {
+    this.fastify.register(cors, {
+      origin: ["http://localhost:5173"],
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      credentials: true,
+    });
+
     //? Aqui inicializa as rotas
     LoginRoutes.registerRoutes(this.fastify);
     CategoriaRoutes.registerRoutes(this.fastify);
@@ -51,7 +59,8 @@ class Server {
   async start() {
     try {
       await this.fastify.listen({ port: 3000 });
-      this.fastify.log.info("Server is listening on port 3000");
+      this.fastify.log.info("Servidor esta na porta 3000");
+      this.fastify.log.info("Link: http://localhost:3000");
     } catch (error) {
       this.fastify.log.error(error);
       process.exit(1);
@@ -61,7 +70,7 @@ class Server {
   async close() {
     try {
       await this.fastify.close();
-      this.fastify.log.info("Server closed successfully");
+      this.fastify.log.info("Servidor fechado com sucesso");
     } catch (error) {
       this.fastify.log.error("Error closing server:", error);
       process.exit(1);

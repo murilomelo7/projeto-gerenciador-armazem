@@ -21,7 +21,11 @@ function Header() {
         <h1 className="text-white text-2xl">Armazém</h1>
       </div>
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-      <div className={`ml-64 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'transform translate-x-64' : ''}`}>
+      <div
+        className={`ml-64 transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? "transform translate-x-64" : ""
+        }`}
+      >
         {/* Conteúdo da página aqui */}
       </div>
     </header>

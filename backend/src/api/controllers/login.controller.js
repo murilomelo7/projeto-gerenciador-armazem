@@ -14,7 +14,7 @@ class LoginController {
       });
 
       if (!usuarioValidation) {
-        reply.code(404).send({
+        return reply.code(404).send({
           statusCode: 404,
           error: "Not Found",
           message: "Usuário não encontrado",
@@ -29,7 +29,7 @@ class LoginController {
       );
 
       if (!senhaValidation) {
-        reply.code(400).send({
+        return reply.code(400).send({
           statusCode: 400,
           error: "Bad Request",
           message: "Senha incorreta",

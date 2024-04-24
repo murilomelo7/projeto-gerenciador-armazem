@@ -5,20 +5,24 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-// import api from "@/services/api";
+// import logger from "@/lib/logger";
+import api from "@/services/api";
 
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
 
-  const handleSubmit = async () => {
-    // const dados = { usuario, senha };
-    // const request = await api.post("/login", dados);
-    // let token = null;
-    // if (request.statusCode === "200") {
-    //   token = request.token;
-    // }
-    // console.log(token);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const dados = { usuario, senha };
+
+    try {
+      const response = await api.post("login", dados);
+      console.log(response);
+      alert(response.data.token); // Assumindo que a resposta possui uma propriedade "data" com a informação desejada
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+    }
   };
 
   return (
