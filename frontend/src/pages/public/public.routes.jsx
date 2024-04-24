@@ -7,13 +7,15 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Inicio from "./Login/Inicio";
+import Inicio from "./Inicio/Inicio";
+import Login from "./Login/Login";
 
 const PublicRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/inicio" element={<Inicio />} />
+        <Route path="/" element={<Inicio />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
