@@ -7,13 +7,13 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Login from "./Login/Login";
+import Inicio from "./Login/Inicio";
 
 const PublicRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/inicio" element={<Inicio />} />
       </Routes>
     </BrowserRouter>
   );
