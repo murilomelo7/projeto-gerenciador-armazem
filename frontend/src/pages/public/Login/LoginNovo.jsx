@@ -6,6 +6,12 @@ import '/src/pages/public/Inicio/inicioNovo.css';
 import './loginNovo.css';
 
 const LoginNovo = () => {
+
+  function desactive(){
+    var mainElement = document.querySelector('.container');
+  mainElement.classList.remove('active'); 
+  }
+  
   useEffect(() => {
     const hamburger_menu = document.querySelector(".hamburger-menu");
     const container = document.querySelector(".container");
@@ -47,7 +53,7 @@ const LoginNovo = () => {
       </div>
 
       <div className="main-container">
-        <div className="main">
+        <div className="main" onClick={desactive}>
           <header>
             <div className="overlay">
               <div className="inner">

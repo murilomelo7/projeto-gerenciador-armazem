@@ -7,6 +7,11 @@ import { Label } from "@/components/ui/label";
 
 // import api from "@/services/api";
 
+function desactive(){
+    var mainElement = document.querySelector('.container');
+  mainElement.classList.remove('active'); 
+  }
+
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");

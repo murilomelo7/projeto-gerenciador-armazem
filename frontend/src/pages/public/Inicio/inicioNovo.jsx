@@ -4,12 +4,17 @@ import { Link } from "react-router-dom";
 import './inicioNovo.css';
 
 const InicioNovo = () => {
+  function desactive(){
+    var mainElement = document.querySelector('.container');
+  mainElement.classList.remove('active');
+  }
+
   useEffect(() => {
     const hamburger_menu = document.querySelector(".hamburger-menu");
     const container = document.querySelector(".container");
 
     const toggleMenu = () => {
-      container.classList.toggle("active");
+      container.classList.toggle("active"); 
     };
 
     hamburger_menu.addEventListener("click", toggleMenu);
@@ -31,10 +36,10 @@ const InicioNovo = () => {
       </div>
 
       <div className="main-container">
-        <div className="main">
+        <div className="main" onClick={desactive}>
           <header>
             <div className="overlay">
-              <div className="inner">
+              <div className="inner" >
                 <h2 className="title">O Futuro está conosco!</h2>
                 <p>
                   Junte-se ao maior sistema de estoque online do momento. Esta preparado?
