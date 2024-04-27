@@ -1,17 +1,16 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import '/src/pages/public/Inicio/inicioNovo.css';
-import './loginNovo.css';
+import "/src/pages/public/Inicio/inicioNovo.css";
+import "./loginNovo.css";
 
 const LoginNovo = () => {
-
-  function desactive(){
-    var mainElement = document.querySelector('.container');
-  mainElement.classList.remove('active'); 
+  function desactive() {
+    var mainElement = document.querySelector(".container");
+    mainElement.classList.remove("active");
   }
-  
+
   useEffect(() => {
     const hamburger_menu = document.querySelector(".hamburger-menu");
     const container = document.querySelector(".container");
@@ -42,10 +41,15 @@ const LoginNovo = () => {
 
   return (
     <div className="container">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+      <link
+        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        rel="stylesheet"
+      />
       <div className="navbar">
         <div className="menu">
-          <h3 className="logo">NandeRellis <span>StockSolutions</span></h3>
+          <h3 className="logo">
+            NandeRellis <span>StockSolutions</span>
+          </h3>
           <div className="hamburger-menu">
             <div className="bar"></div>
           </div>
@@ -58,22 +62,35 @@ const LoginNovo = () => {
             <div className="overlay">
               <div className="inner">
                 <div className="wrapper">
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <h1>Login</h1>
-                            <div className="input-box">
-                                <input type="text" placeholder="Insira seu usuário" value={usuario} onChange={(e) => setUsuario(e.target.value)}/>
-                                <i className='bx bxs-user'></i>
-                            </div>
+                  <form onSubmit={handleSubmit}>
+                    <div>
+                      <h1>Login</h1>
+                      <div className="input-box">
+                        <input
+                          type="text"
+                          placeholder="Insira seu usuário"
+                          value={usuario}
+                          onChange={(e) => setUsuario(e.target.value)}
+                        />
+                        <i className="bx bxs-user"></i>
+                      </div>
 
-                            <div className="input-box">
-                                <input type="password" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
-                                <i className='bx bxs-lock-alt' ></i>
-                            </div>
+                      <div className="input-box">
+                        <input
+                          type="password"
+                          placeholder="Insira sua senha"
+                          value={senha}
+                          onChange={(e) => setSenha(e.target.value)}
+                        />
+                        <i className="bx bxs-lock-alt"></i>
+                        fkgdkfg
+                      </div>
 
-                            <button type="submit" className="btn">Login</button>
-                        </div>
-                    </form>
+                      <button type="submit" className="btn">
+                        Login
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -87,16 +104,24 @@ const LoginNovo = () => {
       <div className="links">
         <ul>
           <li>
-            <Link to="/" style={{'--i': '0.1s'}}>Home</Link>
+            <Link to="/" style={{ "--i": "0.1s" }}>
+              Home
+            </Link>
           </li>
           <li>
-            <a href="servicos.html" style={{'--i': '0.15s'}}>Serviços</a>
+            <a href="servicos.html" style={{ "--i": "0.15s" }}>
+              Serviços
+            </a>
           </li>
           <li>
-            <a href="contato.html" style={{'--i': '0.2s'}}>Contato</a>
+            <a href="contato.html" style={{ "--i": "0.2s" }}>
+              Contato
+            </a>
           </li>
           <li>
-            <a href="sobre.html" style={{'--i': '0.25s'}}>Sobre</a>
+            <a href="sobre.html" style={{ "--i": "0.25s" }}>
+              Sobre
+            </a>
           </li>
         </ul>
       </div>
