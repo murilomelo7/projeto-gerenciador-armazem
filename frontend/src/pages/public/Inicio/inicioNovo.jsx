@@ -44,7 +44,9 @@ const InicioNovo = () => {
                 <p>
                   Junte-se ao maior sistema de estoque online do momento. Esta preparado?
                 </p>
-                <button className="btn">Inscreva-se</button>
+                <Link to="/registrar">
+                   <button className="btn">Inscreva-se</button>
+                </Link>
               </div>
             </div>
           </header>
