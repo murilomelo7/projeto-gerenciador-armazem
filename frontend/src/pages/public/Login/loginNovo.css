@@ -1,7 +1,8 @@
 .wrapper{
     width: 420px;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
+    border: 2px solid #ff7e5f;
+    box-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
     color: #fff;
     border-radius: 10px;
     padding: 30px 40px;

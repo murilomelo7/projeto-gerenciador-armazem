@@ -9,8 +9,9 @@ import {
 // import Login from "./Login/Login";
 import InicioNovo from "./Inicio/inicioNovo";
 import LoginNovo from "./Login/LoginNovo";
-import Registrar from "./Registrar/RegistrarTela";
+import Contato from "./Contato/contatoTela";
 import Sobre from "./Sobre/SobreTela";
+import ContatoResp from "./Contato/contatoResp";
 
 const PublicRoutes = () => {
 
@@ -21,7 +22,8 @@ const PublicRoutes = () => {
         <Route path="/" element={<InicioNovo />} />
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/login" element={<LoginNovo />} />
-        <Route path="/registrar" element={<Registrar />} />
+        <Route path="/resposta" element={<ContatoResp />} />
+        <Route path="/contato" element={<Contato />} />
         <Route path="/sobre" element={<Sobre />} />
       </Routes>
     </BrowserRouter>

@@ -8,8 +8,9 @@
   width: 100%;
   max-width: 820px;
   background-color: transparent; 
-  border-radius: 10px;
-  box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.2); 
+  border-radius: 20px;
+  border: 2px solid #ff7e5f;
+  box-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
   z-index: 1000;
   overflow: hidden;
   display: grid;
@@ -21,6 +22,7 @@
   text-align: center;
   color: #fff; 
   padding: 0 2rem;
+  
 }
 
 .subcontainer .contact-form {
@@ -28,32 +30,12 @@
   position: relative;
 }
 
-/* .subcontainer .circle {
-  border-radius: 50%;
-  background: linear-gradient(135deg, transparent 20%, #023579);
-  position: absolute;
-}
-
-.subcontainer .circle.one {
-  width: 130px;
-  height: 130px;
-  top: 130px;
-  right: -40px;
-}
-
-.subcontainer .circle.two {
-  width: 80px;
-  height: 80px;
-  top: 10px;
-  right: 30px;
-} */
-
 .subcontainer .contact-form:before {
   content: "";
   position: absolute;
   width: 26px;
   height: 26px;
-  background-color: #79898f;
+  background-color: #ffffff;
   transform: rotate(45deg);
   top: 50px;
   left: -13px;
@@ -122,7 +104,7 @@
 
 .subcontainer .btn {
   padding: 0.6rem 1.3rem;
-  background-color: transparent; 
+  background-color: #1179e7; 
   border: 2px solid rgba(255, 255, 255, 0.2); 
   font-size: 0.95rem;
   color: #fff; 
@@ -132,11 +114,6 @@
   cursor: pointer;
   transition: 0.3s;
   margin: 0;
-}
-
-.subcontainer .btn:hover {
-  background-color: #fff; 
-  color: #1a38bc; 
 }
 
 .subcontainer .input-container span {
@@ -191,7 +168,7 @@
 }
 
 .subcontainer .contact-info .title {
-  color: #0e26fa; 
+  color: #ffffff; 
 }
 
 .subcontainer .text {
@@ -238,7 +215,7 @@
 }
 
 .subcontainer .social-icons a:hover {
-  transform: scale(1.05);
+  transform: scale(1.15);
 }
 
 .subcontainer .contact-info:before {

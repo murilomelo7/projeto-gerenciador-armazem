@@ -3,16 +3,39 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { Link } from 'react-router-dom';
 import '/src/pages/public/Inicio/inicioNovo.css';
-import './registrarStyle.css'
-import './registrarApp'
+import './contatoStyle.css'
 
 
-const Registrar = () => {
+
+
+const Contato = () => {
 
 function desactive(){
   var mainElement = document.querySelector('.container');
 mainElement.classList.remove('active');
 }
+
+useEffect(() => {
+  const inputs = document.querySelectorAll(".input");
+
+function focusFunc() {
+  let parent = this.parentNode;
+  parent.classList.add("focus");
+}
+
+function blurFunc() {
+  let parent = this.parentNode;
+  if (this.value == "") {
+    parent.classList.remove("focus");
+  }
+}
+
+inputs.forEach((input) => {
+  input.addEventListener("focus", focusFunc);
+  input.addEventListener("blur", blurFunc);
+});
+
+})
 
 useEffect(() => {
   const hamburger_menu = document.querySelector(".hamburger-menu");
@@ -51,9 +74,9 @@ useEffect(() => {
                     <img src="/src/assets/extra.png" className="square" alt="" /> */}
                     <div className="form">
                       <div className="contact-info">
-                        <h3 className="title">Como nos encontrar?</h3>
+                        <h3 className="title">Está com problemas?</h3>
                         <p className="text">
-                          Não perca tempo, junte-se a nós e ganhe mais tempo e rendimento!
+                          Não oferecemos suporte! Se der bigode o problema é seu.
                         </p>
 
                         <div className="info">
@@ -95,28 +118,15 @@ useEffect(() => {
                         <span className="circle two"></span>
 
                         <form action="index.html" autoComplete="off">
-                          <h3 className="title">Registre-se</h3>
-                          <div className="input-container">
-                            <input type="text" name="name" className="input" />
-                            <label >Nome</label>
-                            <span>Nome</span>
-                          </div>
-                          <div className="input-container">
-                            <input type="email" name="email" className="input" />
-                            <label >Email</label>
-                            <span>Email</span>
-                          </div>
-                          <div className="input-container">
-                            <input type="tel" name="phone" className="input" />
-                            <label >Telefone</label>
-                            <span>Telefone</span>
-                          </div>
+                          <h3 className="title">Digite aqui sua dúvida</h3>
                           <div className="input-container textarea">
                             <textarea name="message" className="input"></textarea>
-                            <label >Empresa</label>
-                            <span>Empresa</span>
+                            <label >Duvida</label>
+                            <span>Duvida</span>
                           </div>
-                          <input type="submit" value="Enviar" className="btn" />
+                          <Link to="/resposta">
+                              <button className="btn">Enviar</button>
+                          </Link>
                         </form>
                       </div>
                     </div>
@@ -139,10 +149,7 @@ useEffect(() => {
               <Link to="/login" style={{'--i': '0.1s'}}>Login</Link>
             </li>
             <li>
-              <a href="servicos.html" style={{'--i': '0.15s'}}>Serviços</a>
-            </li>
-            <li>
-              <a href="contato.html" style={{'--i': '0.2s'}}>Contato</a>
+              <a href="" style={{'--i': '0.15s'}}>Serviços</a>
             </li>
             <li>
               <Link to="/sobre" style={{'--i': '0.1s'}}>Sobre</Link>
@@ -153,4 +160,4 @@ useEffect(() => {
     );
 };
 
-export default Registrar;
+export default Contato;

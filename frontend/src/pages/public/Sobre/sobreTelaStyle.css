@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+
 .containersobre * {
     margin: 0;
     padding: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .containersobre {
@@ -21,6 +24,13 @@
     color: rgb(24, 8, 248);
 } */
 
+/* .containersobre {
+    min-height: 100vh;
+    width: 100%;
+    background: url("/src/assets/Planejamento-de-estoque.png") no-repeat top center / cover;
+    position: relative;
+  } */
+
 .containersobre .subcontaineir {
     max-width: 100%;
     margin: auto;
@@ -35,12 +45,23 @@
     padding: 22px;
     max-width: 40%;
     cursor: pointer;
-    transition: 0.4s;
+    transition: 0.6s;
+    box-sizing: border-box;
+    border: 2px solid #ff7e5f;
+    box-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
+}
+
+.containersobre .time {
+    margin: 10px;
+    padding: 22px;
+    max-width: 40%;
+    cursor: pointer;
+    transition: 0.6s;
     box-sizing: border-box;
 }
 
 .containersobre .time:hover {
-    transform: scale(1.1);
+    transform: scale(1.03);
 }
 
 .containersobre .time img {
@@ -75,11 +96,11 @@
     display: inline-block;
     height: 30px;
     width: 30px;
-    transition: .4s;
+    transition: .3s;
 }
 
 .containersobre .redessociais a:hover {
-    transform: scale(1.5);
+    transform: scale(1.8);
 }
 
 .containersobre .redessociais a i {

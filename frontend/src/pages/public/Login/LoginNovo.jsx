@@ -93,7 +93,7 @@ const LoginNovo = () => {
             <a href="servicos.html" style={{'--i': '0.15s'}}>Serviços</a>
           </li>
           <li>
-            <a href="contato.html" style={{'--i': '0.2s'}}>Contato</a>
+            <Link to="/contato" style={{'--i': '0.1s'}}>Contato</Link>
           </li>
           <li>
             <Link to="/sobre" style={{'--i': '0.1s'}}>Sobre</Link>
