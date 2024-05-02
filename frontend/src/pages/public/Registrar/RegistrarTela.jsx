@@ -145,7 +145,7 @@ useEffect(() => {
               <a href="contato.html" style={{'--i': '0.2s'}}>Contato</a>
             </li>
             <li>
-              <a href="sobre.html" style={{'--i': '0.25s'}}>Sobre</a>
+              <Link to="/sobre" style={{'--i': '0.1s'}}>Sobre</Link>
             </li>
           </ul>
         </div>

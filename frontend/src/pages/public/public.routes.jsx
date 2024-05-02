@@ -10,6 +10,7 @@ import {
 import InicioNovo from "./Inicio/inicioNovo";
 import LoginNovo from "./Login/LoginNovo";
 import Registrar from "./Registrar/RegistrarTela";
+import Sobre from "./Sobre/SobreTela";
 
 const PublicRoutes = () => {
 
@@ -21,6 +22,7 @@ const PublicRoutes = () => {
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/login" element={<LoginNovo />} />
         <Route path="/registrar" element={<Registrar />} />
+        <Route path="/sobre" element={<Sobre />} />
       </Routes>
     </BrowserRouter>
   );
