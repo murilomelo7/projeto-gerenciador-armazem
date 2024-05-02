@@ -9,7 +9,7 @@
     background: transparent;
 }
 
-.containersobre header {
+/* .containersobre header {
     padding-top: 60px;
     color: #444;
     font-size: 20px;
@@ -17,8 +17,12 @@
     line-height: 50px;
 }
 
+.containersobre .header h1 {
+    color: rgb(24, 8, 248);
+} */
+
 .containersobre .subcontaineir {
-    max-width: 1200px;
+    max-width: 100%;
     margin: auto;
     padding: 48px 0;
     display: flex;
@@ -29,7 +33,7 @@
 .containersobre .time {
     margin: 10px;
     padding: 22px;
-    max-width: 30%;
+    max-width: 40%;
     cursor: pointer;
     transition: 0.4s;
     box-sizing: border-box;
@@ -46,6 +50,7 @@
 
 .containersobre .nome {
     padding: 12px;
+    color: white;
     font-weight: bold;
     font-size: 16px;
     text-transform: uppercase;
@@ -53,13 +58,13 @@
 
 .containersobre .area {
     font-style: italic;
-    color: #999;
+    color: #08f5f5;
 }
 
 .containersobre .infosobre {
     margin: 20px 0;
     font-weight: lighter;
-    color: #4e4e4e;
+    color: #ffffff;
 }
 
 .containersobre .redessociais {
@@ -78,6 +83,6 @@
 }
 
 .containersobre .redessociais a i {
-    color: #444;
+    color: #2904fd;
 
 }

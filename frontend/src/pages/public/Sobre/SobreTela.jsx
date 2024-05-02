@@ -45,9 +45,9 @@ const Sobre = () => {
             <header>
               <div className="overlay">
         <div className="containersobre">
-            <div className="header">
+            {/* <div className="header">
                 <h1>Nosso time</h1>
-            </div>
+            </div> */}
             <div className="subcontaineir">
                 <div className="time">
                     <img src="/src/assets/fernando.jpeg" />
