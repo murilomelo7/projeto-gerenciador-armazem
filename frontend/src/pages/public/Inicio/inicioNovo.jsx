@@ -40,6 +40,7 @@ const InicioNovo = () => {
           <header>
             <div className="overlay">
               <div className="inner" >
+                <div className="innerajustado">
                 <h2 className="title">O Futuro está conosco!</h2>
                 <p>
                   Junte-se ao maior sistema de estoque online do momento. Esta preparado?
@@ -47,6 +48,7 @@ const InicioNovo = () => {
                 <Link to="/registrar">
                    <button className="btn">Inscreva-se</button>
                 </Link>
+                </div>
               </div>
             </div>
           </header>
