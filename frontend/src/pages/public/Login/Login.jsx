@@ -1,18 +1,32 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import '/src/pages/public/Inicio/inicioNovo.css';
+import './Login.css';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+const LoginNovo = () => {
 
-// import api from "@/services/api";
-
-function desactive(){
+  function desactive(){
     var mainElement = document.querySelector('.container');
   mainElement.classList.remove('active'); 
   }
+  
+  useEffect(() => {
+    const hamburger_menu = document.querySelector(".hamburger-menu");
+    const container = document.querySelector(".container");
 
-const Login = () => {
+    const toggleMenu = () => {
+      container.classList.toggle("active");
+    };
+
+    hamburger_menu.addEventListener("click", toggleMenu);
+
+    return () => {
+      hamburger_menu.removeEventListener("click", toggleMenu);
+    };
+  }, []);
+
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -27,43 +41,67 @@ const Login = () => {
   };
 
   return (
-    <main className="h-screen flex w-full">
-      <div className="flex items-center justify-center bg-slate-50 h-screen w-screen">
-        <Card className="w-96 h-96">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">
-              Entre com sua conta
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <Label>Usuário</Label>
-                <Input
-                  placeholder="Insira seu usuário"
-                  type="text"
-                  value={usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
-                ></Input>
-              </div>
-              <div className="mt-4">
-                <Label>Senha</Label>
-                <Input
-                  placeholder="Insira sua senha"
-                  type="password"
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                ></Input>
-              </div>
-              <Button type="submit" className="mt-6 w-full">
-                Entrar
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+    <div className="container">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+      <div className="navbar">
+        <div className="menu">
+          <h3 className="logo">NandeRellis <span>StockSolutions</span></h3>
+          <div className="hamburger-menu">
+            <div className="bar"></div>
+          </div>
+        </div>
       </div>
-    </main>
+
+      <div className="main-container">
+        <div className="main" onClick={desactive}>
+          <header>
+            <div className="overlay">
+              <div className="inner">
+                <div className="wrapper">
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <h1>Login</h1>
+                            <div className="input-box">
+                                <input type="text" placeholder="Insira seu usuário" value={usuario} onChange={(e) => setUsuario(e.target.value)}/>
+                                <i className='bx bxs-user'></i>
+                            </div>
+
+                            <div className="input-box">
+                                <input type="password" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
+                                <i className='bx bxs-lock-alt' ></i>
+                            </div>
+
+                            <button type="submit" className="btn">Login</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </header>
+        </div>
+
+        <div className="shadow one"></div>
+        <div className="shadow two"></div>
+      </div>
+
+      <div className="links">
+        <ul>
+          <li>
+            <Link to="/" style={{'--i': '0.1s'}}>Home</Link>
+          </li>
+          <li>
+            <a href="servicos.html" style={{'--i': '0.15s'}}>Serviços</a>
+          </li>
+          <li>
+            <Link to="/contato" style={{'--i': '0.1s'}}>Contato</Link>
+          </li>
+          <li>
+            <Link to="/sobre" style={{'--i': '0.1s'}}>Sobre</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 };
 
-export default Login;
+export default LoginNovo;

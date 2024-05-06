@@ -8,7 +8,7 @@ import {
 // import Inicio from "./Inicio/Inicio";
 // import Login from "./Login/Login";
 import InicioNovo from "./Inicio/inicioNovo";
-import LoginNovo from "./Login/LoginNovo";
+import LoginNovo from "./Login/Login";
 import Contato from "./Contato/contatoTela";
 import Sobre from "./Sobre/SobreTela";
 import ContatoResp from "./Contato/contatoResp";

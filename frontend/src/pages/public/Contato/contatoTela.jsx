@@ -62,6 +62,7 @@ useEffect(() => {
               <div className="bar"></div>
             </div>
           </div>
+          
         </div>
 
         <div className="main-container">
@@ -121,8 +122,8 @@ useEffect(() => {
                           <h3 className="title">Digite aqui sua dúvida</h3>
                           <div className="input-container textarea">
                             <textarea name="message" className="input"></textarea>
-                            <label >Duvida</label>
-                            <span>Duvida</span>
+                            <label >Dúvida</label>
+                            <span>Dúvida</span>
                           </div>
                           <Link to="/resposta">
                               <button className="btn">Enviar</button>
