@@ -23,3 +23,11 @@ export const updateSchema = z.object({
     .nullable()
     .optional(),
 });
+
+export const entradaSchema = z.object({
+
+});
+
+export const saidaSchema = z.object({
+
+});

@@ -1,7 +1,7 @@
 import prisma from "../../database/PrismaService";
 
 import { validateRequestBodyPresence } from "./body.middleware";
-import { createSchema, updateSchema } from "../schema/produto.schema";
+import { createSchema, updateSchema, entradaSchema, saidaSchema } from "../schema/produto.schema";
 
 class ProdutoMiddleware {
   constructor() {}
@@ -9,7 +9,6 @@ class ProdutoMiddleware {
   async create(request, reply) {
     try {
       const body = await validateRequestBodyPresence(request, reply);
-
       createSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
@@ -29,6 +28,35 @@ class ProdutoMiddleware {
       updateSchema.parse(body);
     } catch (error) {
       request.log.warn(error);
+      return reply.code(400).send({
+        statusCode: 400,
+        error: "Bad Request",
+        message: "Dados inválidos",
+        details: error.errors,
+      });
+    }
+  }
+
+  async entrada(request, reply){
+    try {
+      const body = await validateRequestBodyPresence(request, reply);
+      await entradaSchema.validate(body);
+    } catch (error) {
+      request.log.warn(error);
+      return reply.code(400).send({
+        statusCode: 400,
+        error: "Bad Request",
+        message: "Dados inválidos",
+        details: error.errors,
+      });
+    }
+  }
+
+  async saida(request, reply){
+    try {
+      const body = await validateRequestBodyPresence(request, reply);
+      await saidaSchema.validate(body);
+    } catch (error) {
       return reply.code(400).send({
         statusCode: 400,
         error: "Bad Request",
@@ -89,6 +117,7 @@ class ProdutoMiddleware {
       });
     }
   }
+
 }
 
 export default new ProdutoMiddleware();

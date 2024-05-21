@@ -104,6 +104,22 @@ class ProdutoController {
       reply.code(500).send(error);
     }
   }
+
+  async entrada(request, reply){
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+  async saida(request, reply){
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
 }
 
 export default new ProdutoController();
