@@ -2,8 +2,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import "/src/pages/public/Inicio/inicioNovo.css";
-import "./loginNovo.css";
+import "./styles.css";
 
 const LoginNovo = () => {
   function desactive() {
@@ -58,7 +57,7 @@ const LoginNovo = () => {
 
       <div className="main-container">
         <div className="main" onClick={desactive}>
-          <header>
+          <header className="header-inicio">
             <div className="overlay">
               <div className="inner">
                 <div className="wrapper">
@@ -83,7 +82,6 @@ const LoginNovo = () => {
                           onChange={(e) => setSenha(e.target.value)}
                         />
                         <i className="bx bxs-lock-alt"></i>
-                        fkgdkfg
                       </div>
 
                       <button type="submit" className="btn">

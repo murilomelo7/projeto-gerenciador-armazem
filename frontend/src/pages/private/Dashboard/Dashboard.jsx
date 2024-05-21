@@ -1,14 +1,11 @@
-import { Header } from "@radix-ui/react-accordion";
-import { NavigationMenuSub } from "@radix-ui/react-navigation-menu";
-import { Layout } from "lucide-react";
+import Layout from "@/components/Layout";
+import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-      <Layout>
-        <div>
-          testeaaaaaaaaaa
-        </div>
-      </Layout>
+    <Layout>
+      <h1>Dashboard</h1>
+    </Layout>
   );
 };
 

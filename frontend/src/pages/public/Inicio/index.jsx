@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import './inicioNovo.css';
+import "./styles.css";
 
 const InicioNovo = () => {
-  function desactive(){
-    var mainElement = document.querySelector('.container');
-  mainElement.classList.remove('active');
+  function desactive() {
+    var mainElement = document.querySelector(".container");
+    mainElement.classList.remove("active");
   }
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const InicioNovo = () => {
     const container = document.querySelector(".container");
 
     const toggleMenu = () => {
-      container.classList.toggle("active"); 
+      container.classList.toggle("active");
     };
 
     hamburger_menu.addEventListener("click", toggleMenu);
@@ -28,7 +28,9 @@ const InicioNovo = () => {
     <div className="container">
       <div className="navbar">
         <div className="menu">
-          <h3 className="logo">NandeRellis <span>StockSolutions</span></h3>
+          <h3 className="logo">
+            NandeRellis <span>StockSolutions</span>
+          </h3>
           <div className="hamburger-menu">
             <div className="bar"></div>
           </div>
@@ -37,12 +39,13 @@ const InicioNovo = () => {
 
       <div className="main-container">
         <div className="main" onClick={desactive}>
-          <header>
+          <header className="header-inicio">
             <div className="overlay">
-              <div className="inner" >
+              <div className="inner">
                 <h2 className="title">O Futuro está conosco!</h2>
                 <p>
-                  Junte-se ao maior sistema de estoque online do momento. Esta preparado?
+                  Junte-se ao maior sistema de estoque online do momento. Esta
+                  preparado?
                 </p>
                 <button className="btn">Inscreva-se</button>
               </div>
@@ -57,16 +60,24 @@ const InicioNovo = () => {
       <div className="links">
         <ul>
           <li>
-            <Link to="/login" style={{'--i': '0.1s'}}>Login</Link>
+            <Link to="/login" style={{ "--i": "0.1s" }}>
+              Login
+            </Link>
           </li>
           <li>
-            <a href="servicos.html" style={{'--i': '0.15s'}}>Serviços</a>
+            <a href="servicos.html" style={{ "--i": "0.15s" }}>
+              Serviços
+            </a>
           </li>
           <li>
-            <a href="contato.html" style={{'--i': '0.2s'}}>Contato</a>
+            <a href="contato.html" style={{ "--i": "0.2s" }}>
+              Contato
+            </a>
           </li>
           <li>
-            <a href="sobre.html" style={{'--i': '0.25s'}}>Sobre</a>
+            <a href="sobre.html" style={{ "--i": "0.25s" }}>
+              Sobre
+            </a>
           </li>
         </ul>
       </div>
