@@ -8,7 +8,7 @@
   border: 2px solid #020817;
   border-radius: 10px;
   margin: 10px;
-  width: 100%; /* 100% da largura da viewport */
+  width: 99%; /* 100% da largura da viewport */
   height: 100%; /* 100% da altura da viewport */
   display: flex;
   flex-direction: column;
