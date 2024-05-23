@@ -1,11 +1,10 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Layout/Layout";
 import React from "react";
+
 
 const EmpresaForm = () => {
   return (
-    <Layout>
-      <div>EmpresaForm</div>
-    </Layout>
+    <div>EmpresaForm</div>
   );
 };
 

@@ -4,7 +4,6 @@
 
 /* Estilos para o componente Layout */
 .container-empresa {
-  background-color: #ddd;
   border: 2px solid #020817;
   border-radius: 10px;
   margin: 10px;
@@ -15,10 +14,21 @@
 }
 
 .title {
-  font-size: 24px;
+  font-size: 10px;
   padding: 6px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+}
+
+.filters input {
+  height: 30px;
+  width: 100px;
 }
 .panel-heading {
   background-color: #777676;
@@ -40,6 +50,7 @@
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .btn-novo:hover {

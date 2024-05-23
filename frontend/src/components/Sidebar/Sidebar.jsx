@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Home, User, Building } from "lucide-react";
-import "./styles.css"; // Adicione estilos CSS para o Sidebar
+import "./Sidebar.css"; // Adicione estilos CSS para o Sidebar
 
 const Sidebar = ({ isOpen }) => {
   return (

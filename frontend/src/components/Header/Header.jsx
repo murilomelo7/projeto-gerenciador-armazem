@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.css"; // Adicione estilos CSS para o Header
+import "./Header.css"; // Adicione estilos CSS para o Header
 
 const Header = ({ children }) => {
   return (
