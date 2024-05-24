@@ -13,6 +13,8 @@ const SidenavArmazem = ({
 }) => {
   const navigate = useNavigate();
 
+  const perfil = 'admin';
+
   const handleSelect = (eventKey) => {
     switch (eventKey) {
       case "1":
@@ -37,9 +39,12 @@ const SidenavArmazem = ({
         <Sidenav.Toggle onToggle={onExpand} />
         <Sidenav.Body style={{ height: "90vh" }}>
           <Nav {...navProps} onSelect={handleSelect}>
+            {perfil === 'asmin' &&
             <Nav.Item eventKey="1" active icon={<DashboardIcon />}>
-              Dashboard
-            </Nav.Item>
+            Dashboard
+          </Nav.Item>
+            
+            }
 
             <Nav.Item eventKey="2" active icon={<BuildingIcon />}>
               Empresa
