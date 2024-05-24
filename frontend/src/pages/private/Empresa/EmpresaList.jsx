@@ -1,9 +1,8 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "rsuite";
 import "./EmpresaList.css";
 import { Link } from "react-router-dom";
 
 const Empresa = () => {
-
   const empresas = [
     { id: 1, name: "Empresa 1", description: "Descrição da Empresa 1" },
     { id: 2, name: "Empresa 2", description: "Descrição da Empresa 2" },
