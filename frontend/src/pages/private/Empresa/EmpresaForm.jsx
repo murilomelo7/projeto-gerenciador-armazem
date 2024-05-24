@@ -1,15 +1,13 @@
-import { useState } from "react";
-import { Button, Col, Input, Modal, Row } from "rsuite";
+import { useState } from 'react';
+import { Button, Col, Input, Modal, Row } from 'rsuite';
 
 const EmpresaForm = ({ showModal, onClose }) => {
-  const [nome, setNome] = useState("");
-  const [descricao, setDescricao] = useState("");
-
-  console.log("ksjdnflkjsdf");
+  const [nome, setNome] = useState('');
+  const [descricao, setDescricao] = useState('');
 
   const handleSalvar = () => {
-    console.log("Nome:", nome);
-    console.log("Descrição:", descricao);
+    console.log('Nome:', nome);
+    console.log('Descrição:', descricao);
     onClose();
   };
 
@@ -20,31 +18,23 @@ const EmpresaForm = ({ showModal, onClose }) => {
       </Modal.Header>
       <Modal.Body>
         <Col sm={24}>
-          {" "}
+          {' '}
           {/* Adicione um container Col */}
           <Row>
             <Col sm={12}>
               <p>Nome da empresa</p>
-              <Input
-                value={nome}
-                onChange={(value) => setNome(value)}
-                placeholder="Nome da empresa"
-              />
+              <Input value={nome} onChange={value => setNome(value)} placeholder="Nome da empresa" />
             </Col>
             <Col sm={12}>
               <p>Descrição</p>
-              <Input
-                value={descricao}
-                onChange={(value) => setDescricao(value)}
-                placeholder="Descrição da empresa"
-              />
+              <Input value={descricao} onChange={value => setDescricao(value)} placeholder="Descrição da empresa" />
             </Col>
           </Row>
           <Row>
             <Col sm={12}>
               <p>Outro campo</p>
               <Input
-                value={"aaaaaaaaa"}
+                value={'aaaaaaaaa'}
                 // onChange={(value) => setOutroCampo(value)}
                 placeholder="Outro campo"
               />
@@ -52,7 +42,7 @@ const EmpresaForm = ({ showModal, onClose }) => {
             <Col sm={12}>
               <p>Mais um campo</p>
               <Input
-                value={"aaaaaaaaa"}
+                value={'aaaaaaaaa'}
                 // onChange={(value) => setMaisUmCampo(value)}
                 placeholder="Mais um campo"
               />
@@ -62,7 +52,7 @@ const EmpresaForm = ({ showModal, onClose }) => {
             <Col sm={12}>
               <p>Outro campo</p>
               <Input
-                value={"aaaaaaaaa"}
+                value={'aaaaaaaaa'}
                 // onChange={(value) => setOutroCampo(value)}
                 placeholder="Outro campo"
               />
@@ -70,7 +60,7 @@ const EmpresaForm = ({ showModal, onClose }) => {
             <Col sm={12}>
               <p>Mais um campo</p>
               <Input
-                value={"aaaaaaaaa"}
+                value={'aaaaaaaaa'}
                 // onChange={(value) => setMaisUmCampo(value)}
                 placeholder="Mais um campo"
               />

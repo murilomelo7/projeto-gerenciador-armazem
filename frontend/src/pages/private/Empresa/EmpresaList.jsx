@@ -1,32 +1,32 @@
-import { Button, Col, Panel, Row, Table, Input } from "rsuite";
-import { Link } from "react-router-dom";
-import { Container } from "rsuite";
-import EmpresaForm from "./EmpresaForm";
-import { useState } from "react";
+import { Button, Col, Panel, Row, Table, Input } from 'rsuite';
+import { Link } from 'react-router-dom';
+import { Container } from 'rsuite';
+import EmpresaForm from './EmpresaForm';
+import { useState } from 'react';
 
 const EmpresaList = () => {
   const [showModal, setShowModal] = useState(false);
 
   const empresas = [
-    { id: 1, name: "Empresa 1", description: "Descrição da Empresa 1" },
-    { id: 2, name: "Empresa 2", description: "Descrição da Empresa 2" },
-    { id: 3, name: "Empresa 3", description: "Descrição da Empresa 3" },
-    { id: 4, name: "Empresa 4", description: "Descrição da Empresa 4" },
-    { id: 5, name: "Empresa 5", description: "Descrição da Empresa 5" },
+    { id: 1, name: 'Empresa 1', description: 'Descrição da Empresa 1' },
+    { id: 2, name: 'Empresa 2', description: 'Descrição da Empresa 2' },
+    { id: 3, name: 'Empresa 3', description: 'Descrição da Empresa 3' },
+    { id: 4, name: 'Empresa 4', description: 'Descrição da Empresa 4' },
+    { id: 5, name: 'Empresa 5', description: 'Descrição da Empresa 5' },
   ];
 
   return (
     <Container>
       <EmpresaForm showModal={showModal} onClose={() => setShowModal(false)} />
       <Panel bordered style={{ borderRadius: 10 }}>
-        <Row style={{ textAlign: "center" }}>
+        <Row style={{ textAlign: 'center' }}>
           <Col md={20}>
             <h2>Empresas</h2>
           </Col>
           <Col md={4}>
             <Button
               appearance="primary"
-              style={{ width: "90px" }}
+              style={{ width: '90px' }}
               onClick={() => {
                 setShowModal(true);
               }}
@@ -36,11 +36,7 @@ const EmpresaList = () => {
           </Col>
         </Row>
 
-        <Panel
-          header="Filtros"
-          bordered
-          style={{ borderRadius: 10, marginTop: 40 }}
-        >
+        <Panel header="Filtros" bordered style={{ borderRadius: 10, marginTop: 40 }}>
           <Row style={{ marginTop: 20 }}>
             <Col md={24}>
               <Row>
@@ -48,7 +44,7 @@ const EmpresaList = () => {
                   <Input type="text" placeholder="Nome da empresa"></Input>
                 </Col>
                 <Col>
-                  <Button appearance="primary" style={{ width: "90px" }}>
+                  <Button appearance="primary" style={{ width: '90px' }}>
                     Filtrar
                   </Button>
                 </Col>
@@ -59,7 +55,7 @@ const EmpresaList = () => {
         <Row style={{ marginTop: 20 }}>
           <Col md={24}>
             <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
-              <div style={{ overflowX: "auto" }}>
+              <div style={{ overflowX: 'auto' }}>
                 <Table
                   height={600}
                   bordered
@@ -83,11 +79,7 @@ const EmpresaList = () => {
                   </Table.Column>
                   <Table.Column width={200} fixed="right">
                     <Table.HeaderCell>Ações</Table.HeaderCell>
-                    <Table.Cell>
-                      {(rowData) => (
-                        <Link to={`/empresa/${rowData.id}`}>Detalhes</Link>
-                      )}
-                    </Table.Cell>
+                    <Table.Cell>{rowData => <Link to={`/empresa/${rowData.id}`}>Detalhes</Link>}</Table.Cell>
                   </Table.Column>
                 </Table>
               </div>
