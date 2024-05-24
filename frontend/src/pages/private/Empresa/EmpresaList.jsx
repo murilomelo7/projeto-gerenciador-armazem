@@ -1,8 +1,12 @@
-import { Input } from "rsuite";
-import "./EmpresaList.css";
+import { Button, Col, Panel, Row, Table, Input } from "rsuite";
 import { Link } from "react-router-dom";
+import { Container } from "rsuite";
+import EmpresaForm from "./EmpresaForm";
+import { useState } from "react";
 
-const Empresa = () => {
+const EmpresaList = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const empresas = [
     { id: 1, name: "Empresa 1", description: "Descrição da Empresa 1" },
     { id: 2, name: "Empresa 2", description: "Descrição da Empresa 2" },
@@ -12,45 +16,87 @@ const Empresa = () => {
   ];
 
   return (
-    <div className="container-empresa">
-      <div className="panel-heading">
-        <div className="title">
-          <h1>Empresas</h1>
-        </div>
-        <div>
-          <Link to="/empresa/form" className="btn-novo">
-            Novo
-          </Link>
-        </div>
-      </div>
+    <Container>
+      <EmpresaForm showModal={showModal} onClose={() => setShowModal(false)} />
+      <Panel bordered style={{ borderRadius: 10 }}>
+        <Row style={{ textAlign: "center" }}>
+          <Col md={20}>
+            <h2>Empresas</h2>
+          </Col>
+          <Col md={4}>
+            <Button
+              appearance="primary"
+              style={{ width: "90px" }}
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              <strong>Novo</strong>
+            </Button>
+          </Col>
+        </Row>
 
-      <div className="filters">
-        <div className="search">
-          <label>Pesquisar</label>
-          <Input type="text" placeholder="Nome da empresa"></Input>
-        </div>
-      </div>
-      <div className="line"></div>
-      <div className="table">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-            </tr>
-          </thead>
-          <tbody>
-            {empresas.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+        <Panel
+          header="Filtros"
+          bordered
+          style={{ borderRadius: 10, marginTop: 40 }}
+        >
+          <Row style={{ marginTop: 20 }}>
+            <Col md={24}>
+              <Row>
+                <Col md={12}>
+                  <Input type="text" placeholder="Nome da empresa"></Input>
+                </Col>
+                <Col>
+                  <Button appearance="primary" style={{ width: "90px" }}>
+                    Filtrar
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Panel>
+        <Row style={{ marginTop: 20 }}>
+          <Col md={24}>
+            <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
+              <div style={{ overflowX: "auto" }}>
+                <Table
+                  height={600}
+                  bordered
+                  cellBordered
+                  autoHeight
+                  affixHeader
+                  affixHorizontalScrollbar
+                  data={empresas}
+                >
+                  <Table.Column width={200} align="center" flexGrow={1}>
+                    <Table.HeaderCell>ID</Table.HeaderCell>
+                    <Table.Cell dataKey="id" />
+                  </Table.Column>
+                  <Table.Column width={700} align="left" flexGrow={1}>
+                    <Table.HeaderCell>Nome</Table.HeaderCell>
+                    <Table.Cell dataKey="name" />
+                  </Table.Column>
+                  <Table.Column width={700} align="left" flexGrow={1}>
+                    <Table.HeaderCell>Descrição</Table.HeaderCell>
+                    <Table.Cell dataKey="description" />
+                  </Table.Column>
+                  <Table.Column width={200} fixed="right">
+                    <Table.HeaderCell>Ações</Table.HeaderCell>
+                    <Table.Cell>
+                      {(rowData) => (
+                        <Link to={`/empresa/${rowData.id}`}>Detalhes</Link>
+                      )}
+                    </Table.Cell>
+                  </Table.Column>
+                </Table>
+              </div>
+            </Panel>
+          </Col>
+        </Row>
+      </Panel>
+    </Container>
   );
 };
 
-export default Empresa;
+export default EmpresaList;

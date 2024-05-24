@@ -1,16 +1,19 @@
 import React from "react";
-import "./Header.css"; // Adicione estilos CSS para o Header
+import { Dropdown, Nav, Navbar } from "rsuite";
+import ExitIcon from "@rsuite/icons/legacy/Exit";
 
-const Header = ({ children }) => {
+const Header = () => {
   return (
-    <header className="header">
-      <div className="header-content">
-        <h3 className="logo">
-          NandeRellis <span>StockSolutions</span>
-        </h3>
-        {children}
-      </div>
-    </header>
+    <Navbar appearance="inverse">
+      <Navbar.Brand href="/dashboard">
+        <label>
+          <strong>NANDERELIS STOCKSYSTEM</strong>
+        </label>
+      </Navbar.Brand>
+      <Nav pullRight>
+        <Nav.Item icon={<ExitIcon />}></Nav.Item>
+      </Nav>
+    </Navbar>
   );
 };
 

@@ -1,8 +1,8 @@
 import Layout from "@/components/Layout/Layout";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Input } from "@/components/ui/input";
-import './UsuarioList.css';
+import { Input } from "rsuite";
+import "./UsuarioList.css";
 
 const Usuario = () => {
   const usuarios = [
@@ -34,47 +34,47 @@ const Usuario = () => {
 
   return (
     <div className="container-usuario">
-    <div className="panel-heading">
-      <div className="title">
-        <h1>Usuários</h1>
+      <div className="panel-heading">
+        <div className="title">
+          <h1>Usuários</h1>
+        </div>
+        <div>
+          <Link to="/usuario/form" className="btn-novo">
+            Novo
+          </Link>
+        </div>
       </div>
-      <div>
-        <Link to="/usuario/form" className="btn-novo">
-          Novo
-        </Link>
-      </div>
-    </div>
 
-    <div className="filters">
-      <div className="search">
-        <label>Pesquisar</label>
-        <Input type="text" placeholder="Nome do usuário"></Input>
+      <div className="filters">
+        <div className="search">
+          <label>Pesquisar</label>
+          <Input type="text" placeholder="Nome do usuário"></Input>
+        </div>
+      </div>
+      <div className="line"></div>
+      <div className="table">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Cpf</th>
+              <th>Usuário</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usuarios.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.nome}</td>
+                <td>{item.cpf}</td>
+                <td>{item.usuario}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
-    <div className="line"></div>
-    <div className="table">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Cpf</th>
-            <th>Usuário</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.nome}</td>
-              <td>{item.cpf}</td>
-              <td>{item.usuario}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
   );
 };
 
