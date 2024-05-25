@@ -1,24 +1,19 @@
 // Router
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, RouterProvider, Navigate } from 'react-router-dom';
 
-import Layout from "@/components/Layout/Layout";
-import Dashboard from "./Dashboard/Dashboard";
-import UsuarioList from "./Usuario/UsuarioList";
-import EmpresaList from "./Empresa/EmpresaList";
-import EmpresaForm from "./Empresa/EmpresaForm";
-import UsuarioForm from "./Usuario/UsuarioForm";
+import Layout from '@/components/Layout/Layout';
+import Dashboard from './Dashboard/Dashboard';
+import UsuarioList from './Usuario/UsuarioList';
+import EmpresaList from './Empresa/EmpresaList';
+import CategoriaList from './Categoria/CategoriaList';
+import ProdutoList from './Produto/ProdutoList';
+import PerfilList from './Perfil/PerfilList';
 
 const PrivateRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-      <Route
+        <Route
           path="/dashboard"
           element={
             <Layout>
@@ -35,14 +30,6 @@ const PrivateRoutes = () => {
           }
         />
         <Route
-          path="/empresa/form"
-          element={
-            <Layout>
-              <EmpresaForm />
-            </Layout>
-          }
-        />
-        <Route
           path="/usuario"
           element={
             <Layout>
@@ -51,10 +38,26 @@ const PrivateRoutes = () => {
           }
         />
         <Route
-          path="/usuario/form"
+          path="/perfil"
           element={
             <Layout>
-              <UsuarioForm />
+              <PerfilList />
+            </Layout>
+          }
+        />
+        <Route
+          path="/categoria"
+          element={
+            <Layout>
+              <CategoriaList />
+            </Layout>
+          }
+        />
+        <Route
+          path="/produto"
+          element={
+            <Layout>
+              <ProdutoList />
             </Layout>
           }
         />

@@ -1,9 +1,9 @@
-import { Button, Col, Panel, Row, Table, Input } from 'rsuite';
+import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
+import { Plus, Edit, Trash } from '@rsuite/icons';
 import { Link } from 'react-router-dom';
 import { Container } from 'rsuite';
 import EmpresaForm from './EmpresaForm';
 import { useState } from 'react';
-import EditIcon from '@rsuite/icons/legacy/Edit';
 
 const initData = {
   tipo: '',
@@ -64,6 +64,10 @@ const EmpresaList = () => {
     setShowModal(true);
   };
 
+  const handleRemove = rowData => {
+    console.log('removeu sa poha');
+  };
+
   return (
     <Container>
       <EmpresaForm
@@ -74,13 +78,23 @@ const EmpresaList = () => {
       />
       <Panel bordered style={{ borderRadius: 10 }}>
         <Row style={{ textAlign: 'center' }}>
-          <Col md={20}>
-            <h2>Empresas</h2>
+          <Col md={22}>
+            <h3>Empresas</h3>
           </Col>
-          <Col md={4}>
-            <Button appearance="primary" style={{ width: '90px' }} onClick={handleCreate}>
-              <strong>Novo</strong>
-            </Button>
+        </Row>
+
+        <Row>
+          <Col md={22}></Col>
+          <Col md={2}>
+            <IconButton
+              appearance="primary"
+              color="green"
+              icon={<Plus />}
+              style={{ width: '90px' }}
+              onClick={handleCreate}
+            >
+              Novo
+            </IconButton>
           </Col>
         </Row>
 
@@ -113,7 +127,7 @@ const EmpresaList = () => {
                   affixHorizontalScrollbar
                   data={empresas}
                 >
-                  <Table.Column width={200} align="center" flexGrow={1}>
+                  <Table.Column width={100} fixed="left" align="center">
                     <Table.HeaderCell>ID</Table.HeaderCell>
                     <Table.Cell dataKey="id" />
                   </Table.Column>
@@ -125,13 +139,26 @@ const EmpresaList = () => {
                     <Table.HeaderCell>Cpf/Cnpj</Table.HeaderCell>
                     <Table.Cell dataKey="cpfCnpj" />
                   </Table.Column>
-                  <Table.Column width={200} fixed="right">
-                    <Table.HeaderCell>Ações</Table.HeaderCell>
+                  <Table.Column width={100} fixed="right">
+                    <Table.HeaderCell align="center">Ações</Table.HeaderCell>
                     <Table.Cell style={{ alignItems: 'center', paddingTop: 10 }}>
                       {rowData => (
-                        <Button onClick={() => handleEdit(rowData)}>
-                          <EditIcon />
-                        </Button>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <IconButton
+                            size={'sm'}
+                            color="violet"
+                            appearance="ghost"
+                            onClick={() => handleEdit(rowData)}
+                            icon={<Edit />}
+                          ></IconButton>
+                          <IconButton
+                            size={'sm'}
+                            color="red"
+                            appearance="ghost"
+                            onClick={() => handleRemove(rowData)}
+                            icon={<Trash />}
+                          ></IconButton>
+                        </div>
                       )}
                     </Table.Cell>
                   </Table.Column>
