@@ -31,6 +31,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
 
   const handleClose = () => {
     setErrors({});
+    setFormData(initData);
     onClose();
   };
 
@@ -76,6 +77,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                     searchable={false}
                     accepter={SelectPicker}
                     placeholder={'Selecione'}
+                    cleanable={false}
                     data={[
                       { label: 'Jurídica', value: 'J' },
                       { label: 'Fisíca', value: 'F' },
