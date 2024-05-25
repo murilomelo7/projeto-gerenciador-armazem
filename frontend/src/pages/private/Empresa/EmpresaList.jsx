@@ -103,7 +103,7 @@ const EmpresaList = () => {
             <Col md={24}>
               <Row>
                 <Col md={12}>
-                  <Input type="text" placeholder="Nome da empresa"></Input>
+                  <Input  type="text" placeholder="Nome da empresa"></Input>
                 </Col>
                 <Col>
                   <Button appearance="primary" style={{ width: '90px' }}>
