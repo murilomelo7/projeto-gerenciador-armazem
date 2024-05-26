@@ -1,14 +1,12 @@
 import api from '@/services/api';
 
-class EmpresaController {
+class ProdutoController {
   constructor() {
     this.api = api;
   }
 
   async create(data) {
-    const response = await this.api.post('/empresa', data);
-    console.log(response);
-
+    const response = await this.api.post('/perfil', data);
     if (response && response.status === 200) {
       return true;
     }
@@ -17,7 +15,7 @@ class EmpresaController {
 
   async update(data) {
     const { id } = data;
-    const response = await this.api.put(`/empresa/${id}`, data);
+    const response = await this.api.put(`/perfil/${id}`, data);
     if (response && response.status === 200) {
       return true;
     }
@@ -25,7 +23,7 @@ class EmpresaController {
   }
 
   async findFirst(id) {
-    const response = await this.api.get(`/empresa/${id}`);
+    const response = await this.api.get(`/perfil/${id}`);
     if (response && response.status === 200) {
       return response.data;
     }
@@ -33,7 +31,7 @@ class EmpresaController {
   }
 
   async findMany(filters) {
-    const response = await this.api.get('/empresa');
+    const response = await this.api.get('/perfil');
     console.log(response);
     if (response && response.status === 200) {
       return response.data;
@@ -42,25 +40,12 @@ class EmpresaController {
   }
 
   async delete(id) {
-    const response = await this.api.delete(`/empresa/${id}`);
+    const response = await this.api.delete(`/perfil/${id}`);
     if (response && response.status === 200) {
       return true;
     }
     return false;
   }
-
-  async getSelectData() {
-    const empresas = await this.findMany();
-
-    if (empresas.length > 0) {
-      const empresasList = empresas.map(empresa => ({
-        value: empresa.id,
-        label: empresa.nome,
-      }));
-      return empresasList;
-    }
-    return [];
-  }
 }
 
-export default new EmpresaController();
+export default new ProdutoController();

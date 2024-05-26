@@ -16,12 +16,6 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
     setFormData(initialData);
   }, [initialData]);
 
-  useEffect(() => {
-    console.log('formData', formData); // Verifica o estado atualizado de formData
-  }, [formData]);
-
-  console.log(formData);
-
   const handleClose = () => {
     setErrors({});
     setFormData(initData);

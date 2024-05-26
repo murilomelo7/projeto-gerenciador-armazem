@@ -1,6 +1,6 @@
 import { Nav, Sidenav } from 'rsuite';
 import BuildingIcon from '@rsuite/icons/legacy/Building';
-import { Package, Building2, SquareUser, Grid2X2 } from 'lucide-react';
+import { Package, Building2, SquareUser, Grid2X2, User } from 'lucide-react';
 
 import { Dashboard, Plus, Gear } from '@rsuite/icons';
 import { useNavigate } from 'react-router-dom';
@@ -27,6 +27,9 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
       case 'cadastro-perfil':
         navigate('/perfil');
         break;
+      case 'cadastro-usuario':
+        navigate('/usuario');
+        break;
       case 'controle-entradas-saidas':
         navigate('/entradas-saidas');
         break;
@@ -52,6 +55,10 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
               <Nav.Item eventKey="cadastro-empresa" active>
                 <Building2 size={'18'} style={{ marginRight: 5, marginBottom: 3, verticalAlign: 'middle' }} />
                 Empresa
+              </Nav.Item>
+              <Nav.Item eventKey="cadastro-usuario" active>
+                <User size={'18'} style={{ marginRight: 5, marginBottom: 3, verticalAlign: 'middle' }} />
+                Usuário
               </Nav.Item>
               <Nav.Item eventKey="cadastro-perfil" active>
                 <SquareUser size={'18'} style={{ marginRight: 5, marginBottom: 3, verticalAlign: 'middle' }} />

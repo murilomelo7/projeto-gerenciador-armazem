@@ -23,8 +23,13 @@ class UsuarioController {
 
   async update(request, reply) {
     try {
+      const { id } = request.params;
+
+      const data = request.body;
+      const where = { id };
       const usuarioAtualizado = await prisma.usuario.update({
-        data: request.body,
+        data,
+        where,
       });
       reply.code(200).send(usuarioAtualizado);
     } catch (error) {
@@ -40,6 +45,7 @@ class UsuarioController {
 
       const usuario = await prisma.usuario.findFirst({
         where: { id, empresa_id },
+        include: { empresaFk: true, perfilFk: true },
       });
 
       if (!usuario) {
@@ -59,7 +65,9 @@ class UsuarioController {
 
   async findMany(request, reply) {
     try {
-      const usuarios = await prisma.usuario.findMany();
+      const usuarios = await prisma.usuario.findMany({
+        include: { empresaFk: true, perfilFk: true },
+      });
 
       if (!usuarios) {
         reply.code(404).send({
