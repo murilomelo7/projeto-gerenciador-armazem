@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, Input, MaskedInput, Modal, Row, SelectPicker } from 'rsuite';
-import { createSchema, updateSchema } from './schemas/EmpresaFormSchema';
+import { Button, Col, Form, Input, Modal, Row, SelectPicker } from 'rsuite';
+import { createSchema, updateSchema } from './schema/EmpresaFormSchema';
 import { z } from 'zod';
 
 const initData = {
