@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Modal, Row, SelectPicker } from 'rsuite';
 import { createSchema, updateSchema } from './schema/EmpresaFormSchema';
 import { z } from 'zod';
+import EmpresaController from '@/controller/EmpresaController';
 
 const initData = {
   tipo: '',
@@ -23,12 +24,6 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
     setFormData(initialData);
   }, [initialData]);
 
-  useEffect(() => {
-    console.log('formData', formData); // Verifica o estado atualizado de formData
-  }, [formData]);
-
-  console.log(formData);
-
   const handleClose = () => {
     setErrors({});
     setFormData(initData);
@@ -39,13 +34,28 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
       const schema = isEdit ? updateSchema : createSchema;
       schema.parse(formData);
       console.log(formData);
-      handleClose();
-      console.log('jabedjkfnsdf');
+
+      if (!isEdit) {
+        const response = await EmpresaController.create(formData);
+
+        if (response) {
+          handleClose();
+        } else {
+          console.log('erro');
+        }
+      } else {
+        const response = await EmpresaController.update(formData);
+        if (response) {
+          handleClose();
+        } else {
+          console.log('erro');
+        }
+      }
     } catch (e) {
       console.log(e);
       if (e instanceof z.ZodError) {
@@ -96,6 +106,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                     name="cpfCnpj"
                     accepter={Input}
                     placeholder={'CPF/CNPJ'}
+                    maxLength={14}
                     onChange={value => handleChange(value, 'cpfCnpj')}
                     value={formData.cpfCnpj}
                   />
@@ -109,6 +120,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                     name="nome"
                     accepter={Input}
                     placeholder={'Nome da empresa'}
+                    maxLength={80}
                     onChange={value => handleChange(value, 'nome')}
                     value={formData.nome}
                   />
@@ -124,6 +136,8 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                     name="email"
                     accepter={Input}
                     placeholder={'Email'}
+                    minLength={5}
+                    maxLength={100}
                     onChange={value => handleChange(value, 'email')}
                     value={formData.email}
                   />
@@ -137,6 +151,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                     name="telefone"
                     accepter={Input}
                     placeholder={'Telefone'}
+                    maxLength={80}
                     onChange={value => handleChange(value, 'telefone')}
                     value={formData.telefone}
                   />
@@ -163,6 +178,8 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                   <Form.ControlLabel>CEP</Form.ControlLabel>
                   <Form.Control
                     name="cep"
+                    minLength={9}
+                    maxLength={9}
                     accepter={Input}
                     placeholder={'CEP'}
                     onChange={value => handleChange(value, 'cep')}
@@ -176,6 +193,8 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                   <Form.ControlLabel>Estado</Form.ControlLabel>
                   <Form.Control
                     name="estado"
+                    minLength={2}
+                    maxLength={2}
                     accepter={Input}
                     placeholder={'Estado'}
                     onChange={value => handleChange(value, 'estado')}

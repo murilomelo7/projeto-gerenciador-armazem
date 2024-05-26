@@ -1,9 +1,10 @@
 import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
 import { Plus, Edit, Trash } from '@rsuite/icons';
-import { Link } from 'react-router-dom';
+
 import { Container } from 'rsuite';
+import EmpresaController from '@/controller/EmpresaController';
 import EmpresaForm from './EmpresaForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const initData = {
   tipo: '',
@@ -20,37 +21,20 @@ const EmpresaList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedEmpresa, setSelectedEmpresa] = useState(initData);
   const [isEdit, setIsEdit] = useState(false);
+  const [empresas, setEmpresas] = useState([]);
 
-  const empresas = [
-    {
-      id: 1,
-      tipo: 'J',
-      cpfCnpj: '1234567890123',
-      nome: 'EmpresaTeste',
-      email: 'email@email.com',
-      telefone: '234234234',
-      endereco: 'sla',
-      cep: '2387492',
-      estado: '423424',
-      cidade: '234234',
-    },
-    {
-      id: 2,
-      tipo: 'J',
-      cpfCnpj: '1234567890123',
-      nome: 'EmpresaTeste',
-      email: 'email@email.com',
-      telefone: '234234234',
-      endereco: 'sla',
-      cep: '2387492',
-      estado: '423424',
-      cidade: '234234',
-    },
-    // { id: 2, name: 'Empresa 2', description: 'Descrição da Empresa 2' },
-    // { id: 3, name: 'Empresa 3', description: 'Descrição da Empresa 3' },
-    // { id: 4, name: 'Empresa 4', description: 'Descrição da Empresa 4' },
-    // { id: 5, name: 'Empresa 5', description: 'Descrição da Empresa 5' },
-  ];
+  const init = async () => {
+    try {
+      const response = await EmpresaController.findMany();
+      setEmpresas(response);
+    } catch (error) {
+      console.error('Erro ao buscar empresas:', error);
+    }
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   const handleCreate = () => {
     setSelectedEmpresa(initData);
@@ -64,25 +48,28 @@ const EmpresaList = () => {
     setShowModal(true);
   };
 
-  const handleRemove = rowData => {
-    console.log('removeu sa poha');
+  const handleRemove = async rowData => {
+    const { id } = rowData;
+    const response = await EmpresaController.delete(id);
+    if (response) {
+      handleAfterSubmit();
+    }
+  };
+
+  const handleAfterSubmit = () => {
+    setShowModal(false);
+    init();
   };
 
   return (
     <Container>
-      <EmpresaForm
-        showModal={showModal}
-        onClose={() => setShowModal(false)}
-        isEdit={isEdit}
-        initialData={selectedEmpresa}
-      />
+      <EmpresaForm showModal={showModal} onClose={handleAfterSubmit} isEdit={isEdit} initialData={selectedEmpresa} />
       <Panel bordered style={{ borderRadius: 10 }}>
         <Row style={{ textAlign: 'center' }}>
           <Col md={22}>
             <h3>Empresas</h3>
           </Col>
         </Row>
-
         <Row>
           <Col md={22}></Col>
           <Col md={2}>
@@ -103,7 +90,7 @@ const EmpresaList = () => {
             <Col md={24}>
               <Row>
                 <Col md={12}>
-                  <Input  type="text" placeholder="Nome da empresa"></Input>
+                  <Input type="text" placeholder="Nome da empresa"></Input>
                 </Col>
                 <Col>
                   <Button appearance="primary" style={{ width: '90px' }}>

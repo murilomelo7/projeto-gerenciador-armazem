@@ -52,7 +52,9 @@ class EmpresaController {
 
   async findMany(request, reply) {
     try {
-      const empresas = await prisma.empresa.findMany();
+      const empresas = await prisma.empresa.findMany({
+        orderBy: { id: "asc" },
+      });
 
       if (!empresas) {
         reply.code(404).send({
