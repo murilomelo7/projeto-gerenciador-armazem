@@ -2,7 +2,8 @@ import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
 import { Plus, Edit, Trash } from '@rsuite/icons';
 import { Container } from 'rsuite';
 import PerfilForm from './PerfilForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PerfilController from '@/controller/PerfilController';
 
 const initData = {
   nome: '',
@@ -12,19 +13,18 @@ const PerfilList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPerfil, setSelectedPerfil] = useState(initData);
   const [isEdit, setIsEdit] = useState(false);
+  const [perfis, setPerfis] = useState([]);
 
-  const empresas = [
-    {
-      id: 1,
-      nome: 'Administrador',
-      acessos: 'admin',
-    },
-    {
-      id: 2,
-      nome: 'Cliente',
-      acessos: 'cliente',
-    },
-  ];
+
+  const init = async () => {
+    const response = await  PerfilController.findMany();
+    setPerfis(response);
+  }
+  
+  useEffect(() => {
+    init();
+  }, []);
+
 
   const handleCreate = () => {
     setSelectedPerfil(initData);
@@ -42,11 +42,16 @@ const PerfilList = () => {
     console.log('removeu sa poha');
   };
 
+  const handleAfterSubmit = () => {
+    init();  
+    setShowModal(false);
+  }
+
   return (
     <Container>
       <PerfilForm
         showModal={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={handleAfterSubmit}
         isEdit={isEdit}
         initialData={selectedPerfil}
       />
@@ -99,7 +104,7 @@ const PerfilList = () => {
                   autoHeight
                   affixHeader
                   affixHorizontalScrollbar
-                  data={empresas}
+                  data={perfis}
                 >
                   <Table.Column width={100} fixed="left" align="center">
                     <Table.HeaderCell>ID</Table.HeaderCell>

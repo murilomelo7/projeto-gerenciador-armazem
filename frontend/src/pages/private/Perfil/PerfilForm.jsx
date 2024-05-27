@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Modal, Row, SelectPicker } from 'rsuite';
 import { createSchema, updateSchema } from './schema/PerfilFormSchema';
 import { z } from 'zod';
+import PerfilController from '@/controller/PerfilController';
 
 const initData = {
   nome: '',
@@ -26,13 +27,22 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
       const schema = isEdit ? updateSchema : createSchema;
       schema.parse(formData);
-      console.log(formData);
-      handleClose();
-      console.log('jabedjkfnsdf');
+
+      if (!isEdit) {
+        const response = await PerfilController.create(formData);
+        if (response) {
+          handleClose();
+        }
+      } else {
+        const response = await PerfilController.update(formData);
+        if (response) {
+          handleClose();
+        }
+      }
     } catch (e) {
       console.log(e);
       if (e instanceof z.ZodError) {
