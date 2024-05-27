@@ -32,6 +32,10 @@ export const createSchema = z.object({
     .min(2, { message: 'Estado deve ter 2 caracteres' })
     .max(2, { message: 'Estado deve ter 2 caracteres' }),
   cep: z.string().min(9, { message: 'CEP deve ter 9 caracteres' }).max(9, { message: 'CEP deve ter 9 caracteres' }),
+  nomeUsuario: z.string().min(1).max(80),
+  usuario: z.string().min(1).max(40),
+  cpf: z.string().min(11).max(11),
+  perfil_id: z.number().int().min(1),
 });
 export const updateSchema = z.object({
   tipo: z.string().min(1, { message: 'Tipo é obrigatório' }).max(1, { message: 'Tipo deve ter no máximo 1 caractere' }),

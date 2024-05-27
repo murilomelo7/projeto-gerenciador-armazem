@@ -14,6 +14,7 @@ import ProdutoRoutes from "./api/routes/private/tenant/produto.routes";
 
 //? Public
 import LoginRoutes from "./api/routes/public/login.routes";
+import AuthRoutes from "./api/routes/public/auth.routes";
 
 const environment = "development";
 
@@ -49,6 +50,7 @@ class Server {
 
     //? Aqui inicializa as rotas
     LoginRoutes.registerRoutes(this.fastify);
+    AuthRoutes.registerRoutes(this.fastify);
     CategoriaRoutes.registerRoutes(this.fastify);
     EmpresaRoutes.registerRoutes(this.fastify);
     PerfilRoutes.registerRoutes(this.fastify);

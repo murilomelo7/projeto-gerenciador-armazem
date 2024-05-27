@@ -2,7 +2,8 @@ import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
 import { Plus, Edit, Trash } from '@rsuite/icons';
 import { Container } from 'rsuite';
 import CategoriaForm from './CategoriaForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import CategoriaController from '@/controller/CategoriaController';
 
 const initData = {
   nome: '',
@@ -12,19 +13,20 @@ const CategoriaList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPerfil, setSelectedPerfil] = useState(initData);
   const [isEdit, setIsEdit] = useState(false);
+  const [categorias, setCategorias] = useState();
 
-  const categorias = [
-    {
-      id: 1,
-      nome: 'Categoria 1',
-      descricao: 'Descrição da categoria 1',
-    },
-    {
-      id: 2,
-      nome: 'Categoria 2',
-      descricao: 'Descrição da categoria 2',
-    },
-  ];
+  const init = async () => {
+    try {
+      const response = await CategoriaController.findMany();
+      setCategorias(response);
+    } catch (error) {
+      console.error('Erro ao buscar categorias', error);
+    }
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   const handleCreate = () => {
     setSelectedPerfil(initData);
@@ -38,18 +40,22 @@ const CategoriaList = () => {
     setShowModal(true);
   };
 
-  const handleRemove = rowData => {
-    console.log('removeu sa poha');
+  const handleRemove = async rowData => {
+    const { id } = rowData;
+    const response = await CategoriaController.delete(id);
+    if (response) {
+      handleAfterSubmit();
+    }
+  };
+
+  const handleAfterSubmit = () => {
+    setShowModal(false);
+    init();
   };
 
   return (
     <Container>
-      <CategoriaForm
-        showModal={showModal}
-        onClose={() => setShowModal(false)}
-        isEdit={isEdit}
-        initialData={selectedPerfil}
-      />
+      <CategoriaForm showModal={showModal} onClose={handleAfterSubmit} isEdit={isEdit} initialData={selectedPerfil} />
       <Panel bordered style={{ borderRadius: 10 }}>
         <Row style={{ textAlign: 'center' }}>
           <Col md={22}>
@@ -110,8 +116,8 @@ const CategoriaList = () => {
                     <Table.Cell dataKey="nome" />
                   </Table.Column>
                   <Table.Column width={700} align="left" flexGrow={1}>
-                    <Table.HeaderCell>Acessos</Table.HeaderCell>
-                    <Table.Cell dataKey="acessos" />
+                    <Table.HeaderCell>Descrição</Table.HeaderCell>
+                    <Table.Cell dataKey="descricao" />
                   </Table.Column>
                   <Table.Column width={100} fixed="right">
                     <Table.HeaderCell align="center">Ações</Table.HeaderCell>

@@ -16,6 +16,7 @@ class CategoriaController {
   async update(data) {
     const { id } = data;
     const response = await this.api.put(`/categoria/${id}`, data);
+    console.log(response.data);
     if (response && response.status === 200) {
       return true;
     }
@@ -45,6 +46,19 @@ class CategoriaController {
       return true;
     }
     return false;
+  }
+
+  async getSelectData() {
+    const categorias = await this.findMany();
+
+    if (categorias.length > 0) {
+      const categoriaList = categorias.map(categoria => ({
+        value: categoria.id,
+        label: categoria.nome,
+      }));
+      return categoriaList;
+    }
+    return [];
   }
 }
 

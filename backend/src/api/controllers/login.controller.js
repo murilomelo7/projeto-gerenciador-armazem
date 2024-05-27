@@ -35,16 +35,19 @@ class LoginController {
           message: "Senha incorreta",
         });
       }
+      let token = null;
+      if (!usuarioValidation.token || usuarioValidation.token.trim() === "") {
+        const payload = `${usuario}${senha}`;
+        token = await LoginService.generateToken(payload);
+        const { id } = usuarioValidation;
 
-      const payload = `${usuario}${senha}`;
-      const token = await LoginService.generateToken(payload);
-
-      const { id } = usuarioValidation;
-
-      await prisma.usuario.update({
-        data: { token },
-        where: { id },
-      });
+        await prisma.usuario.update({
+          data: { token },
+          where: { id },
+        });
+      } else {
+        token = usuarioValidation.token;
+      }
 
       reply.code(200).send({
         statusCode: 200,

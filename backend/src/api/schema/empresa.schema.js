@@ -10,6 +10,10 @@ export const createSchema = z.object({
   cidade: z.string().min(1).max(100),
   estado: z.string().min(2).max(2),
   cep: z.string().min(9).max(9),
+  nomeUsuario: z.string().min(1).max(80),
+  usuario: z.string().min(1).max(40),
+  cpf: z.string().min(11).max(11),
+  perfil_id: z.number().int().min(1),
   // observacoes: z.string(),
 });
 export const updateSchema = z.object({
@@ -22,6 +26,6 @@ export const updateSchema = z.object({
   cidade: z.string().min(1).max(100),
   estado: z.string().min(2).max(2),
   cep: z.string().min(9).max(9),
-  status: z.string().min(1).max(20),
+  // status: z.string().min(1).max(20),
   // observacoes: z.string(),
 });

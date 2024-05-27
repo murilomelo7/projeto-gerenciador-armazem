@@ -5,7 +5,7 @@ import Layout from './components/Layout/Layout';
 import Dashboard from './pages/private/Dashboard/Dashboard'; // Importando Dashboard como componente
 
 //? Telas públicas
-import Login from './pages/public/Login';
+import Login from './pages/public/Login/Login';
 import Inicio from './pages/public/Inicio';
 
 //? Telas privadas
@@ -14,6 +14,7 @@ import UsuarioList from './pages/private/Usuario/UsuarioList';
 import PerfilList from './pages/private/Perfil/PerfilList';
 import CategoriaList from './pages/private/Categoria/CategoriaList';
 import ProdutoList from './pages/private/Produto/ProdutoList';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 const AppRoutes = () => {
   return (
@@ -27,49 +28,61 @@ const AppRoutes = () => {
         <Route
           path="/dashboard"
           element={
-            <Layout>
-              <Dashboard />
-            </Layout>
+            <PrivateRoute acessos={['admin', 'cliente']}>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/empresa"
           element={
-            <Layout>
-              <EmpresaList />
-            </Layout>
+            <PrivateRoute acessos={['admin']}>
+              <Layout>
+                <EmpresaList />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/usuario"
           element={
-            <Layout>
-              <UsuarioList />
-            </Layout>
+            <PrivateRoute acessos={['admin']}>
+              <Layout>
+                <UsuarioList />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/perfil"
           element={
-            <Layout>
-              <PerfilList />
-            </Layout>
+            <PrivateRoute acessos={['admin']}>
+              <Layout>
+                <PerfilList />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/categoria"
           element={
-            <Layout>
-              <CategoriaList />
-            </Layout>
+            <PrivateRoute acessos={['cliente']}>
+              <Layout>
+                <CategoriaList />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/produto"
           element={
-            <Layout>
-              <ProdutoList />
-            </Layout>
+            <PrivateRoute acessos={['cliente']}>
+              <Layout>
+                <ProdutoList />
+              </Layout>
+            </PrivateRoute>
           }
         />
 

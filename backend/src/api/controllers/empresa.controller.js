@@ -1,14 +1,32 @@
 import prisma from "../../database/PrismaService";
+import usuarioService from "../services/usuario.service";
 
 class EmpresaController {
   constructor() {}
 
   async create(request, reply) {
     try {
-      const empresa = await prisma.empresa.create({
-        data: request.body,
+      const { nomeUsuario, usuario, cpf, perfil_id, ...data } = request.body;
+
+      const empresa = await prisma.empresa.create({ data });
+
+      const dadosUsuario = {
+        nome: nomeUsuario,
+        usuario,
+        email: empresa.email,
+        cpf,
+        perfil_id,
+        empresa_id: empresa.id,
+      };
+
+      const usuarioNovo =
+        await usuarioService.createUsuarioEmpresa(dadosUsuario);
+
+      reply.code(200).send({
+        statusCode: 200,
+        message: "Empresa criada com sucesso",
+        data: { empresa, usuarioNovo },
       });
-      reply.code(200).send(empresa);
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);

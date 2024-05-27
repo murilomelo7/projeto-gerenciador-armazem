@@ -3,6 +3,7 @@ import { Button, Col, Form, Input, Modal, Row, SelectPicker } from 'rsuite';
 import { createSchema, updateSchema } from './schema/EmpresaFormSchema';
 import { z } from 'zod';
 import EmpresaController from '@/controller/EmpresaController';
+import PerfilController from '@/controller/PerfilController';
 
 const initData = {
   tipo: '',
@@ -19,6 +20,16 @@ const initData = {
 const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
   const [formData, setFormData] = useState(initData);
   const [errors, setErrors] = useState({});
+  const [perfis, setPerfis] = useState([]);
+
+  const init = async () => {
+    const perfisResponse = await PerfilController.getSelectData();
+    setPerfis(perfisResponse);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   useEffect(() => {
     setFormData(initialData);
@@ -38,7 +49,6 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
     try {
       const schema = isEdit ? updateSchema : createSchema;
       schema.parse(formData);
-      console.log(formData);
 
       if (!isEdit) {
         const response = await EmpresaController.create(formData);
@@ -73,12 +83,19 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
   return (
     <Modal size="lg" open={showModal} onClose={handleClose}>
       <Modal.Header>
-        <Modal.Title>{isEdit ? 'Editar Empresa' : 'Criar Empresa'}</Modal.Title>
+        <Modal.Title style={{ fontSize: 22 }}>{isEdit ? 'Editar Empresa' : 'Criar Empresa'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Col sm={24}>
           <Form fluid onSubmit={handleSubmit}>
-            <Row style={{ marginTop: 10 }}>
+            <Row>
+              <Col
+                xs={24}
+                sm={24}
+                style={{ marginBottom: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              >
+                <Form.ControlLabel style={{ fontSize: 16 }}>Dados empresa</Form.ControlLabel>
+              </Col>
               <Col xs={12} sm={6}>
                 <Form.Group controlId="tipo">
                   <Form.ControlLabel>Tipo</Form.ControlLabel>
@@ -151,7 +168,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                     name="telefone"
                     accepter={Input}
                     placeholder={'Telefone'}
-                    maxLength={80}
+                    maxLength={14}
                     onChange={value => handleChange(value, 'telefone')}
                     value={formData.telefone}
                   />
@@ -217,6 +234,78 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
                 </Form.Group>
               </Col>
             </Row>
+            {!isEdit && (
+              <Row style={{ marginTop: 20 }}>
+                <Col
+                  xs={24}
+                  sm={24}
+                  style={{ marginBottom: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                >
+                  <Form.ControlLabel style={{ fontSize: 16 }}>Dados usuário</Form.ControlLabel>
+                </Col>
+
+                <Col xs={6} sm={6}>
+                  <Form.Group controlId="nomeUsuario">
+                    <Form.ControlLabel>Nome do cliente</Form.ControlLabel>
+                    <Form.Control
+                      name="nomeUsuario"
+                      accepter={Input}
+                      placeholder={'Nome do cliente'}
+                      maxLength={40}
+                      onChange={value => handleChange(value, 'nomeUsuario')}
+                      value={formData.nomeUsuario}
+                    />
+                    {errors.nomeUsuario && <div style={{ color: 'red' }}>{errors.nomeUsuario}</div>}
+                  </Form.Group>
+                </Col>
+                <Col xs={6} sm={6}>
+                  <Form.Group controlId="usuario">
+                    <Form.ControlLabel>Usuário</Form.ControlLabel>
+                    <Form.Control
+                      name="usuario"
+                      accepter={Input}
+                      placeholder={'Usuário do cliente'}
+                      maxLength={40}
+                      onChange={value => handleChange(value, 'usuario')}
+                      value={formData.usuario}
+                    />
+                    {errors.usuario && <div style={{ color: 'red' }}>{errors.usuario}</div>}
+                  </Form.Group>
+                </Col>
+                <Col xs={6} sm={6}>
+                  <Form.Group controlId="cpf">
+                    <Form.ControlLabel>Cpf</Form.ControlLabel>
+                    <Form.Control
+                      name="cpf"
+                      accepter={Input}
+                      placeholder={'Cpf do cliente'}
+                      maxLength={11}
+                      onChange={value => handleChange(value, 'cpf')}
+                      value={formData.Cpf}
+                    />
+                    {errors.cpf && <div style={{ color: 'red' }}>{errors.cpf}</div>}
+                  </Form.Group>
+                </Col>
+
+                <Col xs={6} sm={6}>
+                  <Form.Group controlId="perfil_id">
+                    <Form.ControlLabel>Perfil</Form.ControlLabel>
+                    <Form.Control
+                      name="perfil_id"
+                      searchable={false}
+                      accepter={SelectPicker}
+                      placeholder={'Selecione'}
+                      cleanable={false}
+                      data={perfis}
+                      style={{ width: 270 }}
+                      onChange={value => handleChange(value, 'perfil_id')}
+                      value={formData.perfil_id}
+                    />
+                    {errors.perfil_id && <div style={{ color: 'red' }}>{errors.perfil_id}</div>}
+                  </Form.Group>
+                </Col>
+              </Row>
+            )}
           </Form>
         </Col>
       </Modal.Body>

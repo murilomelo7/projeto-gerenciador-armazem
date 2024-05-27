@@ -68,7 +68,6 @@ const UsuarioList = () => {
             <h3>Usuários</h3>
           </Col>
         </Row>
-
         <Row>
           <Col md={22}></Col>
           <Col md={2}>

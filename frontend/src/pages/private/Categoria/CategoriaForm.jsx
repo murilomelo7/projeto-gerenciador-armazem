@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Modal, Row, SelectPicker } from 'rsuite';
 import { createSchema, updateSchema } from './schema/CategoriaSchema';
 import { z } from 'zod';
+import CategoriaController from '@/controller/CategoriaController';
 
 const initData = {
   nome: '',
@@ -26,12 +27,27 @@ const CategoriaForm = ({ showModal, onClose, isEdit, initialData }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
       const schema = isEdit ? updateSchema : createSchema;
       schema.parse(formData);
-      console.log(formData);
-      handleClose();
+
+      if (!isEdit) {
+        const response = await CategoriaController.create(formData);
+        if (response) {
+          handleClose();
+        } else {
+          console.log('erro');
+        }
+      } else {
+        const response = await CategoriaController.update(formData);
+
+        if (response) {
+          handleClose();
+        } else {
+          console.log('erro');
+        }
+      }
     } catch (e) {
       console.log(e);
       if (e instanceof z.ZodError) {
