@@ -5,11 +5,20 @@ class NovoBanco{
   async create(request, reply){
     try {
       const dataEmpresa = {
-
+        tipo: 'J',
+        cpfCnpj: '12345678910123',
+        nome: 'EMPRESA ADMIN',
+        telefone: '999888777',
+        email: 'emailadmin@admin.com',
+        endereco: 'Endereço admin',
+        cidade: 'Cascavel',
+        estado: 'PR',
+        cep: '85123-700'
       }
 
-      const dataPerfil = {
-        
+      const dataPerfilAdmin = {
+        nome: 'Administrador',
+        acessos: 'admin'
       }
 
       const dataUsuario = {
