@@ -1,10 +1,6 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class UsuarioController {
-  constructor() {
-    this.api = api;
-  }
-
+class UsuarioController extends Controller {
   async create(data) {
     const response = await this.api.post('/usuario', data);
     if (response && response.status === 200) {

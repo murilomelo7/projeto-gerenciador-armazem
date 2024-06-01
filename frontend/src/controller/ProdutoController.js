@@ -1,12 +1,13 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class ProdutoController {
-  constructor() {
-    this.api = api;
-  }
-
+class ProdutoController extends Controller {
   async create(data) {
-    const response = await this.api.post('/perfil', data);
+    const token = await this.getToken();
+    const response = await this.api.post('/perfil', data, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return true;
     }
@@ -14,8 +15,14 @@ class ProdutoController {
   }
 
   async update(data) {
+    const token = await this.getToken();
+
     const { id } = data;
-    const response = await this.api.put(`/perfil/${id}`, data);
+    const response = await this.api.put(`/perfil/${id}`, data, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return true;
     }
@@ -23,7 +30,12 @@ class ProdutoController {
   }
 
   async findFirst(id) {
-    const response = await this.api.get(`/perfil/${id}`);
+    const token = await this.getToken();
+    const response = await this.api.get(`/perfil/${id}`, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return response.data;
     }
@@ -31,7 +43,12 @@ class ProdutoController {
   }
 
   async findMany(filters) {
-    const response = await this.api.get('/perfil');
+    const token = await this.getToken();
+    const response = await this.api.get('/perfil', {
+      headers: {
+        token,
+      },
+    });
     console.log(response);
     if (response && response.status === 200) {
       return response.data;
@@ -40,7 +57,12 @@ class ProdutoController {
   }
 
   async delete(id) {
-    const response = await this.api.delete(`/perfil/${id}`);
+    const token = await this.getToken();
+    const response = await this.api.delete(`/perfil/${id}`, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return true;
     }

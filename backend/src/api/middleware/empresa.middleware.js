@@ -1,7 +1,7 @@
-import prisma from "../../database/PrismaService";
+import prisma from '../../database/PrismaService';
 
-import { validateRequestBodyPresence } from "./body.middleware";
-import { createSchema, updateSchema } from "../schema/empresa.schema";
+import { validateRequestBodyPresence } from './body.middleware';
+import { createSchema, updateSchema } from '../schema/empresa.schema';
 
 class EmpresaMiddleware {
   constructor() {}
@@ -15,8 +15,8 @@ class EmpresaMiddleware {
       request.log.warn(error);
       return reply.code(400).send({
         statusCode: 400,
-        error: "Bad Request",
-        message: "Dados inválidos",
+        error: 'Bad Request',
+        message: 'Dados inválidos',
         details: error.errors,
       });
     }
@@ -31,8 +31,8 @@ class EmpresaMiddleware {
       request.log.warn(error);
       return reply.code(400).send({
         statusCode: 400,
-        error: "Bad Request",
-        message: "Dados inválidos",
+        error: 'Bad Request',
+        message: 'Dados inválidos',
         details: error.errors,
       });
     }
@@ -42,28 +42,22 @@ class EmpresaMiddleware {
   async empresaExists(request, reply) {
     try {
       const { id } = request.params;
-
-      console.log("idEmpresa: ", id);
-
       const empresaValidation = await prisma.empresa.findFirst({
         where: { id },
       });
 
-      console.log("empresaValidation");
-      console.log(empresaValidation);
-
       if (!empresaValidation) {
         return reply.code(400).send({
           statusCode: 400,
-          error: "Bad Request",
-          message: "Está empresa não existe",
+          error: 'Bad Request',
+          message: 'Está empresa não existe',
         });
       }
     } catch (error) {
       return reply.code(500).send({
         statusCode: 500,
-        error: "Error",
-        message: "Ocorreu um erro na validação do empresa_id",
+        error: 'Error',
+        message: 'Ocorreu um erro na validação do empresa_id',
         details: error.message,
       });
     }
@@ -81,15 +75,15 @@ class EmpresaMiddleware {
       if (!empresaValidation) {
         return reply.code(400).send({
           statusCode: 400,
-          error: "Bad Request",
-          message: "Está empresa não existe",
+          error: 'Bad Request',
+          message: 'Está empresa não existe',
         });
       }
     } catch (error) {
       return reply.code(500).send({
         statusCode: 500,
-        error: "Error",
-        message: "Ocorreu um erro na validação do empresa_id",
+        error: 'Error',
+        message: 'Ocorreu um erro na validação do empresa_id',
         details: error.message,
       });
     }

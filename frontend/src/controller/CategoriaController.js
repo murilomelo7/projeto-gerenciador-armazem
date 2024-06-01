@@ -1,22 +1,29 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class CategoriaController {
-  constructor() {
-    this.api = api;
-  }
-
+class CategoriaController extends Controller {
   async create(data) {
-    const response = await this.api.post('/categoria', data);
-    if (response && response.status === 200) {
+    const token = await this.getToken();
+    const response = await this.api.post('/categoria', data, {
+      headers: {
+        token,
+      },
+    });
+
+    if (response.status === 201) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   async update(data) {
+    const token = await this.getToken();
     const { id } = data;
-    const response = await this.api.put(`/categoria/${id}`, data);
-    console.log(response.data);
+    const response = await this.api.put(`/categoria/${id}`, data, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return true;
     }
@@ -24,7 +31,12 @@ class CategoriaController {
   }
 
   async findFirst(id) {
-    const response = await this.api.get(`/categoria/${id}`);
+    const token = await this.getToken();
+    const response = await this.api.get(`/categoria/${id}`, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return response.data;
     }
@@ -32,7 +44,12 @@ class CategoriaController {
   }
 
   async findMany(filters) {
-    const response = await this.api.get('/categoria');
+    const token = await this.getToken();
+    const response = await this.api.get('/categoria', {
+      headers: {
+        token,
+      },
+    });
     console.log(response);
     if (response && response.status === 200) {
       return response.data;
@@ -41,7 +58,12 @@ class CategoriaController {
   }
 
   async delete(id) {
-    const response = await this.api.delete(`/categoria/${id}`);
+    const token = await this.getToken();
+    const response = await this.api.delete(`/categoria/${id}`, {
+      headers: {
+        token,
+      },
+    });
     if (response && response.status === 200) {
       return true;
     }

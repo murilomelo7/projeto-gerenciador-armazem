@@ -1,43 +1,39 @@
-import controller from "../../../controllers/categoria.controller";
-import categoriaMiddleware from "../../../middleware/categoria.middleware";
-import authMiddleware from "../../../middleware/auth.middleware";
+import controller from '../../../controllers/categoria.controller';
+import categoriaMiddleware from '../../../middleware/categoria.middleware';
+import authMiddleware from '../../../middleware/auth.middleware';
 
 class CategoriaRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post("/categoria", {
+    fastify.post('/categoria', {
       preHandler: [authMiddleware.authToken, categoriaMiddleware.create],
       handler: controller.create,
     });
 
-    fastify.put("/categoria/:id", {
+    fastify.put('/categoria/:id', {
       schema: {
         params: {
-          type: "object",
+          type: 'object',
           properties: {
-            id: { type: "number" },
+            id: { type: 'number' },
           },
-          required: ["id"],
+          required: ['id'],
           additionalProperties: false,
         },
       },
-      preHandler: [
-        authMiddleware.authToken,
-        categoriaMiddleware.update,
-        categoriaMiddleware.categoriaExists,
-      ],
+      preHandler: [authMiddleware.authToken, categoriaMiddleware.update, categoriaMiddleware.categoriaExists],
       handler: controller.update,
     });
 
-    fastify.get("/categoria/:id", {
+    fastify.get('/categoria/:id', {
       schema: {
         params: {
-          type: "object",
+          type: 'object',
           properties: {
-            id: { type: "number" },
+            id: { type: 'number' },
           },
-          required: ["id"],
+          required: ['id'],
           additionalProperties: false,
         },
       },
@@ -45,9 +41,24 @@ class CategoriaRoutes {
       handler: controller.findFirst,
     });
 
-    fastify.get("/categoria", {
+    fastify.get('/categoria', {
       preHandler: authMiddleware.authToken,
       handler: controller.findMany,
+    });
+
+    fastify.delete('/categoria/:id', {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'number' },
+          },
+          required: ['id'],
+          additionalProperties: false,
+        },
+      },
+      preHandler: [authMiddleware.authToken, categoriaMiddleware.categoriaExists],
+      handler: controller.delete,
     });
   }
 }

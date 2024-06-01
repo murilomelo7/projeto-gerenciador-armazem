@@ -34,6 +34,8 @@ const CategoriaForm = ({ showModal, onClose, isEdit, initialData }) => {
 
       if (!isEdit) {
         const response = await CategoriaController.create(formData);
+
+        console.log(response);
         if (response) {
           handleClose();
         } else {

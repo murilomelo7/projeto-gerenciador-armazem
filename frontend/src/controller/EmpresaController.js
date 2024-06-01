@@ -1,10 +1,6 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class EmpresaController {
-  constructor() {
-    this.api = api;
-  }
-
+class EmpresaController extends Controller {
   async create(data) {
     const response = await this.api.post('/empresa', data);
     console.log(response);

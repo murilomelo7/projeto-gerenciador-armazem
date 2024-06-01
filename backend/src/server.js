@@ -1,28 +1,29 @@
 // server.js
 
-import Fastify from "fastify";
-import cors from "@fastify/cors";
+import Fastify from 'fastify';
+import cors from '@fastify/cors';
 
 //? Private Admin
-import EmpresaRoutes from "./api/routes/private/admin/empresa.routes";
-import PerfilRoutes from "./api/routes/private/admin/perfil.routes";
-import UsuarioRoutes from "./api/routes/private/admin/usuario.routes";
+import EmpresaRoutes from './api/routes/private/admin/empresa.routes';
+import PerfilRoutes from './api/routes/private/admin/perfil.routes';
+import UsuarioRoutes from './api/routes/private/admin/usuario.routes';
+import NovobancoRoutes from './api/routes/private/admin/novobanco.routes';
 
 //? Private Tenant
-import CategoriaRoutes from "./api/routes/private/tenant/categoria.routes";
-import ProdutoRoutes from "./api/routes/private/tenant/produto.routes";
+import CategoriaRoutes from './api/routes/private/tenant/categoria.routes';
+import ProdutoRoutes from './api/routes/private/tenant/produto.routes';
 
 //? Public
-import LoginRoutes from "./api/routes/public/login.routes";
-import AuthRoutes from "./api/routes/public/auth.routes";
+import LoginRoutes from './api/routes/public/login.routes';
+import AuthRoutes from './api/routes/public/auth.routes';
 
-const environment = "development";
+const environment = 'development';
 
 const loggerConfig = () => {
-  if (environment === "development") {
+  if (environment === 'development') {
     return {
       transport: {
-        target: "pino-pretty",
+        target: 'pino-pretty',
         options: {
           colorize: true,
         },
@@ -43,8 +44,8 @@ class Server {
 
   initializeRoutes() {
     this.fastify.register(cors, {
-      origin: ["http://localhost:5173"],
-      methods: ["GET", "POST", "PUT", "DELETE"],
+      origin: ['http://localhost:5173'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
       credentials: true,
     });
 
@@ -56,13 +57,14 @@ class Server {
     PerfilRoutes.registerRoutes(this.fastify);
     ProdutoRoutes.registerRoutes(this.fastify);
     UsuarioRoutes.registerRoutes(this.fastify);
+    NovobancoRoutes.registerRoutes(this.fastify);
   }
 
   async start() {
     try {
       await this.fastify.listen({ port: 3000 });
-      this.fastify.log.info("Servidor esta na porta 3000");
-      this.fastify.log.info("Link: http://localhost:3000");
+      this.fastify.log.info('Servidor esta na porta 3000');
+      this.fastify.log.info('Link: http://localhost:3000');
     } catch (error) {
       this.fastify.log.error(error);
       process.exit(1);
@@ -72,9 +74,9 @@ class Server {
   async close() {
     try {
       await this.fastify.close();
-      this.fastify.log.info("Servidor fechado com sucesso");
+      this.fastify.log.info('Servidor fechado com sucesso');
     } catch (error) {
-      this.fastify.log.error("Error closing server:", error);
+      this.fastify.log.error('Error closing server:', error);
       process.exit(1);
     }
   }

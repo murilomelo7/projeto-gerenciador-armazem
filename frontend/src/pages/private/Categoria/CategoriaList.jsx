@@ -7,7 +7,7 @@ import CategoriaController from '@/controller/CategoriaController';
 
 const initData = {
   nome: '',
-  acessos: '',
+  descricao: '',
 };
 const CategoriaList = () => {
   const [showModal, setShowModal] = useState(false);

@@ -1,10 +1,6 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class PerfilController {
-  constructor() {
-    this.api = api;
-  }
-
+class PerfilController extends Controller {
   async create(data) {
     const response = await this.api.post('/perfil', data);
     if (response && response.status === 200) {

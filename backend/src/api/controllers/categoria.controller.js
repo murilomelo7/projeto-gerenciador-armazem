@@ -1,11 +1,11 @@
-import prisma from "../../database/PrismaService";
+import prisma from '../../database/PrismaService';
 
 class CategoriaController {
   constructor() {}
 
   async create(request, reply) {
     try {
-      const data = request.body;
+      const data = { empresa_id: request.empresa_id, ...request.body };
       const categoria = await prisma.categoria.create({ data });
       reply.code(201).send(categoria);
     } catch (error) {
@@ -17,7 +17,7 @@ class CategoriaController {
   async update(request, reply) {
     try {
       const { id } = request.params;
-      const { empresa_id } = request.empresa_id;
+      const { empresa_id } = request;
 
       const where = {
         id,
@@ -37,7 +37,7 @@ class CategoriaController {
     try {
       const { id } = request.params;
 
-      const { empresa_id } = request.empresa_id;
+      const { empresa_id } = request;
 
       const where = {
         id,
@@ -49,8 +49,8 @@ class CategoriaController {
       if (!categoria) {
         reply.code(404).send({
           statusCode: 404,
-          error: "Not Found",
-          message: "Categoria não encontrada",
+          error: 'Not Found',
+          message: 'Categoria não encontrada',
         });
       }
 
@@ -65,7 +65,7 @@ class CategoriaController {
     try {
       const queryParams = request.query;
 
-      const { empresa_id } = request.empresa_id;
+      const { empresa_id } = request;
 
       const where = {
         empresa_id,
@@ -79,12 +79,32 @@ class CategoriaController {
       if (!categorias) {
         reply.code(404).send({
           statusCode: 404,
-          error: "Not Found",
-          message: "Categorias não encontradas",
+          error: 'Not Found',
+          message: 'Categorias não encontradas',
         });
       }
 
       reply.code(200).send(categorias);
+    } catch (error) {
+      request.log.error(error);
+      reply.code(500).send(error);
+    }
+  }
+  async delete(request, reply) {
+    try {
+      const { id } = request.params;
+
+      const { empresa_id } = request;
+
+      const where = {
+        id,
+        empresa_id,
+      };
+      await prisma.categoria.delete({ where });
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Categoria removida com sucesso',
+      });
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);

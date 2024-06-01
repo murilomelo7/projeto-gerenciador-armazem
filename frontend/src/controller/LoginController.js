@@ -1,10 +1,6 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class LoginController {
-  constructor() {
-    this.api = api;
-  }
-
+class LoginController extends Controller {
   async login(data) {
     const response = await this.api.post(`/login`, data);
     if (response && response.status === 200) {

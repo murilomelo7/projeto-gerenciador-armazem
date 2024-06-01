@@ -1,10 +1,6 @@
-import api from '@/services/api';
+import Controller from './_Controller';
 
-class AuthController {
-  constructor() {
-    this.api = api;
-  }
-
+class AuthController extends Controller {
   async testToken(token) {
     const headers = {
       token,
@@ -27,7 +23,6 @@ class AuthController {
     };
     const response = await this.api.put(`/clean-token`, {}, { headers });
     if (response && response.status === 200) {
-      console.log('aaaaaaaaaaaaaaaaaa');
       return true;
     }
     return false;

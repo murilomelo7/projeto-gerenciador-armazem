@@ -1,4 +1,4 @@
-import prisma from "../../database/PrismaService";
+import prisma from '../../database/PrismaService';
 
 class AuthMiddleware {
   constructor() {}
@@ -8,8 +8,8 @@ class AuthMiddleware {
       if (!request.headers.token) {
         return reply.code(400).send({
           statusCode: 400,
-          error: "Bad Request",
-          message: "Token não informado",
+          error: 'Bad Request',
+          message: 'Token não informado',
         });
       }
 
@@ -20,12 +20,13 @@ class AuthMiddleware {
       });
 
       if (!tokenValidation) {
-        reply.code(404).send({
+        return reply.code(404).send({
           statusCode: 404,
-          error: "Not Found",
-          message: "Token não encontrado",
+          error: 'Not Found',
+          message: 'Token não encontrado',
         });
       }
+
       request.empresa_id = tokenValidation.empresa_id;
     } catch (error) {
       request.log.error(error);
