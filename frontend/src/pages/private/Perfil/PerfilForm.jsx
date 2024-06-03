@@ -3,7 +3,6 @@ import { Button, Col, Form, Input, Message, Modal, Row, useToaster } from 'rsuit
 import { createSchema, updateSchema } from './schema/PerfilFormSchema';
 import { z } from 'zod';
 import PerfilController from '@/controller/PerfilController';
-import NotificationWrapper from '@/components/NotificationWrapper/NotificationWrapper';
 
 const initData = {
   nome: '',
@@ -49,7 +48,7 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
           toaster.push(message('success', response.message), { placement: 'topEnd' });
           handleClose();
         } else {
-          console.log('erro');
+          toaster.push(message('error', response.message), { placement: 'topEnd' });
         }
       } else {
         const response = await PerfilController.update(formData);
@@ -65,7 +64,6 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
           newErrors[error.path[0]] = error.message;
         });
         setErrors(newErrors);
-        NotificationWrapper({ type: 'error', message: 'Ocorreu um erro ao processar a operação.' });
       }
     }
   };
