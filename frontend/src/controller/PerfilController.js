@@ -19,9 +19,15 @@ class PerfilController extends Controller {
     const { id } = data;
     const response = await this.api.put(`/perfil/${id}`, data);
     if (response && response.status === 200) {
-      return response.data.message;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return response.error;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async findFirst(id) {
@@ -29,7 +35,7 @@ class PerfilController extends Controller {
     if (response && response.status === 200) {
       return response.data;
     }
-    return false;
+    return [];
   }
 
   async findMany(filters) {
@@ -44,9 +50,15 @@ class PerfilController extends Controller {
   async delete(id) {
     const response = await this.api.delete(`/perfil/${id}`);
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async getSelectData() {

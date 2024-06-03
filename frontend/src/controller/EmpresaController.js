@@ -6,18 +6,30 @@ class EmpresaController extends Controller {
     console.log(response);
 
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async update(data) {
     const { id } = data;
     const response = await this.api.put(`/empresa/${id}`, data);
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async findFirst(id) {
@@ -40,9 +52,15 @@ class EmpresaController extends Controller {
   async delete(id) {
     const response = await this.api.delete(`/empresa/${id}`);
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async getSelectData() {

@@ -24,7 +24,7 @@ class EmpresaController {
 
       reply.code(200).send({
         statusCode: 200,
-        message: "Empresa criada com sucesso",
+        message: "Empresa cadastrada com sucesso",
         data: { empresa, usuarioNovo },
       });
     } catch (error) {
@@ -42,8 +42,11 @@ class EmpresaController {
 
       const empresa = await prisma.empresa.update({ data, where });
 
-      reply.code(200).send(empresa);
-    } catch (error) {
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Empresa atualizada com sucesso',
+      });
+      } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
     }

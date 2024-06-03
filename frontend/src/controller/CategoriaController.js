@@ -9,11 +9,16 @@ class CategoriaController extends Controller {
       },
     });
 
-    if (response.status === 201) {
-      return true;
-    } else {
-      return false;
+    if (response.status === 200) {
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async update(data) {
@@ -25,9 +30,15 @@ class CategoriaController extends Controller {
       },
     });
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async findFirst(id) {
@@ -65,9 +76,15 @@ class CategoriaController extends Controller {
       },
     });
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async getSelectData() {

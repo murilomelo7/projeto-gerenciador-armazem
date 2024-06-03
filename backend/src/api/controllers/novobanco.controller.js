@@ -42,7 +42,7 @@ class NovoBanco {
 
       reply.code(200).send({
         statusCode: 200,
-        message: 'Novo banco criado com sucesso',
+        message: 'Novo banco cadastrado com sucesso',
         data: { novoUsuario },
       });
     } catch (error) {

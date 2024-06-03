@@ -14,7 +14,10 @@ class UsuarioController {
       const novoUsuario = await prisma.usuario.create({
         data: request.body,
       });
-      reply.code(200).send(novoUsuario);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Novo usuário cadastrado com sucesso',
+      });    
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -31,7 +34,10 @@ class UsuarioController {
         data,
         where,
       });
-      reply.code(200).send(usuarioAtualizado);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Usuário atualizado com sucesso',
+      });        
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -93,7 +99,10 @@ class UsuarioController {
         where: { id, empresa_id },
       });
 
-      reply.code(200).send(usuario);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Usuário removido com sucesso',
+      });    
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);

@@ -14,7 +14,10 @@ class ProdutoController {
 
       const produto = await prisma.produto.create({ data });
 
-      reply.code(200).send(produto);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Novo produto cadastrado com sucesso',
+      });
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -28,20 +31,23 @@ class ProdutoController {
 
       const data_validade = request.body.data_validade ? new Date(data_validade) : null;
       const quantidade_produto = Number(request.body.quantidade_produto);
-
-      request.body = { ...request.body, data_validade, quantidade_produto };
-
+    
+      const data = { ...request.body, data_validade, quantidade_produto };
+      
       const where = {
         id,
         empresa_id,
       };
 
       const produto = await prisma.produto.update({
-        data: request.body,
+        data,
         where,
       });
 
-      reply.code(200).send(produto);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Produto atualizado com sucesso',
+      });
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -103,8 +109,11 @@ class ProdutoController {
 
       await prisma.produto.delete({ where });
 
-      reply.code(200).send();
-    } catch (error) {
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Produto removido com sucesso',
+      });   
+     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
     }
@@ -183,6 +192,30 @@ class ProdutoController {
       const saidaRealizada = prisma.controleProduto.create({ data: dataSaida });
 
       reply.code(200).send(saidaRealizada);
+    } catch (error) {
+      request.log.error(error);
+      reply.code(500).send(error);
+    }
+  }
+
+  async findManyEntradasSaidas(request, reply){
+    try {
+      const { empresa_id } = request;
+
+      const where = {
+        empresa_id,
+      };
+
+      const include = {
+        produto: true,
+      };
+      const orderBy = {
+        codigo: 'asc',
+      };
+
+      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy });
+
+      reply.code(200).send(controleProduto);
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);

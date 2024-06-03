@@ -1,4 +1,4 @@
-import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
+import { Button, Col, Panel, Row, Table, Input, IconButton, useToaster, Message } from 'rsuite';
 import { Plus, Edit, Trash } from '@rsuite/icons';
 
 import { Container } from 'rsuite';
@@ -11,6 +11,8 @@ const EmpresaList = () => {
   const [selectedEmpresa, setSelectedEmpresa] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [empresas, setEmpresas] = useState([]);
+
+  const toaster = useToaster();
 
   const init = async () => {
     try {
@@ -40,8 +42,12 @@ const EmpresaList = () => {
   const handleRemove = async rowData => {
     const { id } = rowData;
     const response = await EmpresaController.delete(id);
-    if (response) {
+    if (response && !response.error) {
+      toaster.push(message('success', response.message), { placement: 'topEnd' });
       handleAfterSubmit();
+    }else{
+      console.log('jsndfsndfkn')
+      toaster.push(message('error', response.message), { placement: 'topEnd' });
     }
   };
 
@@ -50,7 +56,15 @@ const EmpresaList = () => {
     init();
   };
 
+  const message = (type, message) => (
+    <Message showIcon type={type} closable>
+      {message}
+    </Message>
+  );
+
   return (
+   <>
+   {message}
     <Container>
       <EmpresaForm showModal={showModal} onClose={handleAfterSubmit} isEdit={isEdit} initialData={selectedEmpresa} />
       <Panel bordered style={{ borderRadius: 10 }}>
@@ -137,6 +151,7 @@ const EmpresaList = () => {
         </Row>
       </Panel>
     </Container>
+   </>
   );
 };
 

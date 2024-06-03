@@ -28,10 +28,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
     const perfisResponse = await PerfilController.getSelectData();
     setPerfis(perfisResponse);
 
-    console.log(initialData);
-
     if (!isEdit) {
-      console.log('jdnsfjnsdjkfnsjdnfjsndf');
       setFormData(initData);
     } else {
       setFormData(initialData);
@@ -69,9 +66,10 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
       } else {
         const response = await EmpresaController.update(formData);
         if (response) {
+          toaster.push(message('success', response.message), { placement: 'topEnd' });
           handleClose();
         } else {
-          console.log('erro');
+          toaster.push(message('error', response.message), { placement: 'topEnd' });
         }
       }
     } catch (e) {

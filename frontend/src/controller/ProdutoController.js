@@ -9,24 +9,38 @@ class ProdutoController extends Controller {
       },
     });
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async update(data) {
     const token = await this.getToken();
 
-    const { id } = data;
-    const response = await this.api.put(`/produto/${id}`, data, {
+    const { id, categoriaFk, ...dataWithoutId } = data;
+
+    const response = await this.api.put(`/produto/${id}`, dataWithoutId, {
       headers: {
         token,
       },
     });
+
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async findFirst(id) {
@@ -37,9 +51,15 @@ class ProdutoController extends Controller {
       },
     });
     if (response && response.status === 200) {
-      return response.data;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async findMany(filters) {
@@ -65,10 +85,15 @@ class ProdutoController extends Controller {
     });
 
     if (response && response.status === 200) {
-      console.log(response);
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 }
 

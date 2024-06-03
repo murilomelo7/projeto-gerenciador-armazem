@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Message, Modal, Row, useToaster } from 'rsuite';
-import { createSchema, updateSchema } from './schema/PerfilFormSchema';
 import { z } from 'zod';
-import PerfilController from '@/controller/PerfilController';
+import ControleProdutoController from '@/controller/ControleProdutoController';
 
 const initData = {
   nome: '',
   acessos: '',
 };
 
-const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
+const EntradasSaidasForm = ({ showModal, onClose, isEdit, initialData }) => {
   const [formData, setFormData] = useState(initData);
   const [errors, setErrors] = useState({});
 
@@ -43,7 +42,7 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
       schema.parse(formData);
 
       if (!isEdit) {
-        const response = await PerfilController.create(formData);
+        const response = await ControleProdutoController.create(formData);
         if (response && !response.error) {
           toaster.push(message('success', response.message), { placement: 'topEnd' });
           handleClose();
@@ -51,7 +50,7 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
           toaster.push(message('error', response.message), { placement: 'topEnd' });
         }
       } else {
-        const response = await PerfilController.update(formData);
+        const response = await ControleProdutoController.update(formData);
         if (response && !response.error) {
           toaster.push(message('success', response.message), { placement: 'topEnd' });
           handleClose();
@@ -130,4 +129,4 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
   );
 };
 
-export default PerfilForm;
+export default EntradasSaidasForm;

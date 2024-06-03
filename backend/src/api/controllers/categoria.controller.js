@@ -7,7 +7,10 @@ class CategoriaController {
     try {
       const data = { empresa_id: request.empresa_id, ...request.body };
       const categoria = await prisma.categoria.create({ data });
-      reply.code(201).send(categoria);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Nova categoria cadastrada com sucesso',
+      });    
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -27,7 +30,10 @@ class CategoriaController {
 
       const categoria = await prisma.categoria.update({ data, where });
 
-      reply.code(200).send(categoria);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Categoria atualizada com sucesso',
+      });     
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);

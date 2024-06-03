@@ -10,7 +10,7 @@ class PerfilController {
       });
       reply.code(200).send({
         statusCode: 200,
-        message: 'Novo perfil criado com sucesso',
+        message: 'Novo perfil cadastrado com sucesso',
       });
     } catch (error) {
       request.log.error(error);
@@ -27,7 +27,10 @@ class PerfilController {
         where: { id },
       });
 
-      reply.code(200).send(perfil);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Perfil atualizado com sucesso',
+      });    
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);

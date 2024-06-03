@@ -4,9 +4,15 @@ class UsuarioController extends Controller {
   async create(data) {
     const response = await this.api.post('/usuario', data);
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async update(data) {
@@ -14,9 +20,15 @@ class UsuarioController extends Controller {
 
     const response = await this.api.put(`/usuario/${id}`, dados);
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async findFirst(id) {
@@ -39,9 +51,15 @@ class UsuarioController extends Controller {
   async delete(id) {
     const response = await this.api.delete(`/usuario/${id}`);
     if (response && response.status === 200) {
-      return true;
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 }
 
