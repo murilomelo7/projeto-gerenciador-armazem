@@ -46,7 +46,7 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
         navigate('/usuario');
         break;
       case 'controle-entradas-saidas':
-        navigate('/entradas-saidas');
+        navigate('/entrada-saida');
         break;
       default:
         break;
@@ -57,7 +57,7 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
     <div style={{ width: expanded ? 260 : 0, display: 'inline-table' }}>
       <Sidenav appearance={appearance} expanded={expanded} openKeys={openKeys} onOpenChange={onOpenChange}>
         <Sidenav.Toggle onToggle={onExpand} />
-        <Sidenav.Body style={{ height: '90vh' }}>
+        <Sidenav.Body style={{ height: '100vh' }}>
           <Nav {...navProps} onSelect={handleSelect}>
             <Nav.Item eventKey="dashboard" active icon={<Dashboard />}>
               Dashboard

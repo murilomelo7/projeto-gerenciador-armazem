@@ -1,43 +1,39 @@
-import controller from "../../../controllers/produto.controller";
-import produtoMiddleware from "../../../middleware/produto.middleware";
-import authMiddleware from "../../../middleware/auth.middleware";
+import controller from '../../../controllers/produto.controller';
+import produtoMiddleware from '../../../middleware/produto.middleware';
+import authMiddleware from '../../../middleware/auth.middleware';
 
 class ProdutoRoutes {
   constructor() {}
 
   async registerRoutes(fastify, options) {
-    fastify.post("/produto", {
-      preHandler: produtoMiddleware.create,
+    fastify.post('/produto', {
+      preHandler: [authMiddleware.authToken, produtoMiddleware.create],
       handler: controller.create,
     });
 
-    fastify.put("/produto/:id", {
+    fastify.put('/produto/:id', {
       schema: {
         params: {
-          type: "object",
+          type: 'object',
           properties: {
-            id: { type: "number" },
+            id: { type: 'number' },
           },
-          required: ["id"],
+          required: ['id'],
           additionalProperties: false,
         },
       },
-      preHandler: [
-        authMiddleware.authToken,
-        produtoMiddleware.update,
-        produtoMiddleware.produtoExists,
-      ],
+      preHandler: [authMiddleware.authToken, produtoMiddleware.update, produtoMiddleware.produtoExists],
       handler: controller.update,
     });
 
-    fastify.get("/produto/:id", {
+    fastify.get('/produto/:id', {
       schema: {
         params: {
-          type: "object",
+          type: 'object',
           properties: {
-            id: { type: "number" },
+            id: { type: 'number' },
           },
-          required: ["id"],
+          required: ['id'],
           additionalProperties: false,
         },
       },
@@ -45,19 +41,19 @@ class ProdutoRoutes {
       handler: controller.findFirst,
     });
 
-    fastify.get("/produto", {
+    fastify.get('/produto', {
       preHandler: [authMiddleware.authToken],
       handler: controller.findMany,
     });
 
-    fastify.delete("/produto/:id", {
+    fastify.delete('/produto/:id', {
       schema: {
         params: {
-          type: "object",
+          type: 'object',
           properties: {
-            id: { type: "number" },
+            id: { type: 'number' },
           },
-          required: ["id"],
+          required: ['id'],
           additionalProperties: false,
         },
       },

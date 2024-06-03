@@ -3,19 +3,25 @@ import Controller from './_Controller';
 class PerfilController extends Controller {
   async create(data) {
     const response = await this.api.post('/perfil', data);
-    if (response && response.status === 200) {
-      return true;
+    if (response.status === 200) {
+      return {
+        error: false,
+        message: response.data.message,
+      };
     }
-    return false;
+    return {
+      error: true,
+      message: response.data.error,
+    };
   }
 
   async update(data) {
     const { id } = data;
     const response = await this.api.put(`/perfil/${id}`, data);
     if (response && response.status === 200) {
-      return true;
+      return response.data.message;
     }
-    return false;
+    return response.error;
   }
 
   async findFirst(id) {

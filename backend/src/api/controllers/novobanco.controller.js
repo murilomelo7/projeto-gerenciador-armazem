@@ -19,6 +19,7 @@ class NovoBanco {
       const novaEmpresa = await prisma.empresa.create({ data: dataEmpresa });
 
       const dataPerfilAdmin = {
+        codigo: '1',
         nome: 'Administrador',
         acessos: 'admin',
       };

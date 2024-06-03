@@ -24,6 +24,7 @@ class CategoriaController {
         empresa_id,
       };
       const data = request.body;
+
       const categoria = await prisma.categoria.update({ data, where });
 
       reply.code(200).send(categoria);
@@ -74,7 +75,10 @@ class CategoriaController {
       // Filtro params por id
       queryParams.id ? (where.id = queryParams.id) : undefined;
 
-      const categorias = await prisma.categoria.findMany({ where });
+      const orderBy = {
+        codigo: 'asc',
+      };
+      const categorias = await prisma.categoria.findMany({ where, orderBy });
 
       if (!categorias) {
         reply.code(404).send({

@@ -15,16 +15,14 @@ const PerfilList = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [perfis, setPerfis] = useState([]);
 
-
   const init = async () => {
-    const response = await  PerfilController.findMany();
+    const response = await PerfilController.findMany();
     setPerfis(response);
-  }
-  
+  };
+
   useEffect(() => {
     init();
   }, []);
-
 
   const handleCreate = () => {
     setSelectedPerfil(initData);
@@ -43,18 +41,13 @@ const PerfilList = () => {
   };
 
   const handleAfterSubmit = () => {
-    init();  
+    init();
     setShowModal(false);
-  }
+  };
 
   return (
     <Container>
-      <PerfilForm
-        showModal={showModal}
-        onClose={handleAfterSubmit}
-        isEdit={isEdit}
-        initialData={selectedPerfil}
-      />
+      <PerfilForm showModal={showModal} onClose={handleAfterSubmit} isEdit={isEdit} initialData={selectedPerfil} />
       <Panel bordered style={{ borderRadius: 10 }}>
         <Row style={{ textAlign: 'center' }}>
           <Col md={22}>
@@ -97,15 +90,7 @@ const PerfilList = () => {
           <Col md={24}>
             <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
               <div style={{ overflowX: 'auto' }}>
-                <Table
-                  height={600}
-                  bordered
-                  cellBordered
-                  autoHeight
-                  affixHeader
-                  affixHorizontalScrollbar
-                  data={perfis}
-                >
+                <Table height={500} virtualized data={perfis}>
                   <Table.Column width={100} fixed="left" align="center">
                     <Table.HeaderCell>ID</Table.HeaderCell>
                     <Table.Cell dataKey="id" />

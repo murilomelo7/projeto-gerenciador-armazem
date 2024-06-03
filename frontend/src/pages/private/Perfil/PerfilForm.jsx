@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Modal, Row, SelectPicker } from 'rsuite';
 import { createSchema, updateSchema } from './schema/PerfilFormSchema';
 import { z } from 'zod';
 import PerfilController from '@/controller/PerfilController';
+import NotificationWrapper from '@/components/NotificationWrapper/NotificationWrapper';
 
 const initData = {
   nome: '',
@@ -13,9 +14,17 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
   const [formData, setFormData] = useState(initData);
   const [errors, setErrors] = useState({});
 
+  const init = async () => {
+    if (!isEdit) {
+      setFormData(initData);
+    } else {
+      setFormData(initialData);
+    }
+  };
+
   useEffect(() => {
-    setFormData(initialData);
-  }, [initialData]);
+    init();
+  }, [showModal]);
 
   const handleClose = () => {
     setErrors({});
@@ -34,8 +43,10 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
 
       if (!isEdit) {
         const response = await PerfilController.create(formData);
-        if (response) {
+        if (response && !response.error) {
           handleClose();
+        } else {
+          console.log('erro');
         }
       } else {
         const response = await PerfilController.update(formData);
@@ -46,13 +57,12 @@ const PerfilForm = ({ showModal, onClose, isEdit, initialData }) => {
     } catch (e) {
       console.log(e);
       if (e instanceof z.ZodError) {
-        if (e instanceof z.ZodError) {
-          const newErrors = {};
-          e.errors.forEach(error => {
-            newErrors[error.path[0]] = error.message;
-          });
-          setErrors(newErrors);
-        }
+        const newErrors = {};
+        e.errors.forEach(error => {
+          newErrors[error.path[0]] = error.message;
+        });
+        setErrors(newErrors);
+        NotificationWrapper({ type: 'error', message: 'Ocorreu um erro ao processar a operação.' });
       }
     }
   };

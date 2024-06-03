@@ -25,15 +25,20 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
   const init = async () => {
     const perfisResponse = await PerfilController.getSelectData();
     setPerfis(perfisResponse);
+
+    console.log(initialData);
+
+    if (!isEdit) {
+      console.log('jdnsfjnsdjkfnsjdnfjsndf');
+      setFormData(initData);
+    } else {
+      setFormData(initialData);
+    }
   };
 
   useEffect(() => {
     init();
-  }, []);
-
-  useEffect(() => {
-    setFormData(initialData);
-  }, [initialData]);
+  }, [showModal]);
 
   const handleClose = () => {
     setErrors({});
@@ -81,7 +86,7 @@ const EmpresaForm = ({ showModal, onClose, isEdit, initialData }) => {
   };
 
   return (
-    <Modal size="lg" open={showModal} onClose={handleClose}>
+    <Modal backdrop="static" size="lg" open={showModal} onClose={handleClose}>
       <Modal.Header>
         <Modal.Title style={{ fontSize: 22 }}>{isEdit ? 'Editar Empresa' : 'Criar Empresa'}</Modal.Title>
       </Modal.Header>

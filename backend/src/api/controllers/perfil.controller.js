@@ -1,4 +1,4 @@
-import prisma from "../../database/PrismaService";
+import prisma from '../../database/PrismaService';
 
 class PerfilController {
   constructor() {}
@@ -8,7 +8,10 @@ class PerfilController {
       const perfil = await prisma.perfil.create({
         data: request.body,
       });
-      reply.code(201).send(perfil);
+      reply.code(200).send({
+        statusCode: 200,
+        message: 'Novo perfil criado com sucesso',
+      });
     } catch (error) {
       request.log.error(error);
       reply.code(500).send(error);
@@ -42,8 +45,8 @@ class PerfilController {
       if (!perfil) {
         reply.code(404).send({
           statusCode: 404,
-          error: "Not Found",
-          message: "Nenhum perfil encontrado",
+          error: 'Not Found',
+          message: 'Nenhum perfil encontrado',
         });
       }
 
@@ -58,15 +61,15 @@ class PerfilController {
     try {
       const perfis = await prisma.perfil.findMany({
         orderBy: {
-          id: "asc",
+          id: 'asc',
         },
       });
 
       if (!perfis) {
         reply.code(404).send({
           statusCode: 404,
-          error: "Not Found",
-          message: "Nenhum perfil encontrado",
+          error: 'Not Found',
+          message: 'Nenhum perfil encontrado',
         });
       }
 
@@ -85,7 +88,7 @@ class PerfilController {
 
       reply.code(200).send({
         statusCode: 200,
-        message: "Perfil removido com sucesso",
+        message: 'Perfil removido com sucesso',
       });
     } catch (error) {
       request.log.error(error);

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const createSchema = z.object({
   nome: z.string().min(1).max(80),
@@ -17,5 +17,16 @@ export const updateSchema = z.object({
   email: z.string().email(),
   cpf: z.string().min(11).max(11),
   perfil_id: z.number().int().min(1),
+  empresa_id: z.number().min(1),
+});
+
+export const entradaSchema = z.object({
+  quantidade: z.string().min(1),
+  produto_id: z.number().min(1),
+  empresa_id: z.number().min(1),
+});
+export const saidaSchema = z.object({
+  quantidade: z.string().min(1),
+  produto_id: z.number().min(1),
   empresa_id: z.number().min(1),
 });

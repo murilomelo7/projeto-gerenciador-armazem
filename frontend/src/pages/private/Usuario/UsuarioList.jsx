@@ -5,17 +5,9 @@ import UsuarioForm from './UsuarioForm';
 import { useEffect, useState } from 'react';
 import UsuarioController from '@/controller/UsuarioController';
 
-const initData = {
-  nome: '',
-  cpf: '',
-  senha: '',
-  email: '',
-  usuario: '',
-};
-
 const UsuarioList = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedUsuario, setSelectedUsuario] = useState(initData);
+  const [selectedUsuario, setSelectedUsuario] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
 
@@ -33,7 +25,7 @@ const UsuarioList = () => {
   }, []);
 
   const handleCreate = () => {
-    setSelectedUsuario(initData);
+    setSelectedUsuario([]);
     setIsEdit(false);
     setShowModal(true);
   };
@@ -103,15 +95,7 @@ const UsuarioList = () => {
           <Col md={24}>
             <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
               <div style={{ overflowX: 'auto' }}>
-                <Table
-                  height={600}
-                  bordered
-                  cellBordered
-                  autoHeight
-                  affixHeader
-                  affixHorizontalScrollbar
-                  data={usuarios}
-                >
+                <Table height={500} virtualized data={usuarios}>
                   <Table.Column width={100} fixed="left" align="center">
                     <Table.HeaderCell>ID</Table.HeaderCell>
                     <Table.Cell dataKey="id" />

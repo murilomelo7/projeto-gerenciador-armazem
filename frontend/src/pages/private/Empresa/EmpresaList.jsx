@@ -6,20 +6,9 @@ import EmpresaController from '@/controller/EmpresaController';
 import EmpresaForm from './EmpresaForm';
 import { useEffect, useState } from 'react';
 
-const initData = {
-  tipo: '',
-  cpfCnpj: '',
-  nome: '',
-  email: '',
-  telefone: '',
-  endereco: '',
-  cep: '',
-  estado: '',
-  cidade: '',
-};
 const EmpresaList = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedEmpresa, setSelectedEmpresa] = useState(initData);
+  const [selectedEmpresa, setSelectedEmpresa] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [empresas, setEmpresas] = useState([]);
 
@@ -37,7 +26,7 @@ const EmpresaList = () => {
   }, []);
 
   const handleCreate = () => {
-    setSelectedEmpresa(initData);
+    setSelectedEmpresa();
     setIsEdit(false);
     setShowModal(true);
   };
@@ -105,15 +94,7 @@ const EmpresaList = () => {
           <Col md={24}>
             <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
               <div style={{ overflowX: 'auto' }}>
-                <Table
-                  height={600}
-                  bordered
-                  cellBordered
-                  autoHeight
-                  affixHeader
-                  affixHorizontalScrollbar
-                  data={empresas}
-                >
+                <Table height={500} virtualized data={empresas}>
                   <Table.Column width={100} fixed="left" align="center">
                     <Table.HeaderCell>ID</Table.HeaderCell>
                     <Table.Cell dataKey="id" />

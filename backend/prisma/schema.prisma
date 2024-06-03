@@ -40,13 +40,12 @@ model Empresa {
   status      String    @default("ativo") @db.VarChar(20)
   observacoes String?   @db.Text
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+  updatedAt   DateTime? @map("updated_at") @db.Timestamp(6)
 
-  usuarios   Usuario[]        @relation("UsuarioEmpresa")
-  categorias Categoria[]      @relation("CategoriaEmpresa")
-  produtos   Produto[]        @relation("ProdutoEmpresa")
-  entradas   EntradaProduto[] @relation("EntradaProdutoEmpresa")
-  saidas     SaidaProduto[]   @relation("SaidaProdutoEmpresa")
+  usuarios   Usuario[]         @relation("UsuarioEmpresa")
+  categorias Categoria[]       @relation("CategoriaEmpresa")
+  produtos   Produto[]         @relation("ProdutoEmpresa")
+  entradas   ControleProduto[] @relation("ControleProdutoEmpresa")
 
   @@map("empresa")
 }
@@ -62,7 +61,7 @@ model Usuario {
   perfil_id  Int
   empresa_id Int
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+  updatedAt  DateTime? @map("updated_at") @db.Timestamp(6)
 
   // Define os relacionamentos
   perfilFk  Perfil?  @relation("UsuarioPerfil", fields: [perfil_id], references: [id])
@@ -73,10 +72,11 @@ model Usuario {
 
 model Perfil {
   id        Int       @id @default(autoincrement())
+  codigo    String?   @db.VarChar(60)
   nome      String    @db.VarChar(80)
   acessos   String    @db.VarChar(40)
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+  updatedAt DateTime? @map("updated_at") @db.Timestamp(6)
 
   perfis Usuario[] @relation("UsuarioPerfil")
 
@@ -85,11 +85,12 @@ model Perfil {
 
 model Categoria {
   id         Int       @id @default(autoincrement())
+  codigo     String?   @db.VarChar(60)
   empresa_id Int
   nome       String    @db.VarChar(128)
   descricao  String    @db.Text
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+  updatedAt  DateTime? @map("updated_at") @db.Timestamp(6)
 
   empresaFk Empresa? @relation("CategoriaEmpresa", fields: [empresa_id], references: [id])
 
@@ -100,6 +101,7 @@ model Categoria {
 
 model Produto {
   id                 Int       @id @default(autoincrement())
+  codigo             String?   @db.VarChar(60)
   empresa_id         Int
   nome               String    @db.VarChar(128)
   categoria_id       Int
@@ -107,45 +109,29 @@ model Produto {
   quantidade_produto Int
   data_validade      DateTime? @db.Timestamp(6)
   createdAt          DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+  updatedAt          DateTime? @map("updated_at") @db.Timestamp(6)
 
-  empresaFk   Empresa?  @relation("ProdutoEmpresa", fields: [empresa_id], references: [id])
-  categoriaFk Categoria @relation("ProdutoCategoria", fields: [categoria_id], references: [id])
+  empresaFk   Empresa?   @relation("ProdutoEmpresa", fields: [empresa_id], references: [id])
+  categoriaFk Categoria? @relation("ProdutoCategoria", fields: [categoria_id], references: [id])
 
-  EntradaProduto EntradaProduto[]
-  SaidaProduto   SaidaProduto[]
+  ControleProduto ControleProduto[]
 
   @@map("produto")
 }
 
-model EntradaProduto {
+model ControleProduto {
   id           Int      @id @default(autoincrement())
+  tipo         String   @db.VarChar(128)
   empresa_id   Int
   produto_id   Int
   quantidade   Int
   data_entrada DateTime @db.Timestamp(6)
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+  updatedAt    DateTime @map("updated_at") @db.Timestamp(6)
 
-  empresaFk Empresa? @relation("EntradaProdutoEmpresa", fields: [empresa_id], references: [id])
-
-  produto Produto @relation(fields: [produto_id], references: [id])
-
-  @@map("entrada_produto")
-}
-
-model SaidaProduto {
-  id         Int      @id @default(autoincrement())
-  empresa_id Int
-  produto_id Int
-  quantidade Int
-  data_saida DateTime @db.Timestamp(6)
-  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
-
-  empresaFk Empresa? @relation("SaidaProdutoEmpresa", fields: [empresa_id], references: [id])
+  empresaFk Empresa? @relation("ControleProdutoEmpresa", fields: [empresa_id], references: [id])
 
   produto Produto @relation(fields: [produto_id], references: [id])
 
-  @@map("saida_produto")
+  @@map("controle_produto")
 }

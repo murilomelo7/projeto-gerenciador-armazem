@@ -1,11 +1,12 @@
 import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
 import { Plus, Edit, Trash } from '@rsuite/icons';
 import { Container } from 'rsuite';
-import CategoriaForm from './CategoriaForm';
+import EntradasForm from './EntradasForm';
+import SaidasForm from './SaidasForm';
 import { useEffect, useState } from 'react';
-import CategoriaController from '@/controller/CategoriaController';
+import ProdutoController from '@/controller/ProdutoController';
 
-const CategoriaList = () => {
+const EntradasSaidasList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPerfil, setSelectedPerfil] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -140,4 +141,4 @@ const CategoriaList = () => {
   );
 };
 
-export default CategoriaList;
+export default EntradasSaidasList;

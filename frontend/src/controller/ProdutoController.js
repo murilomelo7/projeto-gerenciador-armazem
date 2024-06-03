@@ -3,7 +3,7 @@ import Controller from './_Controller';
 class ProdutoController extends Controller {
   async create(data) {
     const token = await this.getToken();
-    const response = await this.api.post('/perfil', data, {
+    const response = await this.api.post('/produto', data, {
       headers: {
         token,
       },
@@ -18,7 +18,7 @@ class ProdutoController extends Controller {
     const token = await this.getToken();
 
     const { id } = data;
-    const response = await this.api.put(`/perfil/${id}`, data, {
+    const response = await this.api.put(`/produto/${id}`, data, {
       headers: {
         token,
       },
@@ -31,7 +31,7 @@ class ProdutoController extends Controller {
 
   async findFirst(id) {
     const token = await this.getToken();
-    const response = await this.api.get(`/perfil/${id}`, {
+    const response = await this.api.get(`/produto/${id}`, {
       headers: {
         token,
       },
@@ -44,7 +44,7 @@ class ProdutoController extends Controller {
 
   async findMany(filters) {
     const token = await this.getToken();
-    const response = await this.api.get('/perfil', {
+    const response = await this.api.get('/produto', {
       headers: {
         token,
       },
@@ -58,12 +58,14 @@ class ProdutoController extends Controller {
 
   async delete(id) {
     const token = await this.getToken();
-    const response = await this.api.delete(`/perfil/${id}`, {
+    const response = await this.api.delete(`/produto/${id}`, {
       headers: {
         token,
       },
     });
+
     if (response && response.status === 200) {
+      console.log(response);
       return true;
     }
     return false;

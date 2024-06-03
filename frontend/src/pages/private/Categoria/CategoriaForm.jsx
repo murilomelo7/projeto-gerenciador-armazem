@@ -5,6 +5,7 @@ import { z } from 'zod';
 import CategoriaController from '@/controller/CategoriaController';
 
 const initData = {
+  codigo: '',
   nome: '',
   descricao: '',
 };
@@ -65,7 +66,7 @@ const CategoriaForm = ({ showModal, onClose, isEdit, initialData }) => {
   };
 
   return (
-    <Modal size="sm" open={showModal} onClose={handleClose}>
+    <Modal backdrop="static" size="md" open={showModal} onClose={handleClose}>
       <Modal.Header>
         <Modal.Title>{isEdit ? 'Editar Categoria' : 'Criar Categoria'}</Modal.Title>
       </Modal.Header>
@@ -73,7 +74,20 @@ const CategoriaForm = ({ showModal, onClose, isEdit, initialData }) => {
         <Col sm={24}>
           <Form fluid onSubmit={handleSubmit}>
             <Row style={{ marginTop: 10 }}>
-              <Col xs={12} sm={12}>
+              <Col xs={4} sm={4}>
+                <Form.Group controlId="codigo">
+                  <Form.ControlLabel>Código</Form.ControlLabel>
+                  <Form.Control
+                    name="codigo"
+                    accepter={Input}
+                    placeholder={'Código'}
+                    onChange={value => handleChange(value, 'codigo')}
+                    value={formData.codigo}
+                  />
+                  {errors.codigo && <div style={{ color: 'red' }}>{errors.codigo}</div>}
+                </Form.Group>
+              </Col>
+              <Col xs={10} sm={10}>
                 <Form.Group controlId="nome">
                   <Form.ControlLabel>Nome</Form.ControlLabel>
                   <Form.Control
@@ -86,7 +100,7 @@ const CategoriaForm = ({ showModal, onClose, isEdit, initialData }) => {
                   {errors.nome && <div style={{ color: 'red' }}>{errors.nome}</div>}
                 </Form.Group>
               </Col>
-              <Col xs={12} sm={12}>
+              <Col xs={10} sm={10}>
                 <Form.Group controlId="descricao">
                   <Form.ControlLabel>Descrição</Form.ControlLabel>
                   <Form.Control

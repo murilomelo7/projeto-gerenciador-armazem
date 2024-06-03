@@ -1,4 +1,4 @@
-import prisma from "../../database/PrismaService";
+import prisma from '../../database/PrismaService';
 
 class AuthController {
   constructor() {}
@@ -8,8 +8,8 @@ class AuthController {
       if (!request.headers.token) {
         return reply.code(400).send({
           statusCode: 400,
-          error: "Bad Request",
-          message: "Token não informado",
+          error: 'Bad Request',
+          message: 'Token não informado',
         });
       }
 
@@ -23,10 +23,10 @@ class AuthController {
       });
 
       if (!tokenValidation) {
-        reply.code(404).send({
+        return reply.code(404).send({
           statusCode: 404,
-          error: "Not Found",
-          message: "Token não encontrado",
+          error: 'Not Found',
+          message: 'Token não encontrado',
         });
       }
 
@@ -44,8 +44,8 @@ class AuthController {
       if (!request.headers.token) {
         return reply.code(400).send({
           statusCode: 400,
-          error: "Bad Request",
-          message: "Token não informado",
+          error: 'Bad Request',
+          message: 'Token não informado',
         });
       }
       const { token } = request.headers;

@@ -25,15 +25,17 @@ const UsuarioForm = ({ showModal, onClose, isEdit, initialData }) => {
     setPerfis(perfisResponse);
     const empresasResponse = await EmpresaController.getSelectData();
     setEmpresas(empresasResponse);
+
+    if (!isEdit) {
+      setFormData(initData);
+    } else {
+      setFormData(initialData);
+    }
   };
 
   useEffect(() => {
     init();
-  }, []);
-
-  useEffect(() => {
-    setFormData(initialData);
-  }, [initialData]);
+  }, [showModal]);
 
   const handleClose = () => {
     setErrors({});
@@ -80,7 +82,7 @@ const UsuarioForm = ({ showModal, onClose, isEdit, initialData }) => {
   };
 
   return (
-    <Modal size="sm" open={showModal} onClose={handleClose}>
+    <Modal backdrop="static" size="sm" open={showModal} onClose={handleClose}>
       <Modal.Header>
         <Modal.Title>{isEdit ? 'Editar usuário' : 'Criar usuário'}</Modal.Title>
       </Modal.Header>
@@ -131,7 +133,7 @@ const UsuarioForm = ({ showModal, onClose, isEdit, initialData }) => {
               </Col>
             </Row>
             <Row style={{ marginTop: 10 }}>
-              <Col xs={12} sm={12}>
+              <Col xs={isEdit ? 24 : 12} sm={isEdit ? 24 : 12}>
                 <Form.Group controlId="email">
                   <Form.ControlLabel>Email</Form.ControlLabel>
                   <Form.Control
@@ -145,21 +147,23 @@ const UsuarioForm = ({ showModal, onClose, isEdit, initialData }) => {
                   {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
                 </Form.Group>
               </Col>
-              <Col xs={12} sm={12}>
-                <Form.Group controlId="senha">
-                  <Form.ControlLabel>Senha</Form.ControlLabel>
-                  <Form.Control
-                    name="senha"
-                    type="password"
-                    disabled={isEdit ? true : false}
-                    accepter={Input}
-                    placeholder={'Senha'}
-                    onChange={value => handleChange(value, 'senha')}
-                    value={formData.senha}
-                  />
-                  {errors.senha && <div style={{ color: 'red' }}>{errors.senha}</div>}
-                </Form.Group>
-              </Col>
+              {!isEdit && (
+                <Col xs={12} sm={12}>
+                  <Form.Group controlId="senha">
+                    <Form.ControlLabel>Senha</Form.ControlLabel>
+                    <Form.Control
+                      name="senha"
+                      type="password"
+                      disabled={isEdit ? true : false}
+                      accepter={Input}
+                      placeholder={'Senha'}
+                      onChange={value => handleChange(value, 'senha')}
+                      value={formData.senha}
+                    />
+                    {errors.senha && <div style={{ color: 'red' }}>{errors.senha}</div>}
+                  </Form.Group>
+                </Col>
+              )}
             </Row>
             <Row style={{ marginTop: 10 }}>
               <Col xs={12} sm={12}>
