@@ -137,6 +137,7 @@ class ProdutoController {
         quantidade: calculoEntrada,
         ...request.body,
       };
+
       const dataProduto = { quantidade_produto: calculoEntrada, ...produto };
       await prisma.produto.update({ data: dataProduto, where });
 

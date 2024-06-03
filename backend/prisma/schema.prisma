@@ -121,7 +121,7 @@ model Produto {
 
 model ControleProduto {
   id           Int      @id @default(autoincrement())
-  tipo         String   @db.VarChar(128)
+  tipo         String   @db.VarChar(200)
   empresa_id   Int
   produto_id   Int
   quantidade   Int
