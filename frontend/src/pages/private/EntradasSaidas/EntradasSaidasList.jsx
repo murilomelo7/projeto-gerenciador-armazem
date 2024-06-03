@@ -14,8 +14,8 @@ const EntradasSaidasList = () => {
 
   const init = async () => {
     try {
-      const response = await CategoriaController.findMany();
-      setCategorias(response);
+      // const response = await ProdutoController.findMany();
+      // setCategorias(response);
     } catch (error) {
       console.error('Erro ao buscar categorias', error);
     }
