@@ -34,7 +34,9 @@ class FornecedorController {
 
       const data = request.body;
 
-      const fornecedor = prisma.fornecedor.update({ data, where });
+      console.log(data);
+
+      const fornecedor = await prisma.fornecedor.update({ data, where });
 
       reply.code(200).send({
         statusCode: 200,

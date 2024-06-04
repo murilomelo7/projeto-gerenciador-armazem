@@ -49,8 +49,8 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
       case 'cadastro-usuario':
         navigate('/usuario');
         break;
-      case 'controle-entradas-saidas':
-        navigate('/entrada-saida');
+      case 'controle-controle-produto':
+        navigate('/controle-produto');
         break;
 
       default:
@@ -104,7 +104,7 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
             </Nav.Menu>
             {acessos === 'cliente' && (
               <Nav.Menu eventKey="controle" active title="Controle" icon={<Gear />}>
-                <Nav.Item eventKey="controle-entradas-saidas" active>
+                <Nav.Item eventKey="controle-controle-produto" active>
                   <Package size={'18'} style={{ marginRight: 5, marginBottom: 3, verticalAlign: 'middle' }} />
                   Entradas e saídas
                 </Nav.Item>

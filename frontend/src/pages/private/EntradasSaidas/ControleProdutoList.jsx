@@ -1,20 +1,22 @@
 import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
-import { Plus, Edit, Trash } from '@rsuite/icons';
+import { Plus, Minus, Edit, Trash } from '@rsuite/icons';
 import { Container } from 'rsuite';
 import { useEffect, useState } from 'react';
 import ProdutoController from '@/controller/ProdutoController';
-import EntradasSaidasForm from './EntradasSaidasForm';
+import EntradasSaidasForm from './ControleProdutoForm';
+import ControleProdutoController from '@/controller/ControleProdutoController';
 
 const EntradasSaidasList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedControleProduto, setSelectedControleProduto] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
+  const [tipoControle, setTipoControle] = useState('');
   const [controleProduto, setControleProdutos] = useState();
+  const [isEdit, setIsEdit] = useState(false);
 
   const init = async () => {
     try {
-      // const response = await ProdutoController.findMany();
-      // setCategorias(response);
+      const response = await ControleProdutoController.findMany();
+      setControleProdutos(response);
     } catch (error) {
       console.error('Erro ao buscar categorias', error);
     }
@@ -24,9 +26,17 @@ const EntradasSaidasList = () => {
     init();
   }, []);
 
-  const handleCreate = () => {
+  const handleEntrada = () => {
     setSelectedControleProduto([]);
     setIsEdit(false);
+    setTipoControle('entrada');
+    setShowModal(true);
+  };
+
+  const handleSaida = () => {
+    setSelectedControleProduto([]);
+    setIsEdit(false);
+    setTipoControle('saida');
     setShowModal(true);
   };
 
@@ -55,27 +65,39 @@ const EntradasSaidasList = () => {
         <EntradasSaidasForm
           showModal={showModal}
           onClose={handleAfterSubmit}
+          tipoControle={tipoControle}
           isEdit={isEdit}
           initialData={selectedControleProduto}
         />
         <Panel bordered style={{ borderRadius: 10 }}>
           <Row style={{ textAlign: 'center' }}>
             <Col md={22}>
-              <h3>Entradas e saídas</h3>
+              <h3>Entradas e saídas dos</h3>
             </Col>
           </Row>
 
           <Row>
-            <Col md={22}></Col>
+            <Col md={20}></Col>
             <Col md={2}>
               <IconButton
                 appearance="primary"
                 color="green"
                 icon={<Plus />}
-                style={{ width: '90px' }}
-                onClick={handleCreate}
+                style={{ width: '100px' }}
+                onClick={handleEntrada}
               >
-                Novo
+                Entrada
+              </IconButton>
+            </Col>
+            <Col md={2}>
+              <IconButton
+                appearance="primary"
+                color="red"
+                icon={<Minus />}
+                style={{ width: '100px' }}
+                onClick={handleSaida}
+              >
+                Saída
               </IconButton>
             </Col>
           </Row>
@@ -100,7 +122,7 @@ const EntradasSaidasList = () => {
             <Col md={24}>
               <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
                 <div style={{ overflowX: 'auto' }}>
-                  <Table height={500} virtualized data={[]}>
+                  <Table height={500} virtualized data={controleProduto}>
                     <Table.Column width={100} fixed="left" align="center">
                       <Table.HeaderCell>Tipo</Table.HeaderCell>
                       <Table.Cell dataKey="tipo" />

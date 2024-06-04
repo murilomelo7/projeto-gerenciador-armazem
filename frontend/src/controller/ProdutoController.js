@@ -123,6 +123,18 @@ class ProdutoController extends Controller {
       };
     }
   }
+
+  async getSelectData() {
+    const produtos = await this.findMany();
+
+    if (produtos.length > 0 && !produtos.error) {
+      return produtos.map(produto => ({
+        value: produto.id,
+        label: produto.nome,
+      }));
+    }
+    return [];
+  }
 }
 
 export default new ProdutoController();
