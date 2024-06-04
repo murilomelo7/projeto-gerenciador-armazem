@@ -2,74 +2,115 @@ import Controller from './_Controller';
 
 class PerfilController extends Controller {
   async create(data) {
-    const response = await this.api.post('/perfil', data);
-    if (response.status === 200) {
+    try {
+      const response = await this.api.post('/perfil', data);
+      if (response.status === 200) {
+        return {
+          error: false,
+          message: response.data.message,
+        };
+      }
       return {
-        error: false,
+        error: true,
         message: response.data.message,
       };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao criar o perfil.',
+      };
     }
-    return {
-      error: true,
-      message: response.data.error,
-    };
   }
 
   async update(data) {
-    const { id } = data;
-    const response = await this.api.put(`/perfil/${id}`, data);
-    if (response && response.status === 200) {
+    try {
+      const { id } = data;
+      const response = await this.api.put(`/perfil/${id}`, data);
+      if (response && response.status === 200) {
+        return {
+          error: false,
+          message: response.data.message,
+        };
+      }
       return {
-        error: false,
+        error: true,
         message: response.data.message,
       };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao atualizar o perfil.',
+      };
     }
-    return {
-      error: true,
-      message: response.data.error,
-    };
   }
 
   async findFirst(id) {
-    const response = await this.api.get(`/perfil/${id}`);
-    if (response && response.status === 200) {
-      return response.data;
+    try {
+      const response = await this.api.get(`/perfil/${id}`);
+      if (response && response.status === 200) {
+        return response.data;
+      }
+      return {
+        error: true,
+        message: 'Perfil não encontrado.',
+      };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao buscar o perfil.',
+      };
     }
-    return [];
   }
 
   async findMany(filters) {
-    const response = await this.api.get('/perfil');
-    console.log(response);
-    if (response && response.status === 200) {
-      return response.data;
+    try {
+      const response = await this.api.get('/perfil', { params: filters });
+      if (response && response.status === 200) {
+        return response.data;
+      }
+      return [];
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao buscar perfis.',
+      };
     }
-    return [];
   }
 
   async delete(id) {
-    const response = await this.api.delete(`/perfil/${id}`);
-    if (response && response.status === 200) {
+    try {
+      const response = await this.api.delete(`/perfil/${id}`);
+      if (response && response.status === 200) {
+        return {
+          error: false,
+          message: response.data.message,
+        };
+      }
       return {
-        error: false,
-        message: response.data.message,
+        error: true,
+        message: response.data.message || 'Erro ao deletar o perfil.',
+      };
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return {
+          error: true,
+          message: error.response.data.message || 'Erro de vínculo: não foi possível deletar o perfil.',
+        };
+      }
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro desconhecido ao tentar deletar o perfil.',
       };
     }
-    return {
-      error: true,
-      message: response.data.error,
-    };
   }
 
   async getSelectData() {
     const perfis = await this.findMany();
-
-    if (perfis.length > 0) {
-      const perfisList = perfis.map(perfil => ({
+    if (perfis.length > 0 && !perfis.error) {
+      return perfis.map(perfil => ({
         value: perfil.id,
         label: perfil.nome,
       }));
-      return perfisList;
     }
     return [];
   }

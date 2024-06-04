@@ -12,6 +12,8 @@ import NovobancoRoutes from './api/routes/private/admin/novobanco.routes';
 //? Private Tenant
 import CategoriaRoutes from './api/routes/private/tenant/categoria.routes';
 import ProdutoRoutes from './api/routes/private/tenant/produto.routes';
+import FornecedorRoutes from './api/routes/private/tenant/fornecedor.routes';
+import ControleProduto from './api/routes/private/tenant/controleProduto.routes';
 
 //? Public
 import LoginRoutes from './api/routes/public/login.routes';
@@ -58,6 +60,8 @@ class Server {
     ProdutoRoutes.registerRoutes(this.fastify);
     UsuarioRoutes.registerRoutes(this.fastify);
     NovobancoRoutes.registerRoutes(this.fastify);
+    FornecedorRoutes.registerRoutes(this.fastify);
+    ControleProduto.registerRoutes(this.fastify);
   }
 
   async start() {

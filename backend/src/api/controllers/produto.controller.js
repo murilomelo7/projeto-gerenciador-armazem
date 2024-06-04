@@ -17,10 +17,15 @@ class ProdutoController {
       reply.code(200).send({
         statusCode: 200,
         message: 'Novo produto cadastrado com sucesso',
+        data: produto,
       });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro no cadastro do produto',
+        error: error.message,
+      });
     }
   }
 
@@ -31,9 +36,9 @@ class ProdutoController {
 
       const data_validade = request.body.data_validade ? new Date(data_validade) : null;
       const quantidade_produto = Number(request.body.quantidade_produto);
-    
+
       const data = { ...request.body, data_validade, quantidade_produto };
-      
+
       const where = {
         id,
         empresa_id,
@@ -47,10 +52,15 @@ class ProdutoController {
       reply.code(200).send({
         statusCode: 200,
         message: 'Produto atualizado com sucesso',
+        data: produto,
       });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na atualização do produto',
+        error: error.message,
+      });
     }
   }
 
@@ -66,10 +76,22 @@ class ProdutoController {
 
       const produto = await prisma.produto.findFirst({ where });
 
+      if (!produto) {
+        return reply.code(404).send({
+          statusCode: 404,
+          message: 'Produto não encontrado',
+          error: 'Not Found',
+        });
+      }
+
       reply.code(200).send(produto);
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na busca do produto',
+        error: error.message,
+      });
     }
   }
 
@@ -90,10 +112,22 @@ class ProdutoController {
 
       const produtos = await prisma.produto.findMany({ where, include, orderBy });
 
+      if (!produtos) {
+        return reply.code(404).send({
+          statusCode: 404,
+          error: 'Not Found',
+          message: 'Produtos não encontrados',
+        });
+      }
+
       reply.code(200).send(produtos);
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na busca dos produtos',
+        error: error.message,
+      });
     }
   }
 
@@ -112,113 +146,14 @@ class ProdutoController {
       reply.code(200).send({
         statusCode: 200,
         message: 'Produto removido com sucesso',
-      });   
-     } catch (error) {
-      request.log.error(error);
-      reply.code(500).send(error);
-    }
-  }
-
-  async entrada(request, reply) {
-    try {
-      const { empresa_id } = request;
-
-      const { produto_id, quantidade } = request.body;
-
-      const where = {
-        id: produto_id,
-        empresa_id,
-      };
-
-      const produto = await prisma.produto.findFirst(where);
-
-      const calculoEntrada = await produtoService.calcularEntrada(produto.quantidade_produto, quantidade);
-
-      if (calculoEntrada < 0) {
-        return reply.code(400).send({
-          statusCode: 400,
-          message: 'Não há estoque suficiente para esta entrada',
-        });
-      }
-
-      const dataEntrada = {
-        tipo: 'entrada',
-        quantidade: calculoEntrada,
-        ...request.body,
-      };
-
-      const dataProduto = { quantidade_produto: calculoEntrada, ...produto };
-      await prisma.produto.update({ data: dataProduto, where });
-
-      const entradaRealizada = prisma.controleProduto.create({ data: dataEntrada });
-
-      reply.code(200).send(entradaRealizada);
+      });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
-    }
-  }
-
-  async saida(request, reply) {
-    try {
-      const { empresa_id } = request;
-
-      const { produto_id, quantidade } = request.body;
-
-      const where = {
-        id: produto_id,
-        empresa_id,
-      };
-
-      const produto = await prisma.produto.findFirst(where);
-
-      const calculoSaida = await produtoService.calcularSaida(produto.quantidade_produto, quantidade);
-
-      if (calculoSaida < 0) {
-        return reply.code(400).send({
-          statusCode: 400,
-          message: 'Não há estoque suficiente para esta saída',
-        });
-      }
-
-      const dataSaida = {
-        tipo: 'saida',
-        quantidade: calculoSaida,
-        ...request.body,
-      };
-      const dataProduto = { quantidade_produto: calculoSaida, ...produto };
-      await prisma.produto.update({ data: dataProduto, where });
-
-      const saidaRealizada = prisma.controleProduto.create({ data: dataSaida });
-
-      reply.code(200).send(saidaRealizada);
-    } catch (error) {
-      request.log.error(error);
-      reply.code(500).send(error);
-    }
-  }
-
-  async findManyEntradasSaidas(request, reply){
-    try {
-      const { empresa_id } = request;
-
-      const where = {
-        empresa_id,
-      };
-
-      const include = {
-        produto: true,
-      };
-      const orderBy = {
-        codigo: 'asc',
-      };
-
-      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy });
-
-      reply.code(200).send(controleProduto);
-    } catch (error) {
-      request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na exclusão do produto',
+        error: error.message,
+      });
     }
   }
 }

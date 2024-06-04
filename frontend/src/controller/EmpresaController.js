@@ -2,76 +2,110 @@ import Controller from './_Controller';
 
 class EmpresaController extends Controller {
   async create(data) {
-    const response = await this.api.post('/empresa', data);
-    console.log(response);
-
-    if (response && response.status === 200) {
+    try {
+      const response = await this.api.post('/empresa', data);
+      if (response && response.status === 200) {
+        return {
+          error: false,
+          message: response.data.message,
+        };
+      }
       return {
-        error: false,
+        error: true,
         message: response.data.message,
       };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao criar a empresa.',
+      };
     }
-    return {
-      error: true,
-      message: response.data.error,
-    };
   }
 
   async update(data) {
-    const { id } = data;
-    const response = await this.api.put(`/empresa/${id}`, data);
-    if (response && response.status === 200) {
+    try {
+      const { id } = data;
+      const response = await this.api.put(`/empresa/${id}`, data);
+      if (response && response.status === 200) {
+        return {
+          error: false,
+          message: response.data.message,
+        };
+      }
       return {
-        error: false,
+        error: true,
         message: response.data.message,
       };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao atualizar a empresa.',
+      };
     }
-    return {
-      error: true,
-      message: response.data.error,
-    };
   }
 
   async findFirst(id) {
-    const response = await this.api.get(`/empresa/${id}`);
-    if (response && response.status === 200) {
-      return response.data;
+    try {
+      const response = await this.api.get(`/empresa/${id}`);
+      if (response && response.status === 200) {
+        return response.data;
+      }
+      return {
+        error: true,
+        message: 'Empresa não encontrada.',
+      };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao buscar a empresa.',
+      };
     }
-    return false;
   }
 
   async findMany(filters) {
-    const response = await this.api.get('/empresa');
-    console.log(response);
-    if (response && response.status === 200) {
-      return response.data;
+    try {
+      const response = await this.api.get('/empresa', { params: filters });
+      if (response && response.status === 200) {
+        return response.data;
+      }
+      return [];
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro ao buscar empresas.',
+      };
     }
-    return [];
   }
 
   async delete(id) {
-    const response = await this.api.delete(`/empresa/${id}`);
-    if (response && response.status === 200) {
+    try {
+      const response = await this.api.delete(`/empresa/${id}`);
+      if (response && response.status === 200) {
+        return {
+          error: false,
+          message: response.data.message,
+        };
+      }
       return {
-        error: false,
-        message: response.data.message,
+        error: true,
+        message: response.data.message || 'Erro ao deletar a empresa.',
+      };
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || 'Erro desconhecido ao tentar deletar a empresa.',
       };
     }
-    return {
-      error: true,
-      message: response.data.error,
-    };
   }
 
   async getSelectData() {
     const empresas = await this.findMany();
 
-    if (empresas.length > 0) {
-      const empresasList = empresas.map(empresa => ({
+    if (empresas.length > 0 && !empresas.error) {
+      return empresas.map(empresa => ({
         value: empresa.id,
         label: empresa.nome,
       }));
-      return empresasList;
     }
     return [];
   }

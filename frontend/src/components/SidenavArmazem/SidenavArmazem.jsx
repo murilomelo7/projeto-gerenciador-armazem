@@ -1,6 +1,6 @@
 import { Nav, Sidenav } from 'rsuite';
 import BuildingIcon from '@rsuite/icons/legacy/Building';
-import { Package, Building2, SquareUser, Grid2X2, User } from 'lucide-react';
+import { Package, Building2, SquareUser, Grid2X2, User, ShoppingBag } from 'lucide-react';
 
 import { Dashboard, Plus, Gear } from '@rsuite/icons';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,7 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
 
     testPerfil();
   }, []);
+
   const handleSelect = eventKey => {
     switch (eventKey) {
       case 'dashboard':
@@ -39,6 +40,9 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
       case 'cadastro-produto':
         navigate('/produto');
         break;
+      case 'cadastro-fornecedor':
+        navigate('/fornecedor');
+        break;
       case 'cadastro-perfil':
         navigate('/perfil');
         break;
@@ -48,6 +52,7 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
       case 'controle-entradas-saidas':
         navigate('/entrada-saida');
         break;
+
       default:
         break;
     }
@@ -89,6 +94,10 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
                   <Nav.Item eventKey="cadastro-produto" active>
                     <Package size={'18'} style={{ marginRight: 5, marginBottom: 3, verticalAlign: 'middle' }} />
                     Produto
+                  </Nav.Item>
+                  <Nav.Item eventKey="cadastro-fornecedor" active>
+                    <ShoppingBag size={'18'} style={{ marginRight: 5, marginBottom: 3, verticalAlign: 'middle' }} />
+                    Fornecedor
                   </Nav.Item>
                 </>
               )}

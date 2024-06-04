@@ -6,14 +6,21 @@ class CategoriaController {
   async create(request, reply) {
     try {
       const data = { empresa_id: request.empresa_id, ...request.body };
+
       const categoria = await prisma.categoria.create({ data });
+
       reply.code(200).send({
         statusCode: 200,
         message: 'Nova categoria cadastrada com sucesso',
-      });    
+        data: categoria,
+      });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro no cadastro da categoria',
+        error: error.message,
+      });
     }
   }
 
@@ -33,10 +40,15 @@ class CategoriaController {
       reply.code(200).send({
         statusCode: 200,
         message: 'Categoria atualizada com sucesso',
-      });     
+        data: categoria,
+      });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na atualização da categoria',
+        error: error.message,
+      });
     }
   }
 
@@ -54,17 +66,21 @@ class CategoriaController {
       const categoria = await prisma.categoria.findFirst({ where });
 
       if (!categoria) {
-        reply.code(404).send({
+        return reply.code(404).send({
           statusCode: 404,
-          error: 'Not Found',
           message: 'Categoria não encontrada',
+          error: 'Not Found',
         });
       }
 
       reply.code(200).send(categoria);
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na busca da categoria',
+        error: error.message,
+      });
     }
   }
 
@@ -78,7 +94,6 @@ class CategoriaController {
         empresa_id,
       };
 
-      // Filtro params por id
       queryParams.id ? (where.id = queryParams.id) : undefined;
 
       const orderBy = {
@@ -87,7 +102,7 @@ class CategoriaController {
       const categorias = await prisma.categoria.findMany({ where, orderBy });
 
       if (!categorias) {
-        reply.code(404).send({
+        return reply.code(404).send({
           statusCode: 404,
           error: 'Not Found',
           message: 'Categorias não encontradas',
@@ -97,7 +112,11 @@ class CategoriaController {
       reply.code(200).send(categorias);
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na busca das categorias',
+        error: error.message,
+      });
     }
   }
   async delete(request, reply) {
@@ -105,6 +124,16 @@ class CategoriaController {
       const { id } = request.params;
 
       const { empresa_id } = request;
+
+      const categoriaProdutoValidation = await prisma.produto.findFirst({ where: { categoria_id: id, empresa_id } });
+
+      if (categoriaProdutoValidation) {
+        return reply.code(400).send({
+          statusCode: 400,
+          error: 'Vínculado',
+          message: 'Está categoria está vínculado a um produto',
+        });
+      }
 
       const where = {
         id,
@@ -117,7 +146,11 @@ class CategoriaController {
       });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na exclusão da categoria',
+        error: error.message,
+      });
     }
   }
 }

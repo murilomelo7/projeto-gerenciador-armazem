@@ -83,24 +83,27 @@ Table controle_produto {
   tipo String [not null]
   empresa_id Int [not null]
   produto_id Int [not null]
+  fornecedor_id Int [not null]
   quantidade Int [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   empresaFk empresa
   produtoFk produto
+  fornecedorFk fornecedor
 }
 
 Table fornecedor {
   id Int [pk, increment]
   empresa_id Int [not null]
   nome String [not null]
-  cnpj String [not null]
+  cpfCnpj String [not null]
   telefone String [not null]
   email String [not null]
   observacao String
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   empresaFk empresa
+  ControleProduto controle_produto [not null]
 }
 
 Ref: usuario.perfil_id > perfil.id
@@ -116,5 +119,7 @@ Ref: produto.categoria_id > categoria.id
 Ref: controle_produto.empresa_id > empresa.id
 
 Ref: controle_produto.produto_id > produto.id
+
+Ref: controle_produto.fornecedor_id > fornecedor.id
 
 Ref: fornecedor.empresa_id > empresa.id
