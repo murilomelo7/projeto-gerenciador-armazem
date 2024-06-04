@@ -15,6 +15,7 @@ import PerfilList from './pages/private/Perfil/PerfilList';
 import CategoriaList from './pages/private/Categoria/CategoriaList';
 import ProdutoList from './pages/private/Produto/ProdutoList';
 import EntradasSaidasList from './pages/private/EntradasSaidas/EntradasSaidasList';
+import FornecedorList from './pages/private/Fornecedor/FornecedorList';
 
 //? auth-routes
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
@@ -84,6 +85,16 @@ const AppRoutes = () => {
             <PrivateRoute acessos={['cliente']}>
               <Layout>
                 <ProdutoList />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/fornecedor"
+          element={
+            <PrivateRoute acessos={['cliente']}>
+              <Layout>
+                <FornecedorList />
               </Layout>
             </PrivateRoute>
           }

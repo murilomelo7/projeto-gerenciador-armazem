@@ -97,8 +97,9 @@ class CategoriaController {
       queryParams.id ? (where.id = queryParams.id) : undefined;
 
       const orderBy = {
-        codigo: 'asc',
+        nome: 'asc',
       };
+
       const categorias = await prisma.categoria.findMany({ where, orderBy });
 
       if (!categorias) {

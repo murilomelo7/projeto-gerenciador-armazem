@@ -106,8 +106,9 @@ class ProdutoController {
       const include = {
         categoriaFk: true,
       };
+
       const orderBy = {
-        codigo: 'asc',
+        nome: 'asc',
       };
 
       const produtos = await prisma.produto.findMany({ where, include, orderBy });

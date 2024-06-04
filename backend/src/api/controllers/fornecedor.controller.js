@@ -1,3 +1,5 @@
+import prisma from '../../database/PrismaService';
+
 class FornecedorController {
   async create(request, reply) {
     try {
@@ -36,7 +38,7 @@ class FornecedorController {
 
       reply.code(200).send({
         statusCode: 200,
-        message: 'Categoria atualizada com sucesso',
+        message: 'Fornecedor atualizado com sucesso',
         data: fornecedor,
       });
     } catch (error) {
@@ -64,7 +66,7 @@ class FornecedorController {
       if (!fornecedor) {
         return reply.code(404).send({
           statusCode: 404,
-          message: 'Fornecedor não encontrada',
+          message: 'Fornecedor não encontrado',
           error: 'Not Found',
         });
       }
@@ -127,7 +129,7 @@ class FornecedorController {
 
       reply.code(200).send({
         statusCode: 200,
-        message: 'Fornecedor removid0 com sucesso',
+        message: 'Fornecedor removido com sucesso',
       });
     } catch (error) {
       request.log.error(error);

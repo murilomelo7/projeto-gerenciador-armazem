@@ -164,6 +164,7 @@ const ProdutoForm = ({ showModal, onClose, isEdit, initialData }) => {
                     <Form.Control
                       name="quantidade_produto"
                       accepter={InputNumber}
+                      disabled={isEdit}
                       placeholder={'Quantidade'}
                       onChange={value => handleChange(value, 'quantidade_produto')}
                       value={formData.quantidade_produto}

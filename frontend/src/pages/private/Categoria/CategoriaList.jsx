@@ -7,7 +7,7 @@ import CategoriaController from '@/controller/CategoriaController';
 
 const CategoriaList = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedPerfil, setSelectedPerfil] = useState([]);
+  const [selectedCategoria, setSelectedCategoria] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [categorias, setCategorias] = useState();
 
@@ -27,13 +27,13 @@ const CategoriaList = () => {
   }, []);
 
   const handleCreate = () => {
-    setSelectedPerfil([]);
+    setSelectedCategoria([]);
     setIsEdit(false);
     setShowModal(true);
   };
 
   const handleEdit = rowData => {
-    setSelectedPerfil(rowData);
+    setSelectedCategoria(rowData);
     setIsEdit(true);
     setShowModal(true);
   };
@@ -64,7 +64,12 @@ const CategoriaList = () => {
     <>
       {message}
       <Container>
-        <CategoriaForm showModal={showModal} onClose={handleAfterSubmit} isEdit={isEdit} initialData={selectedPerfil} />
+        <CategoriaForm
+          showModal={showModal}
+          onClose={handleAfterSubmit}
+          isEdit={isEdit}
+          initialData={selectedCategoria}
+        />
         <Panel bordered style={{ borderRadius: 10 }}>
           <Row style={{ textAlign: 'center' }}>
             <Col md={22}>
