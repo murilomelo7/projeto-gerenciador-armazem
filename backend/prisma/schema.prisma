@@ -45,7 +45,7 @@ model Empresa {
   usuarios   Usuario[]         @relation("UsuarioEmpresa")
   categorias Categoria[]       @relation("CategoriaEmpresa")
   produtos   Produto[]         @relation("ProdutoEmpresa")
-  entradas   ControleProduto[] @relation("ControleProdutoEmpresa")
+  controleProduto   ControleProduto[]
   Fornecedor Fornecedor[]      @relation("FornecedorEmpresa")
 
   @@map("empresa")
@@ -130,12 +130,14 @@ model ControleProduto {
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt     DateTime? @map("updated_at") @db.Timestamp(6)
 
-  empresaFk    Empresa?    @relation("ControleProdutoEmpresa", fields: [empresa_id], references: [id])
-  produtoFk    Produto?    @relation(fields: [produto_id], references: [id])
-  fornecedorFk Fornecedor? @relation("ControleProdutoFornecedor", fields: [fornecedor_id], references: [id])
+  empresaFk    Empresa    @relation(fields: [empresa_id], references: [id])
+  produtoFk    Produto    @relation(fields: [produto_id], references: [id])
+  fornecedorFk Fornecedor @relation("ControleProdutoFornecedor", fields: [fornecedor_id], references: [id])
 
   @@map("controle_produto")
 }
+
+
 
 model Fornecedor {
   id         Int       @id @default(autoincrement())
@@ -148,7 +150,7 @@ model Fornecedor {
   createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt  DateTime? @map("updated_at") @db.Timestamp(6)
 
-  empresaFk       Empresa?          @relation("FornecedorEmpresa", fields: [empresa_id], references: [id])
+  empresaFk       Empresa          @relation("FornecedorEmpresa", fields: [empresa_id], references: [id])
   ControleProduto ControleProduto[] @relation("ControleProdutoFornecedor")
 
   @@map("fornecedor")

@@ -20,7 +20,7 @@ Table empresa {
   usuarios usuario [not null]
   categorias categoria [not null]
   produtos produto [not null]
-  entradas controle_produto [not null]
+  controleProduto controle_produto [not null]
   Fornecedor fornecedor [not null]
 }
 
@@ -87,9 +87,9 @@ Table controle_produto {
   quantidade Int [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
-  empresaFk empresa
-  produtoFk produto
-  fornecedorFk fornecedor
+  empresaFk empresa [not null]
+  produtoFk produto [not null]
+  fornecedorFk fornecedor [not null]
 }
 
 Table fornecedor {
@@ -102,7 +102,7 @@ Table fornecedor {
   observacao String
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
-  empresaFk empresa
+  empresaFk empresa [not null]
   ControleProduto controle_produto [not null]
 }
 

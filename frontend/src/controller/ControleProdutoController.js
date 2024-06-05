@@ -92,6 +92,8 @@ class ControleProdutoController extends Controller {
         params: filters,
       });
 
+      console.log(response.data);
+
       if (response && response.status === 200) {
         return response.data;
       }

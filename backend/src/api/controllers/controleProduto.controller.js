@@ -31,15 +31,26 @@ class ControleProdutoController {
           error: 'Sem estoque',
         });
       }
-      const quantidadeNumero = Number(request.body.quantidade);
 
-      const dataEntrada = { quantidade: quantidadeNumero, ...request.body };
+      const dataEntrada = {
+        tipo: 'entrada',
+        produtoFk: {
+          connect: { id: request.body.produto_id },
+        },
+        empresaFk: {
+          connect: { id: empresa_id },
+        },
+        fornecedorFk: {
+          connect: { id: request.body.fornecedor_id },
+        },
 
-      console.log('asdjkfnjksdnfjsdnfjsdnf');
-      console.log(dataEntrada);
-      console.log(quantidadeNumero);
+        quantidade: Number(request.body.quantidade),
+      };
 
       await prisma.produto.update({ data: { quantidade_produto: calculoEntrada }, where });
+
+      console.log('jnsdfjnsdjfnjsdf', empresa_id);
+      console.log(dataEntrada);
 
       const entradaRealizada = await prisma.controleProduto.create({ data: dataEntrada });
 
@@ -86,7 +97,7 @@ class ControleProdutoController {
         quantidade: calculoSaida,
         ...request.body,
       };
-      const dataProduto = { quantidade_produto: calculoSaida, ...produto };
+      const dataProduto = { ...produto, quantidade_produto: calculoSaida };
       await prisma.produto.update({ data: { quantidade_produto: calculoSaida }, where });
 
       const saidaRealizada = await prisma.controleProduto.create({ data: dataSaida });
@@ -140,6 +151,7 @@ class ControleProdutoController {
       };
 
       const include = {
+        fornecedorFk: true,
         produtoFk: true,
       };
 

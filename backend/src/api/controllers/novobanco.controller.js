@@ -28,6 +28,8 @@ class NovoBanco {
 
       const senhaHash = await usuarioService.hashPassword('admin');
 
+      console.log(novaEmpresa);
+
       const dataUsuario = {
         nome: 'Administrador',
         usuario: 'admin',
