@@ -4,8 +4,11 @@ class ControleProdutoController extends Controller {
   async entrada(data) {
     try {
       const token = await this.getToken();
-      const dataAjustado = { quantidade: Number(data.quantidade), ...data };
-      console.log(dataAjustado);
+      const dataAjustado = {
+        ...data,
+        quantidade: Number(data.quantidade),
+        valor_total: Number(data.valor_unidade) * Number(data.quantidade),
+      };
 
       const response = await this.api.post('/controle-produto/entrada', dataAjustado, {
         headers: {
@@ -34,7 +37,14 @@ class ControleProdutoController extends Controller {
   async saida(data) {
     try {
       const token = await this.getToken();
-      const response = await this.api.post('/controle-produto/saida', data, {
+
+      const dataAjustado = {
+        ...data,
+        quantidade: Number(data.quantidade),
+        valor_total: Number(data.valor_unidade) * Number(data.quantidade),
+      };
+
+      const response = await this.api.post('/controle-produto/saida', dataAjustado, {
         headers: {
           token,
         },

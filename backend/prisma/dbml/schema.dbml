@@ -85,6 +85,9 @@ Table controle_produto {
   produto_id Int [not null]
   fornecedor_id Int
   quantidade Int [not null]
+  valor_unidade Decimal [not null, default: 0]
+  valor_total Decimal [not null, default: 0]
+  data_estorno DateTime
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
   empresaFk empresa [not null]

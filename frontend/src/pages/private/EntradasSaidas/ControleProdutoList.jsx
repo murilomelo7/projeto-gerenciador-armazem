@@ -235,7 +235,7 @@ const EntradasSaidasList = () => {
               <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
                 <div style={{ overflowX: 'auto' }}>
                   <Table height={400} virtualized data={controleProduto}>
-                    <Table.Column width={150} fixed="left" align="center">
+                    <Table.Column width={150} fixed="left">
                       <Table.HeaderCell>Tipo</Table.HeaderCell>
                       <TypeCell dataKey="tipo" />
                     </Table.Column>
@@ -247,14 +247,14 @@ const EntradasSaidasList = () => {
                       <Table.HeaderCell>Quantidade</Table.HeaderCell>
                       <Table.Cell dataKey="quantidade" />
                     </Table.Column>
-                    {/* <Table.Column width={350} align="center" flexGrow={1}>
-                      <Table.HeaderCell>Preço Unitário</Table.HeaderCell>
-                      <Table.Cell dataKey="quantidade" />
+                    <Table.Column width={350} align="center" flexGrow={1}>
+                      <Table.HeaderCell>Valor unidade</Table.HeaderCell>
+                      <Table.Cell dataKey="valor_unidade" />
                     </Table.Column>
                     <Table.Column width={350} align="center" flexGrow={1}>
-                      <Table.HeaderCell>Preço total</Table.HeaderCell>
-                      <Table.Cell dataKey="quantidade" />
-                    </Table.Column> */}
+                      <Table.HeaderCell>Valor total</Table.HeaderCell>
+                      <Table.Cell dataKey="valor_total" />
+                    </Table.Column>
                     <Table.Column width={350} align="center" flexGrow={1}>
                       <Table.HeaderCell>Estoque atual</Table.HeaderCell>
                       <Table.Cell dataKey="produtoFk.quantidade_produto" />

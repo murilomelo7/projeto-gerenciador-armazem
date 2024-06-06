@@ -35,7 +35,10 @@ class ControleProdutoController {
       await prisma.produto.update({ data: { quantidade_produto: calculoEntrada }, where });
 
       const quantidade = Number(request.body.quantidade);
-      const dataEntrada = { ...request.body, empresa_id, quantidade };
+      const valor_unidade = Number(request.body.valor_unidade);
+      const valor_total = Number(request.body.valor_total);
+
+      const dataEntrada = { ...request.body, empresa_id, quantidade, valor_unidade, valor_total };
       const entradaRealizada = await prisma.controleProduto.create({ data: dataEntrada });
 
       return reply.code(200).send({

@@ -125,6 +125,9 @@ model ControleProduto {
   produto_id    Int
   fornecedor_id Int?
   quantidade    Int
+  valor_unidade Decimal   @default(0)
+  valor_total   Decimal   @default(0)
+  data_estorno  DateTime?
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime? @map("updated_at")
 
