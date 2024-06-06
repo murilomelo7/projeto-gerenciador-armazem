@@ -28,92 +28,90 @@ datasource db {
 
 model Empresa {
   id          Int       @id @default(autoincrement())
-  tipo        String    @db.VarChar(1)
-  cpfCnpj     String    @map("cpf_cnpj") @db.VarChar(14)
-  nome        String    @db.VarChar(80)
-  telefone    String?   @db.VarChar(20)
-  email       String?   @db.VarChar(100)
-  endereco    String?   @db.VarChar(255)
-  cidade      String?   @db.VarChar(100)
-  estado      String?   @db.VarChar(2)
-  cep         String?   @db.VarChar(9)
-  status      String    @default("ativo") @db.VarChar(20)
-  observacoes String?   @db.Text
-  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime? @map("updated_at") @db.Timestamp(6)
+  tipo        String
+  cpfCnpj     String    @map("cpf_cnpj")
+  nome        String
+  telefone    String?
+  email       String?
+  endereco    String?
+  cidade      String?
+  estado      String?
+  cep         String?
+  status      String    @default("ativo")
+  observacoes String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @map("updated_at")
 
-  usuarios   Usuario[]         @relation("UsuarioEmpresa")
-  categorias Categoria[]       @relation("CategoriaEmpresa")
-  produtos   Produto[]         @relation("ProdutoEmpresa")
-  controleProduto   ControleProduto[]
-  Fornecedor Fornecedor[]      @relation("FornecedorEmpresa")
+  usuarios        Usuario[]
+  categorias      Categoria[]
+  produtos        Produto[]
+  controleProduto ControleProduto[]
+  fornecedores    Fornecedor[]
 
   @@map("empresa")
 }
 
 model Usuario {
   id         Int       @id @default(autoincrement())
-  nome       String    @db.VarChar(80)
-  usuario    String    @unique @db.VarChar(40)
-  senha      String    @db.VarChar(256)
-  email      String    @unique @db.VarChar(80)
-  cpf        String    @db.VarChar(11)
-  token      String?   @unique @db.VarChar(256)
+  nome       String
+  usuario    String    @unique
+  senha      String
+  email      String    @unique
+  cpf        String
+  token      String?
   perfil_id  Int
   empresa_id Int
-  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime? @map("updated_at") @db.Timestamp(6)
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @map("updated_at")
 
-  // Define os relacionamentos
-  perfilFk  Perfil?  @relation("UsuarioPerfil", fields: [perfil_id], references: [id])
-  empresaFk Empresa? @relation("UsuarioEmpresa", fields: [empresa_id], references: [id])
+  perfilFk  Perfil?  @relation(fields: [perfil_id], references: [id])
+  empresaFk Empresa? @relation(fields: [empresa_id], references: [id])
 
   @@map("usuario")
 }
 
 model Perfil {
   id        Int       @id @default(autoincrement())
-  codigo    String?   @db.VarChar(60)
-  nome      String    @db.VarChar(80)
-  acessos   String    @db.VarChar(40)
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt DateTime? @map("updated_at") @db.Timestamp(6)
+  codigo    String?
+  nome      String
+  acessos   String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
 
-  perfis Usuario[] @relation("UsuarioPerfil")
+  perfis Usuario[]
 
   @@map("perfil")
 }
 
 model Categoria {
   id         Int       @id @default(autoincrement())
-  codigo     String?   @db.VarChar(60)
+  codigo     String?
   empresa_id Int
-  nome       String    @db.VarChar(128)
-  descricao  String    @db.Text
-  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime? @map("updated_at") @db.Timestamp(6)
+  nome       String
+  descricao  String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @map("updated_at")
 
-  empresaFk Empresa? @relation("CategoriaEmpresa", fields: [empresa_id], references: [id])
-
-  produtos Produto[] @relation("ProdutoCategoria")
+  empresaFk Empresa?  @relation(fields: [empresa_id], references: [id])
+  produtos  Produto[]
 
   @@map("categoria")
 }
 
 model Produto {
   id                 Int       @id @default(autoincrement())
-  codigo             String?   @db.VarChar(60)
+  codigo             String?
   empresa_id         Int
-  nome               String    @db.VarChar(128)
+  nome               String
   categoria_id       Int
-  descricao          String?   @db.VarChar(256)
+  descricao          String?
   quantidade_produto Int
-  data_validade      DateTime? @db.Timestamp(6)
-  createdAt          DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime? @map("updated_at") @db.Timestamp(6)
+  data_validade      DateTime?
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime? @map("updated_at")
 
-  empresaFk   Empresa?   @relation("ProdutoEmpresa", fields: [empresa_id], references: [id])
-  categoriaFk Categoria? @relation("ProdutoCategoria", fields: [categoria_id], references: [id])
+  empresaFk   Empresa   @relation(fields: [empresa_id], references: [id])
+  categoriaFk Categoria @relation(fields: [categoria_id], references: [id])
 
   ControleProduto ControleProduto[]
 
@@ -122,22 +120,20 @@ model Produto {
 
 model ControleProduto {
   id            Int       @id @default(autoincrement())
-  tipo          String    @db.VarChar(200)
+  tipo          String
   empresa_id    Int
   produto_id    Int
-  fornecedor_id Int
+  fornecedor_id Int?
   quantidade    Int
-  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt     DateTime? @map("updated_at") @db.Timestamp(6)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @map("updated_at")
 
-  empresaFk    Empresa    @relation(fields: [empresa_id], references: [id])
-  produtoFk    Produto    @relation(fields: [produto_id], references: [id])
-  fornecedorFk Fornecedor @relation("ControleProdutoFornecedor", fields: [fornecedor_id], references: [id])
+  empresaFk    Empresa     @relation(fields: [empresa_id], references: [id])
+  produtoFk    Produto     @relation(fields: [produto_id], references: [id])
+  fornecedorFk Fornecedor? @relation(fields: [fornecedor_id], references: [id])
 
   @@map("controle_produto")
 }
-
-
 
 model Fornecedor {
   id         Int       @id @default(autoincrement())
@@ -147,11 +143,11 @@ model Fornecedor {
   telefone   String
   email      String
   observacao String?
-  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime? @map("updated_at") @db.Timestamp(6)
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @map("updated_at")
 
-  empresaFk       Empresa          @relation("FornecedorEmpresa", fields: [empresa_id], references: [id])
-  ControleProduto ControleProduto[] @relation("ControleProdutoFornecedor")
+  empresaFk       Empresa           @relation(fields: [empresa_id], references: [id])
+  ControleProduto ControleProduto[]
 
   @@map("fornecedor")
 }

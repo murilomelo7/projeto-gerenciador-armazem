@@ -1,21 +1,38 @@
-import { Button, Col, Panel, Row, Table, Input, IconButton } from 'rsuite';
-import { Plus, Minus, Edit, Trash } from '@rsuite/icons';
+import { Button, Col, Panel, Row, Table, Input, IconButton, SelectPicker, DatePicker, Form } from 'rsuite';
+import { Plus, Minus, Edit, Trash, Visible, History, Search } from '@rsuite/icons';
 import { Container } from 'rsuite';
 import { useEffect, useState } from 'react';
 import ProdutoController from '@/controller/ProdutoController';
 import EntradasSaidasForm from './ControleProdutoForm';
 import ControleProdutoController from '@/controller/ControleProdutoController';
+import { format } from 'date-fns';
+import FornecedorController from '@/controller/FornecedorController';
 
 const EntradasSaidasList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedControleProduto, setSelectedControleProduto] = useState([]);
   const [tipoControle, setTipoControle] = useState('');
   const [controleProduto, setControleProdutos] = useState();
+  const [formDataFilter, setFormDataFilter] = useState({});
+  const [produtos, setProdutos] = useState([]);
+  const [fornecedores, setFornecedores] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
   const [isEdit, setIsEdit] = useState(false);
 
   const init = async () => {
     try {
+      const produtosResponse = await ProdutoController.getSelectData();
+      setProdutos(produtosResponse);
+      const fornecedoresResponse = await FornecedorController.getSelectData();
+      setFornecedores(fornecedoresResponse);
+      const categoriasResponse = await FornecedorController.getSelectData();
+      setCategorias(categoriasResponse);
+
       const response = await ControleProdutoController.findMany();
+
+      console.log(response);
+
       setControleProdutos(response);
     } catch (error) {
       console.error('Erro ao buscar categorias', error);
@@ -42,6 +59,7 @@ const EntradasSaidasList = () => {
 
   const handleEdit = rowData => {
     setSelectedControleProduto(rowData);
+    setTipoControle(rowData.tipo);
     setIsEdit(true);
     setShowModal(true);
   };
@@ -54,9 +72,42 @@ const EntradasSaidasList = () => {
     // }
   };
 
+  const handleFilter = async () => {};
+
+  const handleChangeFilter = (value, name) => {
+    setFormDataFilter({ ...formDataFilter, [name]: value });
+  };
+
   const handleAfterSubmit = () => {
     setShowModal(false);
     init();
+  };
+
+  const DateCell = ({ rowData, dataKey, ...props }) => (
+    <Table.Cell {...props}>
+      {rowData[dataKey] ? format(new Date(rowData[dataKey]), 'dd/MM/yyyy HH:mm:ss') : ''}
+    </Table.Cell>
+  );
+
+  const TypeCell = ({ rowData, dataKey, ...props }) => {
+    const borderColor = rowData[dataKey] === 'entrada' ? '#3fab45' : '#e63f30';
+    return (
+      <Table.Cell {...props}>
+        <div
+          style={{
+            border: `2px solid ${borderColor}`,
+            borderRadius: '5px',
+            width: '100px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          {rowData[dataKey] === 'entrada' ? 'Entrada' : 'Saída'}
+        </div>
+      </Table.Cell>
+    );
   };
 
   return (
@@ -72,7 +123,7 @@ const EntradasSaidasList = () => {
         <Panel bordered style={{ borderRadius: 10 }}>
           <Row style={{ textAlign: 'center' }}>
             <Col md={22}>
-              <h3>Entradas e saídas dos</h3>
+              <h3>Entradas e saídas dos produtos</h3>
             </Col>
           </Row>
 
@@ -83,7 +134,7 @@ const EntradasSaidasList = () => {
                 appearance="primary"
                 color="green"
                 icon={<Plus />}
-                style={{ width: '100px' }}
+                style={{ width: '100%' }}
                 onClick={handleEntrada}
               >
                 Entrada
@@ -94,7 +145,7 @@ const EntradasSaidasList = () => {
                 appearance="primary"
                 color="red"
                 icon={<Minus />}
-                style={{ width: '100px' }}
+                style={{ width: '100%' }}
                 onClick={handleSaida}
               >
                 Saída
@@ -103,41 +154,110 @@ const EntradasSaidasList = () => {
           </Row>
 
           <Panel header="Filtros" bordered style={{ borderRadius: 10, marginTop: 40 }}>
-            <Row style={{ marginTop: 20 }}>
-              <Col md={24}>
+            <Col md={24}>
+              <Form fluid onSubmit={handleFilter}>
                 <Row>
-                  <Col md={12}>
-                    <Input type="text" placeholder="Nome da categoria"></Input>
+                  <Col md={4}>
+                    <Form.Group controlId="tipo">
+                      <Form.ControlLabel>Tipo</Form.ControlLabel>
+                      <Form.Control
+                        name="tipo"
+                        searchable={false}
+                        accepter={SelectPicker}
+                        placeholder={'Selecione'}
+                        // cleanable={false}
+                        data={[
+                          { label: 'Entrada', value: 'entrada' },
+                          { label: 'Saída', value: 'saida' },
+                        ]}
+                        style={{ width: '100%' }}
+                        onChange={value => handleChangeFilter(value, 'tipo')}
+                        value={formDataFilter.tipo}
+                      />
+                    </Form.Group>
                   </Col>
-                  <Col>
-                    <Button appearance="primary" style={{ width: '90px' }}>
+                  <Col md={4}>
+                    <Form.Group controlId="produto_id">
+                      <Form.ControlLabel>Produto</Form.ControlLabel>
+                      <Form.Control
+                        name="produto_id"
+                        // searchable={false}
+                        accepter={SelectPicker}
+                        placeholder={'Selecione'}
+                        cleanable={true}
+                        data={produtos}
+                        style={{ width: '100%' }}
+                        onChange={value => handleChangeFilter(value, 'produto_id')}
+                        value={formDataFilter.produto_id}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={4}>
+                    <Form.Group controlId="fornecedor_id">
+                      <Form.ControlLabel>Fornecedor</Form.ControlLabel>
+                      <Form.Control
+                        name="fornecedor_id"
+                        searchable={false}
+                        disabled={isEdit}
+                        accepter={SelectPicker}
+                        placeholder={'Selecione'}
+                        cleanable={false}
+                        data={fornecedores}
+                        style={{ width: '100%' }}
+                        onChange={value => handleChangeFilter(value, 'fornecedor_id')}
+                        value={formDataFilter.fornecedor_id}
+                      />
+                    </Form.Group>
+                  </Col>
+                  {/* <Col md={4}></Col>
+                  <Col md={4}></Col> */}
+                </Row>
+                <Row>
+                  <Col md={22}></Col>
+                  <Col md={2}>
+                    <IconButton
+                      title="Filtrar"
+                      size={'md'}
+                      color="cyan"
+                      appearance="primary"
+                      onClick={handleFilter}
+                      icon={<Search />}
+                    >
                       Filtrar
-                    </Button>
+                    </IconButton>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
+              </Form>
+            </Col>
           </Panel>
           <Row style={{ marginTop: 20 }}>
             <Col md={24}>
               <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
                 <div style={{ overflowX: 'auto' }}>
-                  <Table height={500} virtualized data={controleProduto}>
-                    <Table.Column width={100} fixed="left" align="center">
+                  <Table height={400} virtualized data={controleProduto}>
+                    <Table.Column width={150} fixed="left" align="center">
                       <Table.HeaderCell>Tipo</Table.HeaderCell>
-                      <Table.Cell dataKey="tipo" />
+                      <TypeCell dataKey="tipo" />
                     </Table.Column>
                     <Table.Column width={700} align="left" flexGrow={1}>
                       <Table.HeaderCell>Produto</Table.HeaderCell>
-                      <Table.Cell dataKey="produtoFk" />
+                      <Table.Cell dataKey="produtoFk.nome" />
                     </Table.Column>
-                    <Table.Column width={350} align="left" flexGrow={1}>
+                    <Table.Column width={350} align="center" flexGrow={1}>
                       <Table.HeaderCell>Quantidade</Table.HeaderCell>
+                      <Table.Cell dataKey="quantidade" />
+                    </Table.Column>
+                    <Table.Column width={350} align="center" flexGrow={1}>
+                      <Table.HeaderCell>Preço Unitário</Table.HeaderCell>
+                      <Table.Cell dataKey="quantidade" />
+                    </Table.Column>
+                    <Table.Column width={350} align="center" flexGrow={1}>
+                      <Table.HeaderCell>Preço total</Table.HeaderCell>
                       <Table.Cell dataKey="quantidade" />
                     </Table.Column>
                     <Table.Column width={350} align="left" flexGrow={1}>
                       <Table.HeaderCell>Data lançamento</Table.HeaderCell>
-                      <Table.Cell dataKey="createdAt" />
+                      <DateCell dataKey="createdAt" />
                     </Table.Column>
                     <Table.Column width={100} fixed="right">
                       <Table.HeaderCell align="center">Ações</Table.HeaderCell>
@@ -145,18 +265,20 @@ const EntradasSaidasList = () => {
                         {rowData => (
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <IconButton
+                              title="Visualizar"
                               size={'sm'}
-                              color="violet"
+                              color="green"
                               appearance="ghost"
                               onClick={() => handleEdit(rowData)}
-                              icon={<Edit />}
+                              icon={<Visible />}
                             ></IconButton>
                             <IconButton
+                              title="Estornar"
                               size={'sm'}
-                              color="red"
+                              color="orange"
                               appearance="ghost"
                               onClick={() => handleRemove(rowData)}
-                              icon={<Trash />}
+                              icon={<History />}
                             ></IconButton>
                           </div>
                         )}

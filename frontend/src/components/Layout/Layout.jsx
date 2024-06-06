@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
   const [expanded, setExpand] = React.useState(true);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Header />
       <div style={{ display: 'flex', flexGrow: 1 }}>
         <Sidenav

@@ -32,26 +32,10 @@ class ControleProdutoController {
         });
       }
 
-      const dataEntrada = {
-        tipo: 'entrada',
-        produtoFk: {
-          connect: { id: request.body.produto_id },
-        },
-        empresaFk: {
-          connect: { id: empresa_id },
-        },
-        fornecedorFk: {
-          connect: { id: request.body.fornecedor_id },
-        },
-
-        quantidade: Number(request.body.quantidade),
-      };
-
       await prisma.produto.update({ data: { quantidade_produto: calculoEntrada }, where });
 
-      console.log('jnsdfjnsdjfnjsdf', empresa_id);
-      console.log(dataEntrada);
-
+      const quantidade = Number(request.body.quantidade);
+      const dataEntrada = { ...request.body, empresa_id, quantidade };
       const entradaRealizada = await prisma.controleProduto.create({ data: dataEntrada });
 
       return reply.code(200).send({
@@ -73,16 +57,23 @@ class ControleProdutoController {
     try {
       const { empresa_id } = request;
 
-      const { produto_id, quantidade } = request.body;
+      const produto_id = request.body.produto_id;
 
-      const where = {
-        id: produto_id,
-        empresa_id,
-      };
-
+      const where = { id: produto_id, empresa_id };
       const produto = await prisma.produto.findFirst({ where });
 
-      const calculoSaida = await controleProdutoService.calcularSaida(produto.quantidade_produto, quantidade);
+      if (!produto) {
+        return reply.code(404).send({
+          statusCode: 404,
+          message: 'Produto não encontrado',
+          error: 'Produto não encontrado',
+        });
+      }
+
+      const calculoSaida = await controleProdutoService.calcularSaida(
+        produto.quantidade_produto,
+        request.body.quantidade
+      );
 
       if (calculoSaida < 0) {
         return reply.code(400).send({
@@ -92,24 +83,20 @@ class ControleProdutoController {
         });
       }
 
-      const dataSaida = {
-        tipo: 'saida',
-        quantidade: calculoSaida,
-        ...request.body,
-      };
-      const dataProduto = { ...produto, quantidade_produto: calculoSaida };
       await prisma.produto.update({ data: { quantidade_produto: calculoSaida }, where });
 
+      const quantidade = Number(request.body.quantidade);
+      const dataSaida = { ...request.body, empresa_id, quantidade };
       const saidaRealizada = await prisma.controleProduto.create({ data: dataSaida });
 
-      reply.code(200).send({
+      return reply.code(200).send({
         statusCode: 200,
         message: 'Saída realizada com sucesso',
         data: saidaRealizada,
       });
     } catch (error) {
       request.log.error(error);
-      reply.code(500).send({
+      return reply.code(500).send({
         statusCode: 500,
         message: 'Ocorreu um erro na saída do produto',
         error: error.message,
@@ -156,9 +143,6 @@ class ControleProdutoController {
       };
 
       const controleProduto = await prisma.controleProduto.findMany({ where, include });
-
-      console.log('sdkfmskldfsdkmf');
-      console.log(controleProduto);
 
       reply.code(200).send(controleProduto);
     } catch (error) {

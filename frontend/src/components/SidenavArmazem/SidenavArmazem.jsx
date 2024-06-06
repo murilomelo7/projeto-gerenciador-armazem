@@ -61,8 +61,8 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
   return (
     <div style={{ width: expanded ? 260 : 0, display: 'inline-table' }}>
       <Sidenav appearance={appearance} expanded={expanded} openKeys={openKeys} onOpenChange={onOpenChange}>
-        <Sidenav.Toggle onToggle={onExpand} />
-        <Sidenav.Body style={{ height: '100vh' }}>
+        <Sidenav.Body style={{ height: '94vh' }}>
+          <Sidenav.Toggle onToggle={onExpand} />
           <Nav {...navProps} onSelect={handleSelect}>
             <Nav.Item eventKey="dashboard" active icon={<Dashboard />}>
               Dashboard

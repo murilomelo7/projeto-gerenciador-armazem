@@ -15,13 +15,13 @@ Table empresa {
   cep String
   status String [not null, default: 'ativo']
   observacoes String
-  createdAt DateTime [default: `now()`]
+  createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
   usuarios usuario [not null]
   categorias categoria [not null]
   produtos produto [not null]
   controleProduto controle_produto [not null]
-  Fornecedor fornecedor [not null]
+  fornecedores fornecedor [not null]
 }
 
 Table usuario {
@@ -31,10 +31,10 @@ Table usuario {
   senha String [not null]
   email String [unique, not null]
   cpf String [not null]
-  token String [unique]
+  token String
   perfil_id Int [not null]
   empresa_id Int [not null]
-  createdAt DateTime [default: `now()`]
+  createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
   perfilFk perfil
   empresaFk empresa
@@ -45,7 +45,7 @@ Table perfil {
   codigo String
   nome String [not null]
   acessos String [not null]
-  createdAt DateTime [default: `now()`]
+  createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
   perfis usuario [not null]
 }
@@ -56,7 +56,7 @@ Table categoria {
   empresa_id Int [not null]
   nome String [not null]
   descricao String [not null]
-  createdAt DateTime [default: `now()`]
+  createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
   empresaFk empresa
   produtos produto [not null]
@@ -71,10 +71,10 @@ Table produto {
   descricao String
   quantidade_produto Int [not null]
   data_validade DateTime
-  createdAt DateTime [default: `now()`]
+  createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
-  empresaFk empresa
-  categoriaFk categoria
+  empresaFk empresa [not null]
+  categoriaFk categoria [not null]
   ControleProduto controle_produto [not null]
 }
 
@@ -83,13 +83,13 @@ Table controle_produto {
   tipo String [not null]
   empresa_id Int [not null]
   produto_id Int [not null]
-  fornecedor_id Int [not null]
+  fornecedor_id Int
   quantidade Int [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime
   empresaFk empresa [not null]
   produtoFk produto [not null]
-  fornecedorFk fornecedor [not null]
+  fornecedorFk fornecedor
 }
 
 Table fornecedor {

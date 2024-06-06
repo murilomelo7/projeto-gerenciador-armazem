@@ -138,6 +138,7 @@ const EntradasSaidasForm = ({ showModal, onClose, tipoControle, isEdit, initialD
                     <Form.Control
                       name="produto_id"
                       searchable={false}
+                      disabled={isEdit}
                       accepter={SelectPicker}
                       placeholder={'Selecione'}
                       cleanable={false}
@@ -156,6 +157,7 @@ const EntradasSaidasForm = ({ showModal, onClose, tipoControle, isEdit, initialD
                       <Form.Control
                         name="fornecedor_id"
                         searchable={false}
+                        disabled={isEdit}
                         accepter={SelectPicker}
                         placeholder={'Selecione'}
                         cleanable={false}
