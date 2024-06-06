@@ -212,7 +212,7 @@ const EntradasSaidasList = () => {
                   {/* <Col md={4}></Col>
                   <Col md={4}></Col> */}
                 </Row>
-                <Row>
+                <Row style={{ marginBottom: 20 }}>
                   <Col md={22}></Col>
                   <Col md={2}>
                     <IconButton
