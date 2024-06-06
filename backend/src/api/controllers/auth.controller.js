@@ -50,9 +50,11 @@ class AuthController {
       }
       const { token } = request.headers;
 
+      const usuario = await prisma.usuario.findFirst({ where: { token } });
+
       await prisma.usuario.update({
         data: { token: null },
-        where: { token },
+        where: { id: usuario.id },
       });
     } catch (error) {
       request.log.error(error);

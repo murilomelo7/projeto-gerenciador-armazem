@@ -142,7 +142,11 @@ class ControleProdutoController {
         produtoFk: true,
       };
 
-      const controleProduto = await prisma.controleProduto.findMany({ where, include });
+      const orderBy = {
+        createdAt: 'desc',
+      };
+
+      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy });
 
       reply.code(200).send(controleProduto);
     } catch (error) {

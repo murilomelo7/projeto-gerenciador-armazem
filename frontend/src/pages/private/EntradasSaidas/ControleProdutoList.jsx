@@ -247,13 +247,17 @@ const EntradasSaidasList = () => {
                       <Table.HeaderCell>Quantidade</Table.HeaderCell>
                       <Table.Cell dataKey="quantidade" />
                     </Table.Column>
-                    <Table.Column width={350} align="center" flexGrow={1}>
+                    {/* <Table.Column width={350} align="center" flexGrow={1}>
                       <Table.HeaderCell>Preço Unitário</Table.HeaderCell>
                       <Table.Cell dataKey="quantidade" />
                     </Table.Column>
                     <Table.Column width={350} align="center" flexGrow={1}>
                       <Table.HeaderCell>Preço total</Table.HeaderCell>
                       <Table.Cell dataKey="quantidade" />
+                    </Table.Column> */}
+                    <Table.Column width={350} align="center" flexGrow={1}>
+                      <Table.HeaderCell>Estoque atual</Table.HeaderCell>
+                      <Table.Cell dataKey="produtoFk.quantidade_produto" />
                     </Table.Column>
                     <Table.Column width={350} align="left" flexGrow={1}>
                       <Table.HeaderCell>Data lançamento</Table.HeaderCell>
