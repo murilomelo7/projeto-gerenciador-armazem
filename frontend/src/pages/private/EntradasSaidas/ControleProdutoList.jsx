@@ -1,4 +1,4 @@
-import { Button, Col, Panel, Row, Table, Input, IconButton, SelectPicker, DatePicker, Form } from 'rsuite';
+import { Button, Col, Panel, Row, Table, Input, IconButton, SelectPicker, DatePicker, Form, DateRangePicker } from 'rsuite';
 import { Plus, Minus, Edit, Trash, Visible, History, Search } from '@rsuite/icons';
 import { Container } from 'rsuite';
 import { useEffect, useState } from 'react';
@@ -31,8 +31,6 @@ const EntradasSaidasList = () => {
 
       const response = await ControleProdutoController.findMany();
 
-      console.log(response);
-
       setControleProdutos(response);
     } catch (error) {
       console.error('Erro ao buscar categorias', error);
@@ -64,15 +62,12 @@ const EntradasSaidasList = () => {
     setShowModal(true);
   };
 
-  const handleRemove = async rowData => {
-    const { id } = rowData;
-    // const response = await CategoriaController.delete(id);
-    // if (response) {
-    //   handleAfterSubmit();
-    // }
+  const handleFilter = async () => {
+    const response = await ControleProdutoController.findMany(formDataFilter);
+    if (response) {
+      setControleProdutos(response);
+    }
   };
-
-  const handleFilter = async () => {};
 
   const handleChangeFilter = (value, name) => {
     setFormDataFilter({ ...formDataFilter, [name]: value });
@@ -122,7 +117,7 @@ const EntradasSaidasList = () => {
         />
         <Panel bordered style={{ borderRadius: 10 }}>
           <Row style={{ textAlign: 'center' }}>
-            <Col md={22}>
+            <Col md={20}>
               <h3>Entradas e saídas dos produtos</h3>
             </Col>
           </Row>
@@ -197,11 +192,10 @@ const EntradasSaidasList = () => {
                       <Form.ControlLabel>Fornecedor</Form.ControlLabel>
                       <Form.Control
                         name="fornecedor_id"
-                        searchable={false}
-                        disabled={isEdit}
+                        searchable={true}
                         accepter={SelectPicker}
                         placeholder={'Selecione'}
-                        cleanable={false}
+                        cleanable={true}
                         data={fornecedores}
                         style={{ width: '100%' }}
                         onChange={value => handleChangeFilter(value, 'fornecedor_id')}
@@ -209,6 +203,22 @@ const EntradasSaidasList = () => {
                       />
                     </Form.Group>
                   </Col>
+                  {/* <Col md={4}>
+                    <Form.Group controlId="createdAt">
+                      <Form.ControlLabel>Data lançamento</Form.ControlLabel>
+                      <Form.Control
+                        name="createdAt"
+                        searchable={true}
+                        accepter={DateRangePicker}
+                        placeholder={'Selecione'}
+                        format='dd/MM/yyyy'
+                        cleanable={true}
+                        style={{ width: '100%' }}
+                        onChange={value => handleChangeFilter(value, 'createdAt')}
+                        value={formDataFilter.createdAt}
+                      />
+                    </Form.Group>
+                  </Col> */}
                   {/* <Col md={4}></Col>
                   <Col md={4}></Col> */}
                 </Row>
@@ -234,7 +244,7 @@ const EntradasSaidasList = () => {
             <Col md={24}>
               <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
                 <div style={{ overflowX: 'auto' }}>
-                  <Table height={400} virtualized data={controleProduto}>
+                  <Table virtualized data={controleProduto}>
                     <Table.Column width={150} fixed="left">
                       <Table.HeaderCell>Tipo</Table.HeaderCell>
                       <TypeCell dataKey="tipo" />

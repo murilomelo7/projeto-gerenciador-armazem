@@ -95,6 +95,7 @@ class ControleProdutoController extends Controller {
   async findMany(filters) {
     try {
       const token = await this.getToken();
+
       const response = await this.api.get('/controle-produto', {
         headers: {
           token,

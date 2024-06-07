@@ -1,61 +1,80 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import React, { useState, useEffect } from 'react';
+import { Bar } from 'react-chartjs-2';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import ControleProdutoController from '@/controller/ControleProdutoController';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// Registrando componentes do Chart.js
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const BarChart = () => {
-  const data = {
-    labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"],
-    datasets: [
-      {
-        label: "Empresas novas",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+  const [chartData, setChartData] = useState(null);
 
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await ControleProdutoController.findMany();
 
-  return <Bar data={data} options={options} />;
+      const processData = data => {
+        const labels = Array.from(new Set(data.map(item => new Date(item.createdAt).toLocaleDateString()))).sort();
+        const entradaData = labels.map(label => {
+          const totalEntrada = data
+            .filter(d => new Date(d.createdAt).toLocaleDateString() === label && d.tipo === 'entrada')
+            .reduce((sum, item) => sum + item.quantidade, 0);
+          return totalEntrada;
+        });
+
+        const saidaData = labels.map(label => {
+          const totalSaida = data
+            .filter(d => new Date(d.createdAt).toLocaleDateString() === label && d.tipo === 'saida')
+            .reduce((sum, item) => sum + item.quantidade, 0);
+          return totalSaida;
+        });
+
+        return {
+          labels,
+          datasets: [
+            {
+              label: 'Entradas',
+              data: entradaData,
+              backgroundColor: 'rgb(63,171,69)',
+            },
+            {
+              label: 'Saídas',
+              data: saidaData,
+              backgroundColor: 'rgb(230,63,48)',
+            },
+          ],
+        };
+      };
+
+      setChartData(processData(data));
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {chartData ? (
+        <Bar
+          data={chartData}
+          options={{
+            // responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Entradas e Saídas por Data',
+              },
+            },
+          }}
+        />
+      ) : (
+        <p>Carregando...</p>
+      )}
+    </div>
+  );
 };
 
 export default BarChart;

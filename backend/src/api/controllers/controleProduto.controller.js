@@ -136,8 +136,18 @@ class ControleProdutoController {
     try {
       const { empresa_id } = request;
 
+      let { tipo, produto_id, fornecedor_id, createdAt, limit } = request.query;
+
+      produto_id ? (produto_id = Number(produto_id)) : undefined;
+      fornecedor_id ? (fornecedor_id = Number(fornecedor_id)) : undefined;
+      limit ? (limit = Number(limit)) : undefined;
+
       const where = {
         empresa_id,
+        tipo,
+        produto_id,
+        fornecedor_id,
+        // createdAt,
       };
 
       const include = {
@@ -149,7 +159,7 @@ class ControleProdutoController {
         createdAt: 'desc',
       };
 
-      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy });
+      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy, take: limit });
 
       reply.code(200).send(controleProduto);
     } catch (error) {

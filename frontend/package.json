@@ -12,6 +12,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.3",
     "@hookform/resolvers": "^3.3.4",
+    "@rsuite/charts": "^5.2.3",
     "@rsuite/icons": "^1.0.3",
     "axios": "^1.6.8",
     "chart.js": "^4.4.3",

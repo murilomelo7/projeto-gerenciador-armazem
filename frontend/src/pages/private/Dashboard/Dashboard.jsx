@@ -1,74 +1,99 @@
-import Layout from "@/components/Layout/Layout";
-import BarChart from "@/components/Chart/BarChart";
-import PieChart from "@/components/Chart/PieChart";
+import Layout from '@/components/Layout/Layout';
+import BarChart from '@/components/Chart/BarChart';
+import PieChart from '@/components/Chart/PieChart';
 
-import "./Dashboard.css";
+import { useEffect, useState } from 'react';
+import ControleProdutoController from '@/controller/ControleProdutoController';
+import { Col, Container, Panel, Row, Table } from 'rsuite';
+import { Bar } from 'react-chartjs-2';
+import { format } from 'date-fns';
 
 const Dashboard = () => {
-  const dataPie = {
-    labels: ["Red", "Blue", "Yellow"],
-    datasets: [
-      {
-        label: "",
-        data: [12, 19, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
+  const [controleProduto, setControleProduto] = useState([]);
+
+  const init = async () => {
+    const controleProdutoResponse = await ControleProdutoController.findMany({ limit: 10 });
+    setControleProduto(controleProdutoResponse);
   };
 
-  const empresas = [
-    { id: 1, name: "Empresa 1", description: "Descrição da Empresa 1" },
-    { id: 2, name: "Empresa 2", description: "Descrição da Empresa 2" },
-    { id: 3, name: "Empresa 3", description: "Descrição da Empresa 3" },
-    { id: 4, name: "Empresa 4", description: "Descrição da Empresa 4" },
-    { id: 5, name: "Empresa 4", description: "Descrição da Empresa 5" },
-  ];
+  useEffect(() => {
+    init();
+  }, []);
+
+  const DateCell = ({ rowData, dataKey, ...props }) => (
+    <Table.Cell {...props}>
+      {rowData[dataKey] ? format(new Date(rowData[dataKey]), 'dd/MM/yyyy HH:mm:ss') : ''}
+    </Table.Cell>
+  );
+
+  const TypeCell = ({ rowData, dataKey, ...props }) => {
+    const borderColor = rowData[dataKey] === 'entrada' ? '#3fab45' : '#e63f30';
+    return (
+      <Table.Cell {...props}>
+        <div
+          style={{
+            border: `2px solid ${borderColor}`,
+            borderRadius: '5px',
+            width: '40p50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          {rowData[dataKey] === 'entrada' ? 'Entrada' : 'Saída'}
+        </div>
+      </Table.Cell>
+    );
+  };
 
   return (
-    <div className="dashboard">
-      <div className="title-dashboard">
-        <h1>Dashboard</h1>
-      </div>
-      <div className="content">
-        <div className="chart-container">
-          <div className="chart">
-            <h3>Clientes</h3>
-            <BarChart />
-          </div>
-        </div>
-        <div className="empresas-container">
-          <div className="table-dashboard-empresa">
-            <h3 className="title-ultima-empresa">Últimas empresas cadastradas</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nome</th>
-                </tr>
-              </thead>
-              <tbody>
-                {empresas.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Container>
+        <Panel>
+          <Row style={{ textAlign: 'center' }}>
+            <Col md={24}>
+              <h1>Dashboard</h1>
+            </Col>
+          </Row>
+        </Panel>
+        <Panel>
+          <Row style={{ textAlign: 'center' }}>
+            <Col md={12}>
+              <Panel header="Gráfico de Entradas e Saídas" bordered style={{ borderRadius: 10 }}>
+                <BarChart />
+              </Panel>
+            </Col>
+            <Col md={12}>
+              <Panel  header="Últimas entradas e saídas" bordered style={{ borderRadius: 10 }}>
+                <Table height={290} data={controleProduto}>
+                  <Table.Column width={100}>
+                    <Table.HeaderCell>Tipo</Table.HeaderCell>
+                    <TypeCell dataKey="tipo" />
+                  </Table.Column>
+                  <Table.Column width={100} align="left" flexGrow={1}>
+                    <Table.HeaderCell>Produto</Table.HeaderCell>
+                    <Table.Cell dataKey="produtoFk.nome" />
+                  </Table.Column>
+                  <Table.Column width={100} align="center" flexGrow={1}>
+                    <Table.HeaderCell>Quantidade</Table.HeaderCell>
+                    <Table.Cell dataKey="quantidade" />
+                  </Table.Column>
+                  <Table.Column width={350} align="center" flexGrow={1}>
+                    <Table.HeaderCell>Valor unidade</Table.HeaderCell>
+                    <Table.Cell dataKey="valor_unidade" />
+                  </Table.Column>
+                  <Table.Column width={100} align="center" flexGrow={1}>
+                    <Table.HeaderCell>Valor total</Table.HeaderCell>
+                    <Table.Cell dataKey="valor_total" />
+                  </Table.Column>
+                </Table>
+              </Panel>
+            </Col>
+          </Row>
+        </Panel>
+      </Container>
+    </>
   );
 };
 
