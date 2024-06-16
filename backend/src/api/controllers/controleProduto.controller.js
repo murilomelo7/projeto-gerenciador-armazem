@@ -199,13 +199,17 @@ class ControleProdutoController {
         createdAt: 'desc',
       };
 
-      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy, take: limit });
+      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy, take: 10 });
 
-      const retorno = await controleProduto.map(async v => await controleProdutoService.renomearDadosApp(v));
+      let dadosRetorno = [];
 
-      console.log(retorno);
+      const retorno = controleProduto.map(async v => {
+        return await controleProdutoService.renomearDadosApp(v);
+      });
 
-      reply.code(200).send(retorno);
+      dadosRetorno = await Promise.all(retorno);
+
+      reply.code(200).send(dadosRetorno);
     } catch (error) {
       request.log.error(error);
       reply.code(500).send({
