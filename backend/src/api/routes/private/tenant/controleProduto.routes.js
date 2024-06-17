@@ -32,6 +32,11 @@ class ControleProdutoRoutes {
       preHandler: authMiddleware.authToken,
       handler: controller.findMany,
     });
+
+    fastify.get('/controle-produto-app', {
+      preHandler: authMiddleware.authToken,
+      handler: controller.findManyApp,
+    });
   }
 }
 

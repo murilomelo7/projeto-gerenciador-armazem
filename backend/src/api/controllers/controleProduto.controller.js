@@ -171,5 +171,53 @@ class ControleProdutoController {
       });
     }
   }
+
+  async findManyApp(request, reply) {
+    try {
+      const { empresa_id } = request;
+
+      let { tipo, produto_id, fornecedor_id, createdAt, limit } = request.query;
+
+      produto_id ? (produto_id = Number(produto_id)) : undefined;
+      fornecedor_id ? (fornecedor_id = Number(fornecedor_id)) : undefined;
+      limit ? (limit = Number(limit)) : undefined;
+
+      const where = {
+        empresa_id,
+        tipo,
+        produto_id,
+        fornecedor_id,
+        // createdAt,
+      };
+
+      const include = {
+        fornecedorFk: true,
+        produtoFk: true,
+      };
+
+      const orderBy = {
+        createdAt: 'desc',
+      };
+
+      const controleProduto = await prisma.controleProduto.findMany({ where, include, orderBy, take: 10 });
+
+      let dadosRetorno = [];
+
+      const retorno = controleProduto.map(async v => {
+        return await controleProdutoService.renomearDadosApp(v);
+      });
+
+      dadosRetorno = await Promise.all(retorno);
+
+      reply.code(200).send(dadosRetorno);
+    } catch (error) {
+      request.log.error(error);
+      reply.code(500).send({
+        statusCode: 500,
+        message: 'Ocorreu um erro na busca dos controles produtos',
+        error: error.message,
+      });
+    }
+  }
 }
 export default new ControleProdutoController();
