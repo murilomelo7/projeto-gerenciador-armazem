@@ -61,12 +61,15 @@ const SidenavArmazem = ({ appearance, openKeys, expanded, onOpenChange, onExpand
   return (
     <div style={{ width: expanded ? 260 : 0, display: 'inline-table' }}>
       <Sidenav appearance={appearance} expanded={expanded} openKeys={openKeys} onOpenChange={onOpenChange}>
-        <Sidenav.Body style={{ height: '94vh' }}>
+        <Sidenav.Body style={{ height: '92vh' }}>
           <Sidenav.Toggle onToggle={onExpand} />
           <Nav {...navProps} onSelect={handleSelect}>
-            <Nav.Item eventKey="dashboard" active icon={<Dashboard />}>
-              Dashboard
-            </Nav.Item>
+            {acessos === 'cliente' && (
+              <Nav.Item eventKey="dashboard" active icon={<Dashboard />}>
+                Dashboard
+              </Nav.Item>
+            )}
+
             <Nav.Menu eventKey="cadastro" active title="Cadastros" icon={<Plus />}>
               {acessos === 'admin' && (
                 <>

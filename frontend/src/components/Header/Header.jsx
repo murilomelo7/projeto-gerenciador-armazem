@@ -18,7 +18,7 @@ const Header = () => {
     }
   };
   return (
-    <Navbar appearance="inverse" style={{ height: '6vh' }}>
+    <Navbar appearance="inverse" style={{ height: '10vh' }}>
       <Navbar.Brand href="/dashboard">
         <label>
           <strong>NANDERELIS STOCKSYSTEM</strong>

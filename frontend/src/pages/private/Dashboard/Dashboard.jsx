@@ -66,7 +66,7 @@ const Dashboard = () => {
             </Col>
             <Col md={12}>
               <Panel  header="Últimas entradas e saídas" bordered style={{ borderRadius: 10 }}>
-                <Table height={290} data={controleProduto}>
+                <Table height={326} data={controleProduto}>
                   <Table.Column width={100}>
                     <Table.HeaderCell>Tipo</Table.HeaderCell>
                     <TypeCell dataKey="tipo" />

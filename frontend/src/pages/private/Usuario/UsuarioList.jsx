@@ -88,7 +88,7 @@ const UsuarioList = () => {
             </Col>
           </Row>
 
-          <Panel header="Filtros" bordered style={{ borderRadius: 10, marginTop: 40 }}>
+          {/* <Panel header="Filtros" bordered style={{ borderRadius: 10, marginTop: 40 }}>
             <Row style={{ marginTop: 20 }}>
               <Col md={24}>
                 <Row>
@@ -103,7 +103,7 @@ const UsuarioList = () => {
                 </Row>
               </Col>
             </Row>
-          </Panel>
+          </Panel> */}
           <Row style={{ marginTop: 20 }}>
             <Col md={24}>
               <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>

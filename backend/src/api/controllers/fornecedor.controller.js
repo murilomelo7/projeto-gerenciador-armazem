@@ -127,6 +127,21 @@ class FornecedorController {
         id,
         empresa_id,
       };
+
+      const controleProdutoValidation = await prisma.controleProduto.findFirst({
+        where: { fornecedor_id: id, empresa_id },
+      });
+
+      console.log(controleProdutoValidation);
+
+      if (controleProdutoValidation) {
+        return reply.code(400).send({
+          statusCode: 400,
+          error: 'Vínculado',
+          message: 'O fornecedor está vínculado a um uma entrada ou saída',
+        });
+      }
+
       await prisma.fornecedor.delete({ where });
 
       reply.code(200).send({

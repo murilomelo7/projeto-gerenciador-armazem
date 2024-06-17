@@ -1,4 +1,16 @@
-import { Button, Col, Panel, Row, Table, Input, IconButton, SelectPicker, DatePicker, Form, DateRangePicker } from 'rsuite';
+import {
+  Button,
+  Col,
+  Panel,
+  Row,
+  Table,
+  Input,
+  IconButton,
+  SelectPicker,
+  DatePicker,
+  Form,
+  DateRangePicker,
+} from 'rsuite';
 import { Plus, Minus, Edit, Trash, Visible, History, Search } from '@rsuite/icons';
 import { Container } from 'rsuite';
 import { useEffect, useState } from 'react';
@@ -244,7 +256,7 @@ const EntradasSaidasList = () => {
             <Col md={24}>
               <Panel header="Listagem" bordered style={{ borderRadius: 10 }}>
                 <div style={{ overflowX: 'auto' }}>
-                  <Table virtualized data={controleProduto}>
+                  <Table height={300} virtualized data={controleProduto}>
                     <Table.Column width={150} fixed="left">
                       <Table.HeaderCell>Tipo</Table.HeaderCell>
                       <TypeCell dataKey="tipo" />
@@ -274,7 +286,7 @@ const EntradasSaidasList = () => {
                       <DateCell dataKey="createdAt" />
                     </Table.Column>
                     <Table.Column width={100} fixed="right">
-                      <Table.HeaderCell align="center">Ações</Table.HeaderCell>
+                      <Table.HeaderCell align="left">Ações</Table.HeaderCell>
                       <Table.Cell style={{ alignItems: 'center', paddingTop: 10 }}>
                         {rowData => (
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -286,14 +298,14 @@ const EntradasSaidasList = () => {
                               onClick={() => handleEdit(rowData)}
                               icon={<Visible />}
                             ></IconButton>
-                            <IconButton
+                            {/* <IconButton
                               title="Estornar"
                               size={'sm'}
                               color="orange"
                               appearance="ghost"
                               onClick={() => handleRemove(rowData)}
                               icon={<History />}
-                            ></IconButton>
+                            ></IconButton> */}
                           </div>
                         )}
                       </Table.Cell>

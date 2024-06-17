@@ -4,6 +4,7 @@ import { z } from 'zod';
 import ControleProdutoController from '@/controller/ControleProdutoController';
 import ProdutoController from '@/controller/ProdutoController';
 import FornecedorController from '@/controller/FornecedorController';
+import { entradaSchema, saidaSchema } from './schema/ControleProdutoSchema';
 
 const initData = {
   quantidade: '',
@@ -47,8 +48,8 @@ const EntradasSaidasForm = ({ showModal, onClose, tipoControle, isEdit, initialD
 
   const handleSubmit = async () => {
     try {
-      // const schema = isEdit ? updateSchema : createSchema;
-      // schema.parse(formData);
+      const schema = tipoControle === 'entrada' ? entradaSchema : saidaSchema;
+      schema.parse(formData);
 
       if (!isEdit && tipoControle === 'entrada') {
         const response = await ControleProdutoController.entrada(formData);
@@ -106,7 +107,7 @@ const EntradasSaidasForm = ({ showModal, onClose, tipoControle, isEdit, initialD
       {message}
       <Modal size="md" open={showModal} onClose={handleClose}>
         <Modal.Header>
-          <Modal.Title>{!isEdit ? 'Novo ' : 'Editar'}</Modal.Title>
+          <Modal.Title>{!isEdit ? 'Novo ' : 'Visualizar'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Col sm={24}>
@@ -224,9 +225,11 @@ const EntradasSaidasForm = ({ showModal, onClose, tipoControle, isEdit, initialD
 
         <Modal.Footer>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleSubmit} appearance="primary">
-            {isEdit ? 'Salvar Alterações' : 'Salvar'}
-          </Button>
+          {!isEdit && (
+            <Button onClick={handleSubmit} disabled={isEdit} appearance="primary">
+              Salvar
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

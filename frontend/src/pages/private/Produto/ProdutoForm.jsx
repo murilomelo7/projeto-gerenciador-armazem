@@ -160,12 +160,12 @@ const ProdutoForm = ({ showModal, onClose, isEdit, initialData }) => {
                 </Col>
                 <Col xs={12} sm={12}>
                   <Form.Group controlId="quantidade_produto">
-                    <Form.ControlLabel>Quantidade</Form.ControlLabel>
+                    <Form.ControlLabel>Quantidade inicial</Form.ControlLabel>
                     <Form.Control
                       name="quantidade_produto"
                       accepter={InputNumber}
                       disabled={isEdit}
-                      placeholder={'Quantidade'}
+                      placeholder={'Quantidade inicial'}
                       onChange={value => handleChange(value, 'quantidade_produto')}
                       value={formData.quantidade_produto}
                     />

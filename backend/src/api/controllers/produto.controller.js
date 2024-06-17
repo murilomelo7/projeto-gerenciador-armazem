@@ -142,6 +142,18 @@ class ProdutoController {
         empresa_id,
       };
 
+      const controleProdutoValidation = await prisma.controleProduto.findFirst({
+        where: { produto_id: id, empresa_id },
+      });
+
+      if (controleProdutoValidation) {
+        return reply.code(400).send({
+          statusCode: 400,
+          error: 'Vínculado',
+          message: 'O produto está vínculado a um uma entrada ou saída',
+        });
+      }
+
       await prisma.produto.delete({ where });
 
       reply.code(200).send({
