@@ -7,6 +7,8 @@ let token;
 let idCategoria;
 let idProduto;
 let idFornecedor;
+let idEntrada;
+let idSaida;
 
 beforeAll(async () => {
   await Server.start();
@@ -88,5 +90,72 @@ describe('Controle produto Routes', () => {
     const response = await request.post('/controle-produto/entrada').send({}).set('token', token);
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error', 'Bad Request');
+  });
+
+  it('POST - ENTRADA -  Deve retornar 200 com a entrada realizada com sucesso', async () => {
+    const response = await request
+      .post('/controle-produto/saida')
+      .send({
+        tipo: 'saida',
+        produto_id: idProduto,
+        fornecedor_id: idFornecedor,
+        quantidade: 10,
+        valor_total: 1000,
+        valor_unidade: 10,
+      })
+      .set('token', token);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('statusCode', 200);
+    idEntrada = response.body.data.id;
+  });
+
+  it('POST - SAIDA -  Deve retornar 400 com o token não informado', async () => {
+    const response = await request.post('/controle-produto/saida');
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error', 'Bad Request');
+  });
+
+  it('POST - SAIDA -  Deve retornar 400 com o corpo da requisição não informado', async () => {
+    const response = await request.post('/controle-produto/saida').set('token', token);
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error', 'Bad Request');
+  });
+
+  it('POST - SAIDA -  Deve retornar 400 com os dados inválidos', async () => {
+    const response = await request.post('/controle-produto/saida').send({}).set('token', token);
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error', 'Bad Request');
+  });
+
+  it('POST - SAIDA -  Deve retornar 200 com a saida realizada com sucesso', async () => {
+    const response = await request
+      .post('/controle-produto/saida')
+      .send({
+        tipo: 'saida',
+        produto_id: idProduto,
+        quantidade: 10,
+        valor_total: 1000,
+        valor_unidade: 10,
+      })
+      .set('token', token);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('statusCode', 200);
+    idSaida = response.body.data.id;
+  });
+
+  it('GET ALL-  Deve retornar 400 com o token não informado', async () => {
+    const response = await request.get('/controle-produto');
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error', 'Bad Request');
+  });
+
+  it('GET ENTRADA-  Deve retornar 200 com os dados da entrada', async () => {
+    const response = await request.get(`/controle-produto/${idEntrada}`).set('token', token);
+    expect(response.status).toBe(200);
+  });
+
+  it('GET SAÍDA-  Deve retornar 200 com os dados da entrada', async () => {
+    const response = await request.get(`/controle-produto/${idSaida}`).set('token', token);
+    expect(response.status).toBe(200);
   });
 });
