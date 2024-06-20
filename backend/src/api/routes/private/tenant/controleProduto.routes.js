@@ -1,15 +1,16 @@
 import controller from '../../../controllers/controleProduto.controller';
 import authMiddleware from '../../../middleware/auth.middleware';
+import controleProdutoMiddleware from '../../../middleware/controleProduto.middleware';
 
 class ControleProdutoRoutes {
   async registerRoutes(fastify, options) {
     fastify.post('/controle-produto/entrada', {
-      preHandler: [authMiddleware.authToken],
+      preHandler: [authMiddleware.authToken, controleProdutoMiddleware.entrada],
       handler: controller.entrada,
     });
 
     fastify.post('/controle-produto/saida', {
-      preHandler: [authMiddleware.authToken],
+      preHandler: [authMiddleware.authToken, controleProdutoMiddleware.saida],
       handler: controller.saida,
     });
 

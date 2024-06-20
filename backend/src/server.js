@@ -39,7 +39,8 @@ const loggerConfig = () => {
 class Server {
   constructor() {
     this.fastify = Fastify({
-      logger: loggerConfig(), // Configure o logger corretamente
+      // logger: loggerConfig(),
+      logger: false,
     });
     this.initializeRoutes();
   }
@@ -71,7 +72,7 @@ class Server {
       this.fastify.log.info('Link: http://localhost:3000');
     } catch (error) {
       this.fastify.log.error(error);
-      process.exit(1);
+      // process.exit(1);
     }
   }
 
@@ -81,7 +82,7 @@ class Server {
       this.fastify.log.info('Servidor fechado com sucesso');
     } catch (error) {
       this.fastify.log.error('Error closing server:', error);
-      process.exit(1);
+      // process.exit(1);
     }
   }
 }

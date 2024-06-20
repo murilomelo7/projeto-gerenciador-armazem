@@ -5,7 +5,7 @@ import authMiddleware from '../../../middleware/auth.middleware';
 class FornecedorRoutes {
   async registerRoutes(fastify, options) {
     fastify.post('/fornecedor', {
-      preHandler: [authMiddleware.authToken],
+      preHandler: [authMiddleware.authToken, fornecedorMiddleware.create],
       handler: controller.create,
     });
 
@@ -20,7 +20,7 @@ class FornecedorRoutes {
           additionalProperties: false,
         },
       },
-      preHandler: [authMiddleware.authToken, fornecedorMiddleware.create],
+      preHandler: [authMiddleware.authToken, fornecedorMiddleware.update],
       handler: controller.update,
     });
 
